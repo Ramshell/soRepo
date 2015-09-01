@@ -1,0 +1,46 @@
+Objeto a definir = Shell 
+
+Por el momento solo que puede hacer...
+
+//En si mismo, no interaccionan con otros elementos
+
+start()
+
+version()
+close() //end() la idea seria, finalizar.. sin apagar el sistema
+shutdown()
+
+//Con respecto a disco
+
+check_status() //esto es obvio...
+show_all() //esto seria solo nombrar, es decir tirar un ID onda "dev/sda, dev/sdb
+size(disk_id) //tamaño del disco
+size_occupied(disk_id) //cantidad ocupada
+size_free(disk_id) //espacio libre
+
+//Con respecto a memoria principal
+
+memory_size() //cantidad de memoria actual
+
+//Con respecto a cpu
+cpu_status()
+cpu_temperature()
+cpu_arq()
+
+//Con respecto a filesystem
+
+fs_dir_current()
+fs_dir_enter(fs_dir) //fs_dir seria la idea de PATH en nuestro file_system
+fs_dir_back()
+fs_dir_create(name) //crear carpeta 
+fs_file_create(name) //crear archivo... tipos de archivos, otro tema VER
+fs_dir_files() //muestra archivos en el directorio parado, onda ls
+
+//Con respecto a procesos... diria q podria haber un soft onda administrador de tareas.. //seguro estara en cada device igual
+task_admin_process_start(proc_id) //PID
+task_admin_process_status(proc_id) //esto seria algo asi,como un toString() donde describe su información
+task_admin_process_terminate(proc_id)
+task_admin_show_process() //muestra la info de todos los procesos ejecutandose 
+task_admin_show_version()
+#task_admin_show_version_whatdo()
+_____SandovalLucas____
