@@ -1,21 +1,40 @@
+from InterruptorManager import InterruptorManager
 
 class CPU:
 
-    def __init__(self, memory):
+    def __init__(self, memory,interruptionManager,execTimes):
         self.memory = memory
+        self.interruptionManager = interruptionManager
         
-    def run(self, pcb):
-        #Caso base termino programa
-        if(pcb.getSize()== pcb.getPc()):
+    def run(self, pcb, times):
+        
+        
+        instruction = self.fetch(pcb)
+        if(instruction.isIO()):
+            self.interruptorManager.ioQueue(pcb)
+            #CPU OCIOSA que avisa que espera pcb
+        
+        #SI LLEGO ACA ES DE CPU
+        self.execute(instruction)
+        pcb.incrementPc()
+        
+        times = times -1
+        
+        if(pcb.finished()):
+            #SI EL PROGRAMA TERMINO
+            self.interruptionManager.pcbEnd(pcb)
+            #CPU OCIOSA que avisa que espera pcb
             
-        #Caso base cpu decide terminar de ejecutar este programa.
+        if (times<=0):
+            self.interruptionManager.pcbQueue(pcb)
+            #CPU OCIOSA que avisa que espera pcb
             
-            self.execute(self.memory.getDir(pcb.getBaseDir()+pcb.getPc()))
-            pcb.incrementarPc()
-            #caso recursivo
-            self.run(pcb)
+        self.run(pcb,times)    
             
-    def __execute(self,instruction):
+    def __fetch(self,pcb):
+        return self.memory.getDir(pcb.getBaseDir() + pcb.getPc())
+            
+    def __execute(self, instruction):
         instruction.run()
 
            

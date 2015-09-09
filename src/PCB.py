@@ -3,13 +3,13 @@
 class PCB:
 
 
-    def __init__(self,idP,base, size):
+    def __init__(self, idP, base, size):
         self.pc = 0
         self.pid = idP
         self.baseDir = base
         self.size = size
     
-    def incrementarPc(self):
+    def incrementPc(self):
         self.pc = self.pc + 1
         
     def getBaseDir(self):
@@ -20,3 +20,8 @@ class PCB:
         
     def getSize(self):
         return self.size
+    
+    def finished(self):
+        return self.getPc() == self.getSize()-1
+        
+    

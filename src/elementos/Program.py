@@ -2,7 +2,7 @@
 class Program:
     
 
-    def __init__(self,instructions):
+    def __init__(self, instructions):
         self.instructions = instructions
         
         
