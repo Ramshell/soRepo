@@ -1,4 +1,4 @@
-from Instruction import Instruction
+from elementos import Instruction
 
 
 class MyClass(Instruction):

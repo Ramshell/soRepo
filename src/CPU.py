@@ -2,7 +2,7 @@ from InterruptorManager import InterruptorManager
 
 class CPU:
 
-    def __init__(self, memory,interruptionManager,execTimes):
+    def __init__(self, memory,interruptionManager):
         self.memory = memory
         self.interruptionManager = interruptionManager
         

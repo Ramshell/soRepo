@@ -12,5 +12,8 @@ class Program:
     def getInstructions(self):
         return self.instructions
     
+    def addInstruction(self, instruction):
+        self.instructions.add(instruction)
+    
     
         
