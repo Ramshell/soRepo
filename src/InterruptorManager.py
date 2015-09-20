@@ -29,7 +29,7 @@ class InterruptorManager:
 # cpu = new CPU (im)           
 #    im.interrupt("#KILL", pcb) 
     
- #   
+#   
 #    KillHandle.handle(pcb)  
 #      //hace lo que sabe hacer
             

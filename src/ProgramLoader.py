@@ -1,6 +1,6 @@
 from PCB import PCB
 
-class MyClass(object):
+class ProgramLoader:
 
 
 
@@ -11,13 +11,13 @@ class MyClass(object):
         self.tableIdPcb = []
         
     def loadProcess(self,program):
-        myProgram = self.hdd.getProgram(program)
-        direc = self.memory.getMemoryScope(myProgram.size())
-        miPCB = PCB(self.getNextId(),direc,myProgram.size())
-        self.tableIdPcb.add(miPCB)
-        for inst in myProgram.getInstruccions():
-            self.memory.put(direc,inst)
-            direc = direc + 1
+        self.myProgram = self.hdd.getProgram(program)
+        self.direc = self.memory.getMemoryScope(self.myProgram.size())
+        self.miPCB = PCB(self.getNextId(),self.direc,self.myProgram.size())
+        self.tableIdPcb.append(self.miPCB)
+        for inst in self.myProgram.getInstructions():
+            self.memory.putDir(self.direc,inst)
+            self.direc = self.direc + 1
     
     
     def getNextId(self):
