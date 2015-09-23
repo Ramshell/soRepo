@@ -14,6 +14,7 @@ class ProgramLoader:
         self.myProgram = self.hdd.getProgram(program)
         self.direc = self.memory.getMemoryScope(self.myProgram.size())
         self.miPCB = PCB(self.getNextId(),self.direc,self.myProgram.size())
+        self.processQueue.add(self.miPCB)
         self.tableIdPcb.append(self.miPCB)
         for inst in self.myProgram.getInstructions():
             self.memory.putDir(self.direc,inst)

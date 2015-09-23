@@ -12,6 +12,7 @@ class CPU:
         instruction = self.fetch(pcb)
         if(instruction.isIO()):
             self.interruptorManager.ioQueue(pcb)
+            return
             #CPU OCIOSA que avisa que espera pcb
         
         #SI LLEGO ACA ES DE CPU
@@ -23,18 +24,20 @@ class CPU:
         if(pcb.finished()):
             #SI EL PROGRAMA TERMINO
             self.interruptionManager.pcbEnd(pcb)
+            return
             #CPU OCIOSA que avisa que espera pcb
             
         if (times<=0):
             self.interruptionManager.pcbQueue(pcb)
+            return
             #CPU OCIOSA que avisa que espera pcb
             
         self.run(pcb,times)    
             
-    def __fetch(self,pcb):
+    def fetch(self,pcb):
         return self.memory.getDir(pcb.getBaseDir() + pcb.getPc())
             
-    def __execute(self, instruction):
+    def execute(self, instruction):
         instruction.run()
 
            

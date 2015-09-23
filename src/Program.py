@@ -1,8 +1,9 @@
 
 class Program:
     
-    def __init__ (self):
+    def __init__ (self,name):
         self.instructions = []
+        self.name = name
     
     #def __init__(self, instructions):
     #    self.instructions = instructions
