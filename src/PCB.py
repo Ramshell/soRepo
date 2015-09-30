@@ -8,9 +8,13 @@ class PCB:
         self.pid = idP
         self.baseDir = base
         self.size = size
+        self.estado = NewPCB()
     
+    #
+    # Metodos comunes!!!! 
+    #
     def incrementPc(self):
-        self.pc = self.pc + 1
+        self.estado.incrementarPC(self)
         
     def getBaseDir(self):
         return self.baseDir
@@ -22,6 +26,29 @@ class PCB:
         return self.size
     
     def finished(self):
-        return self.getPc() == self.getSize()-1
+        return self.estado.finished
+    
+    
+    
+    #
+    # Cambios de estado 
+    #
+    def toReady(self):
+        self.estado = ReadyPCB()
         
+    def toWaiting(self):
+        self.estado = WatingPCB()
+        
+    def terminate(self):
+        self.estado = TerminatedPCB()
+        
+    def runing(self):
+        self.estado = RuningPCB()
+    
+    
+    #
+    # Metodos privados!!!! 
+    #
+    def __incrementarPC(self):
+        self.pc = self.pc +1
     
