@@ -1,5 +1,4 @@
 from ReadyPCB import *
-from TerminatedPCB import TerminatedPCB
 from RuningPCB import *
 from WaitingPCB import *
 
@@ -30,7 +29,7 @@ class PCB:
         return self.size
 
     def finished(self):
-        return self.estado.finished
+        return self.pc > self.size
     
     
     
@@ -42,17 +41,10 @@ class PCB:
         
     def toWaiting(self):
         self.estado = WaitingPCB()
-        
-    def terminate(self):
-        self.estado = TerminatedPCB()
-        
+                
     def runing(self):
         self.estado = RuningPCB()
     
     
-    #
-    # Metodos privados!!!! 
-    #
-    def __incrementarPC(self):
-        self.pc = self.pc +1
+    
     

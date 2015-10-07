@@ -1,4 +1,4 @@
 class RuningPCB:
 
-    def incrementarPCB(self,unPCB):
-        unPCB.__incrementarPC()
+    def incrementarPC(self,unPCB):
+        unPCB.pc = unPCB.pc+1
