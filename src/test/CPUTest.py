@@ -26,7 +26,7 @@ from clock import Clock
 class CPUTest(unittest.TestCase):
 
     def setUp(self):
-        self.memoria = RAM(65535)
+        self.memory = RAM(65535)
 
         self.scheduler = Mock()
         self.hdd = Mock()
@@ -34,7 +34,7 @@ class CPUTest(unittest.TestCase):
         #self.aPcb = Mock()
         self.interruptor = Mock()
         self.interruptor2 = Mock()
-        self.interruptor = InterruptorManager(self.memory,self.scheduler,self.hdd,self.queue)
+        self.interruptor = Mock()
 
         self.semaphore = RLock()
 
@@ -50,28 +50,32 @@ class CPUTest(unittest.TestCase):
         self.memory.putDir(1, self.Instruction2)
         self.memory.putDir(2, self.instructionIO)
         self.aPcb = PCB(0,0,3)
-        self.cpu.setPCB(self.aPcb)
+        
 
     def test_when_fetch_then_instruction_valid(self):
         self.expected = self.instruction1 #Arrange
 
-        self.value = self.cpu.fetch(self.aPcb) #Act
+        self.value = self.cpu.fetch() #Act
 
         self.assertEquals(self.value , self.expected) #Assert
 
     def test_when_fetching_third_intruction_then_IO_interruption(self):
+        self.aPcb.runing()
+        self.cpu.setPCB(self.aPcb)
         self.expected = self.instructionIO #Arrange
 
-        self.cpu.fetch(self.aPcb)
-        self.cpu.fetch(self.aPcb) #Act
-        self.cpu.fetch(self.aPcb)
+        self.cpu.tick()
+        self.cpu.tick() #Act
+        self.cpu.tick()
 
-        verify(self.interruptor).ioQueue(aPcb) #Assert
+        verify(self.interruptor).ioQueue(self.aPcb) #Assert
 
     def test_when_fetching_last_instruction_then_pcbEnd_interruption(self):
         self.anotherPcb = PCB(0,0,2) #The difference with aPcb, is their sizes... Arrange
+        self.anotherPcb.runing()
+        self.cpu.setPCB(self.anotherPcb)
 
-        self.cpu.fetch(self.anotherPcb) #Act
-        self.cpu.fetch(self.anotherPcb)
+        self.cpu.tick() #Act
+        self.cpu.tick()
 
-        verify(self.interruptor).pcbEnd(anotherPcb) #Assert
+        verify(self.interruptor).pcbEnd(self.anotherPcb) #Assert

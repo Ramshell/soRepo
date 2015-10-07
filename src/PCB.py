@@ -29,7 +29,7 @@ class PCB:
         return self.size
 
     def finished(self):
-        return self.pc > self.size
+        return self.pc >= self.size
     
     
     
