@@ -8,20 +8,18 @@ class PCB:
         self.pid = idP
         self.baseDir = base
         self.size = size
-    
+
     def incrementPc(self):
         self.pc = self.pc + 1
-        
+
     def getBaseDir(self):
         return self.baseDir
-    
+
     def getPc(self):
-        return self.pc   
-        
+        return self.pc
+
     def getSize(self):
         return self.size
-    
+
     def finished(self):
-        return self.getPc() == self.getSize()-1
-        
-    
+        return self.getPc() == self.getSize()

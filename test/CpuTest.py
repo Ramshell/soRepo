@@ -1,16 +1,21 @@
+from mockito import *
 import unittest
+import os, sys
+src_path = os.path.abspath(os.path.join('..', 'src'))
+sys.path.append(src_path)
+
 from CPU import CPU
 from InterruptorManager import InterruptorManager
 from RAM import RAM
-from mock import Mock
+
 from PCB import PCB
 class CPUTest(unittest.TestCase):
 
 
     def setUp(self):
-        self.memoryMock = Mock()
-        self.intmMock = Mock()
-        self.cpu = CPU(self.memoryMock, self.intmMock, 1)
+        self.memoryMock = mock()
+        self.intmMock = mock()
+        self.cpu = CPU(self.memoryMock, self.intmMock)
 
     def testProbarRunWithOneInstruction(self):
         #Sabemos que el pc empieza en la instruccion 1 y termina en la 
