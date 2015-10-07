@@ -7,17 +7,18 @@ class CPU:
 
         self.memory = memory
         self.interruptorManager = interruptorManager
-        
+
         #Modo usuario, modo
-        self.flag = False
+        self.isEnabled = False #True is enabled to work, user mode only, False kernel mode
+
         self.semaphore = semaphore
 
     def setPCB(self,pcb):
         self.pcb = pcb
-        self.flag = True
+        self.enable
 
     def tick(self):
-        if(self.flag):
+        if(self.isEnabled):
             self.semaphore.acquire()
             inst = self.fetch()
             if(inst.isIO()):
@@ -37,3 +38,9 @@ class CPU:
     def execute(self, instruction):
         instruction.run()
         self.pcb.incrementPc()
+
+    def enable(self):
+        self.isEnabled=True
+
+    def disable(self):
+        self.isEnabled=False
