@@ -51,6 +51,7 @@ class CPUTest(unittest.TestCase):
 
     def test_clock_working_with_two_instructions(self):
         self.clock.run()
+        #assert de que termino el pcb en uestion
         #when(self.inManMock).pcbEnd().then(self.clock)
 
 

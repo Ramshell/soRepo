@@ -7,6 +7,8 @@ class CPU:
 
         self.memory = memory
         self.interruptorManager = interruptorManager
+        
+        #Modo usuario, modo
         self.flag = False
         self.semaphore = semaphore
 
@@ -15,12 +17,12 @@ class CPU:
         self.flag = True
 
     def tick(self):
-
         if(self.flag):
             self.semaphore.acquire()
             inst = self.fetch()
             if(inst.isIO()):
                 self.interruptorManager.ioQueue(self.pcb)
+                #FLagg en false
                 return
 
             self.execute(inst)
