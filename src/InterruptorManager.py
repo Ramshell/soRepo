@@ -1,4 +1,5 @@
 from threading import Thread
+from multiprocessing import Queue
 
 class InterruptorManager(Thread):
   
@@ -20,18 +21,18 @@ class InterruptorManager(Thread):
     #    
     def ioQueue(self,pcb): #CHIZU dijo, cambiarle los nombres
         pcb.toWaiting()
-        self.io.add(pcb)
-        self.schPCB.freeCpu()
+        self.io.put(pcb)
+        self.schPCB.setPcbToCPU()
         
-    def pcbEnd(self,pcb):
+    def kill(self,pcb):
         pcb.terminated()#este seria el kill
         self.memory.clean()
-        self.schPCB.freeCpu()
+        self.schPCB.setPcbToCPU()
         
-    def pcbQueue(self,pcb):
+    def timeOut(self,pcb):
         pcb.toReady()
         self.schPCB.add(pcb)
-        self.schPCB.freeCpu()
+        self.schPCB.setPcbToCPU()
     
     
     #
@@ -39,7 +40,7 @@ class InterruptorManager(Thread):
     #
     def ioEnd(self,pcb): #Esto no detiene estado del CPU, esto tampoco mantiene estado de quien dispare esta interrupcion
         pcb.toReady()
-        self.io.add(pcb)
+        self.schPCB.add(pcb)
     
     def new(self,program):
         pass

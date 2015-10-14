@@ -5,3 +5,6 @@ class WaitingPCB:
 
     def incrementarPCB(self,unPCB):
         pass
+    
+    def name(self):
+        return "waiting"

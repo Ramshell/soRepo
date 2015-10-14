@@ -22,6 +22,7 @@ class CPU:
         #REGISTROS DEL CPU
         self.flagOfIoInstruction = False
         self.flagOfPCBEnding = False
+        self.flagOfRafagaOfPCB = False
     
         if(self.isEnabled):
             self.semaphore.acquire()
@@ -32,6 +33,10 @@ class CPU:
                 self.execute(self.inst)
                 if(self.pcb.finished()):
                     self.flagOfPCBEnding = True
+                else:
+                    if(self.pcb.rafagaIsOver()):
+                        self.flagOfRafagaOfPCB = True
+                        
             self.semaphore.release()
             
             #VERIFICACION DE LOS REGISTROS AL FINAL
@@ -39,14 +44,19 @@ class CPU:
                 self.interruptorManager.ioQueue(self.pcb)
                 return
             if (self.flagOfPCBEnding):
-                self.interruptorManager.pcbEnd(self.pcb)
+                self.interruptorManager.kill(self.pcb)
                 return
-
+            if(self.flagOfRafagaOfPCB):
+                self.interruptorManager.timeOut(self.pcb)
+                self.disable()
+                return
+            
     def fetch(self):
         return self.memory.getDir(self.pcb.getBaseDir() + self.pcb.getPc())
 
     def execute(self, instruction):
         instruction.run()
+        self.pcb.desincrementPriority()
         self.pcb.incrementPc()
 
     def enable(self):

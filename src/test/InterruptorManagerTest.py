@@ -24,19 +24,19 @@ class InterruptorManagerTest(unittest.TestCase):
         
         print("Test 1")
         verify(self.coladeio).add(self.aPCB)
-        verify(self.scheduler).freeCpu()
+        verify(self.scheduler).setPcbToCPU()
     
     def test_signal_of_pcb_end(self):
-        self.im.pcbEnd(self.aPCB)
+        self.im.kill(self.aPCB)
         
         print("Test 2")
         verify(self.ram).clean()
-        verify(self.scheduler).freeCpu()
+        verify(self.scheduler).setPcbToCPU()
          
     def test_signal_of_timeout(self):
         self.im.pcbQueue(self.aPCB)
         
-        verify(self.scheduler).freeCpu()
+        verify(self.scheduler).setPcbToCPU()
         verify(self.scheduler).add(self.aPCB)
         
 if __name__ == "__main__":

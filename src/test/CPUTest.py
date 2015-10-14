@@ -71,11 +71,11 @@ class CPUTest(unittest.TestCase):
         verify(self.interruptor).ioQueue(self.aPcb) #Assert
 
     def test_when_fetching_last_instruction_then_pcbEnd_interruption(self):
-        self.anotherPcb = PCB(0,0,2) #The difference with aPcb, is their sizes... Arrange
+        self.anotherPcb = PCB(0,0,2) #The difference with aPcb, are their sizes... Arrange
         self.anotherPcb.runing()
         self.cpu.setPCB(self.anotherPcb)
 
         self.cpu.tick() #Act
         self.cpu.tick()
 
-        verify(self.interruptor).pcbEnd(self.anotherPcb) #Assert
+        verify(self.interruptor).kill(self.anotherPcb) #Assert

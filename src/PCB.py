@@ -4,19 +4,21 @@ from WaitingPCB import *
 
 class PCB:
 
-
-    def __init__(self, idP, base, size):
+    #este lo crea el loader
+    def __init__(self, idP, base, size, priority):
         self.pc = 0
         self.pid = idP
         self.baseDir = base
         self.size = size
-        self.estado = ReadyPCB()
-    
+        self.state = ReadyPCB()
+        #esto lo cambia scheduler
+        self.rafaga = -1
+        self.priority = priority
     #
     # Metodos comunes!!!! 
     #
     def incrementPc(self):
-        self.estado.incrementarPC(self)
+        self.state.incrementarPC(self)
 
         
     def getBaseDir(self):
@@ -32,19 +34,39 @@ class PCB:
         return self.pc >= self.size
     
     
+    def getPid(self):
+        return self.pid
+    
+    def getState(self):
+        return self.state.name()
     
     #
-    # Cambios de estado 
+    # Cambios de state 
     #
     def toReady(self):
-        self.estado = ReadyPCB()
+        self.state = ReadyPCB()
         
     def toWaiting(self):
-        self.estado = WaitingPCB()
+        self.state = WaitingPCB()
                 
     def runing(self):
-        self.estado = RuningPCB()
+        self.state = RuningPCB()
     
+    #asignacion de rafaga
+    def assignRafaga(self, countRafagaPerPCB):
+        self.rafaga = countRafagaPerPCB
+        
+    def rafagaIsOver(self):
+        return self.rafaga == 0
     
+    #prioridades
     
+    def getPriority(self):
+        return self.priority
     
+    def desincrementPriority(self):
+        if(self.priority > 0):
+            self.priority = self.priority - 1
+        
+    def __cmp__(self, pcb):
+        return cmp(self.priority, pcb.getPriority())
