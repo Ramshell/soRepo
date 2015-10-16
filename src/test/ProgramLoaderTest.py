@@ -33,7 +33,7 @@ class ProgramLoaderTest(unittest.TestCase):
     def test_load_a_program_pcb_creation(self):
         when(self.disco).getProgram("programa").thenReturn(self.program)
         
-        self.progLoader.loadProcess("programa")
+        self.progLoader.loadProcessWithNoPriority("programa")
         
         self.assertEquals(self.progLoader.getNextId() , 1)
 

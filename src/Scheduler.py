@@ -2,13 +2,14 @@
 from abc import abstractmethod
 from threading import Thread
 from multiprocessing import Queue
-from Queue import PriorityQueue
-class Scheduler(Thread):
+from OwnHeap import OwnHeap
+class Scheduler:
 
 
-    def __init__(self, cpu, schedulingStrategy):
+    def __init__(self, cpu, semaphore):
         self.cpu = cpu
-        self.schedulingStrategy = schedulingStrategy
+        self.semaphore = semaphore
+        self.schedulingStrategy = FIFO(semaphore)
         
     def addPcb(self,pcb):
         self.schedulingStrategy.put(pcb)
@@ -16,9 +17,22 @@ class Scheduler(Thread):
     def setPcbToCPU(self):
         pcb = self.schedulingStrategy.choose()
         self.cpu.setPCB(pcb)
-        self.schedulingStrategy.readyQueue.remove(pcb)
         
+    def setRR(self,rafaga):
+        self.schedulingStrategy = RoundRobbin(rafaga,self.semaphore)
         
+    def setFIFO(self):
+        self.schedulingStrategy = FIFO(self.semaphore)
+        
+    def setPriority(self):
+        self.schedulingStrategy = Priority(self.semaphore)
+        
+    def setPriorityAndRoundRobin(self,rafaga):
+        self.schedulingStrategy = PriorityAndRoundRobin(rafaga,self.semaphore)
+    
+    #despues lo vemos 
+    def getQueue(self):
+        return self.schedulingStrategy.getReadyQueue() 
     
 class SchedulingStrategy(object):
     
@@ -36,40 +50,61 @@ class SchedulingStrategy(object):
     
 class FIFO(SchedulingStrategy):
     
-    def __init__(self):
+    def __init__(self,semaphore):
         self.queue = Queue()
 
-    def choose(self, readyQueue):
-        return readyQueue.get()#This should be the first in pcb.
+    def choose(self):
+        return self.readyQueue.get()#This should be the first in pcb.
         
     def put(self,pcb):
-        self.readyQueue.put(pcb);
+        self.readyQueue.put(pcb)
 
         
 class RoundRobbin(SchedulingStrategy):
     
-    def __init__(self, countInstructionPerPCB):
-        self.queue = Queue()
+    def __init__(self, countInstructionPerPCB,semaphore):
+        self.readyQueue = Queue()
         self.rafaga = countInstructionPerPCB
 
-    def choose(self, readyQueue):
-        return self.assignRafaga(readyQueue.get())#This should be the first in pcb.
+    def choose(self):
+        return self.assignRafaga(self.readyQueue.get())#This should be the first in pcb.
         
-    def put(self,pcb):
-        self.readyQueue.put(pcb);
-        
-    def assignRafaga(self, PCB):
-        PCB.assignRafaga(self.rafaga)
-
-class Priority(SchedulingStrategy):
-    
-    def __init__(self):
-        self.readyQueue = PriorityQueue()
-    
-    def choose(self, readyQueue):
-        return self.readyQueue.get()
-    
     def put(self,pcb):
         self.readyQueue.put(pcb)
         
+    def assignRafaga(self, pcb):
+        pcb.assignRafaga(self.rafaga)
+
+class Priority(SchedulingStrategy):
+    
+    def __init__(self,semaphore):
+        self.readyQueue = OwnHeap(semaphore)
+    
+    def choose(self):
+        return self.readyQueue.get()
+    
+    def put(self,pcb):
+        self.readyQueue.add(pcb)
         
+class PriorityAndRoundRobin(SchedulingStrategy):
+    
+    def __init__(self, countInstructionPerPCB,semaphore):
+        self.readyQueue = OwnHeap(semaphore,(lambda pcb1,pcb2: pcb1.getPriority() > pcb2.getPriority()))
+        self.rafaga = countInstructionPerPCB
+
+    def choose(self):
+        return self.assignRafaga(self.readyQueue.getAndRemoveMin()) #This should be the first in pcb.
+        
+    def put(self,pcb):
+        self.readyQueue.add(pcb)
+        
+    def assignRafaga(self, pcb):
+        pcb.assignRafaga(self.rafaga)
+        return pcb
+
+    #un get de la cola para el program loader
+    def getReadyQueue(self):
+        return self.readyQueue
+    
+    
+          

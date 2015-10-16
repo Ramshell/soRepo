@@ -68,5 +68,5 @@ class PCB:
         if(self.priority > 0):
             self.priority = self.priority - 1
         
-    def __cmp__(self, pcb):
-        return cmp(self.priority, pcb.getPriority())
+
+        

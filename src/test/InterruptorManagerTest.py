@@ -23,7 +23,7 @@ class InterruptorManagerTest(unittest.TestCase):
         self.im.ioQueue(self.aPCB)
         
         print("Test 1")
-        verify(self.coladeio).add(self.aPCB)
+        verify(self.coladeio).put(self.aPCB)
         verify(self.scheduler).setPcbToCPU()
     
     def test_signal_of_pcb_end(self):
@@ -39,6 +39,3 @@ class InterruptorManagerTest(unittest.TestCase):
         verify(self.scheduler).setPcbToCPU()
         verify(self.scheduler).add(self.aPCB)
         
-if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.testName']
-    unittest.main()
