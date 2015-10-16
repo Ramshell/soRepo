@@ -4,11 +4,11 @@ from multiprocessing import Queue
 class InterruptorManager(Thread):
   
     
-    def __init__(self,memory,scheduler,hdd,ioQueue):
+    def __init__(self,memory,scheduler,hdd,ioDelivery): #ioDelivery
         #AgregarProgramLoader
         self.memory = memory
         self.schPCB = scheduler
-        self.io = ioQueue
+        self.io = ioDelivery
         self.hdd = hdd
     
     
@@ -20,10 +20,11 @@ class InterruptorManager(Thread):
     # Provenientes de Operaciones de CPU 
     #    
     def ioQueue(self,pcb): #CHIZU dijo, cambiarle los nombres
+        #packageData <-- es una tupla /pcb,instr/ , codDevice
         pcb.toWaiting()
-        self.io.put(pcb)
+        self.io.putInQueue(data,cod)
         self.schPCB.setPcbToCPU()
-        
+     	    
     def kill(self,pcb):
         pcb.terminated()#este seria el kill
         self.memory.clean()
@@ -38,7 +39,7 @@ class InterruptorManager(Thread):
     #
     # Provenientes por I/0 
     #
-    def ioEnd(self,pcb): #Esto no detiene estado del CPU, esto tampoco mantiene estado de quien dispare esta interrupcion
+    def ioDone(self,pcb): #Esto no detiene estado del CPU, esto tampoco mantiene estado de quien dispare esta interrupcion
         pcb.toReady()
         self.schPCB.add(pcb)
     
