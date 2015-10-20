@@ -29,15 +29,15 @@ class CPU:
             self.inst = self.fetch()
             if(self.inst.isIO()):
                 self.flagOfIoInstruction = True
-				self.package = (self.pcb,self.inst)
-				self.codDevice = self.inst.cod #Las instrucciones de IO tiene un cod de device
+                self.package = [self.pcb,self.inst]
+                self.codDevice = self.inst.cod
             else:
                 if(self.pcb.finished()):  #PREGUNTAR ANTES DE EJECUTAR
                     self.flagOfPCBEnding = True
                 else:
-					self.execute(self.inst)
-                    if(self.pcb.rafagaIsOver()):
-                        self.flagOfRafagaOfPCB = True
+                    self.execute(self.inst)
+                if(self.pcb.rafagaIsOver()):
+                    self.flagOfRafagaOfPCB = True
                         
             self.semaphore.release()
             
@@ -55,7 +55,7 @@ class CPU:
             
     def fetch(self):
         return self.memory.getDir(self.pcb.getBaseDir() + self.pcb.getPc())
-		self.pcb.incrementPc() #ANTE CADA FETCH SE INCREMENTA EL PC DEL PCB
+        self.pcb.incrementPc() #ANTE CADA FETCH SE INCREMENTA EL PC DEL PCB
 
     def execute(self, instruction):
         instruction.run()

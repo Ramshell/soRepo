@@ -14,11 +14,13 @@ class IODeliveryTest(unittest.TestCase):
 	
 	def setUp(self):
 		self.delivery = IODelivery()
-		self.newDevice() #Impresora
-		self.newDevice() #Pantalla
+		self.delivery.newDevice() #Impresora
+		self.delivery.newDevice() #Pantalla
+		
+		print(self.delivery.numberOfDevices())
 		
 	def test_when_ask_how_many_devices_are_then_correct_number_of_them(self):
-		self.newDevice() # ARRANGE
+		self.delivery.newDevice() # ARRANGE
 		self.expected = 3
 		
 		self.value = self.delivery.numberOfDevices() #ACT
