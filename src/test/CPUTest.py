@@ -49,7 +49,7 @@ class CPUTest(unittest.TestCase):
         self.memory.putDir(0, self.instruction1)
         self.memory.putDir(1, self.Instruction2)
         self.memory.putDir(2, self.instructionIO)
-        self.aPcb = PCB(0,0,3)
+        self.aPcb = PCB(0,0,3,4)
         
 
     def test_when_fetch_then_instruction_valid(self):
@@ -71,7 +71,7 @@ class CPUTest(unittest.TestCase):
         verify(self.interruptor).ioQueue(self.aPcb) #Assert
 
     def test_when_fetching_last_instruction_then_pcbEnd_interruption(self):
-        self.anotherPcb = PCB(0,0,2) #The difference with aPcb, are their sizes... Arrange
+        self.anotherPcb = PCB(0,0,2,4) #The difference with aPcb, are their sizes... Arrange
         self.anotherPcb.runing()
         self.cpu.setPCB(self.anotherPcb)
 

@@ -29,7 +29,6 @@ class TablePCBTest(unittest.TestCase):
         self.sut.addPCB(self.pcb2)
         self.sut.addPCB(self.pcb3)
         self.sut.addPCB(self.pcb4)
-        self.sut.getPS()
         self.saved_stdout = sys.stdout
         self.out = StringIO()
         sys.stdout = self.out

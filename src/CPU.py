@@ -10,7 +10,7 @@ class CPU:
         self.interruptorManager = interruptorManager
         #Modo usuario, modo
         self.isEnabled = False #True is enabled to work, user mode only, False kernel mode
-        self.pcb = PCB(0,0,0) 
+        self.pcb = PCB(0,0,0,0) 
         self.semaphore = semaphore
 
     def setPCB(self,pcb):
