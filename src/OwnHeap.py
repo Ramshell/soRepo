@@ -1,4 +1,5 @@
 import copy
+from Queue import Queue
 
 class OwnHeap(object):
     
@@ -21,7 +22,7 @@ class OwnHeap(object):
         return 2*i + 2
     
     
-    def getAndRemoveMin(self):
+    def get(self):
         """
            getAndRemoveMin : Heap -> Comparable
            getAndRemoveMin removes and returns the minimum element in the heap.
@@ -104,7 +105,7 @@ class OwnHeap(object):
             i = self.parent(i)
             
             
-    def add(self, newValue):
+    def put(self, newValue):
         """
            add : Heap * Comparable -> NoneType
            add inserts the element at the correct position in the heap.
@@ -135,5 +136,12 @@ class OwnHeap(object):
            top returns a deep copy of the current 'top' of the heap
         """
         res = copy.deepcopy(self.list[0])
-        return res        
+        return res
+    
+    def empty(self):
+        return self.size == 0
+    
+
+        
+    
     

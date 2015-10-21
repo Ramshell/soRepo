@@ -12,7 +12,7 @@ class PCB:
         self.size = size
         self.state = ReadyPCB()
         #esto lo cambia scheduler
-        self.rafaga = -1
+        self.burst = -1
         self.priority = priority
     #
     # Metodos comunes!!!! 
@@ -29,6 +29,9 @@ class PCB:
 
     def getSize(self):
         return self.size
+    
+    def getBurst(self):
+        return self.burst
 
     def finished(self):
         return self.pc >= self.size
@@ -53,8 +56,8 @@ class PCB:
         self.state = RuningPCB()
     
     #asignacion de rafaga
-    def assignRafaga(self, countRafagaPerPCB):
-        self.rafaga = countRafagaPerPCB
+    def assignBurst(self, burst):
+        self.burst = burst
         
     def rafagaIsOver(self):
         return self.rafaga == 0
@@ -64,7 +67,7 @@ class PCB:
     def getPriority(self):
         return self.priority
     
-    def desincrementPriority(self):
+    def decrementPriority(self):
         if(self.priority > 0):
             self.priority = self.priority - 1
         
