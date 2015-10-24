@@ -19,14 +19,13 @@ class InterruptorManager(Thread):
     #
     # Provenientes de Operaciones de CPU 
     #    
-    def ioQueue(self,pcb): #CHIZU dijo, cambiarle los nombres
+    def ioQueue(self,data,cod): #CHIZU dijo, cambiarle los nombres
         #packageData <-- es una tupla /pcb,instr/ , codDevice
-        pcb.toWaiting()
+        data[0].toWaiting()
         self.io.putInQueue(data,cod)
         self.schPCB.setPcbToCPU()
-     	    
+         
     def kill(self,pcb):
-        pcb.terminated()#este seria el kill
         self.memory.clean()
         self.schPCB.setPcbToCPU()
         

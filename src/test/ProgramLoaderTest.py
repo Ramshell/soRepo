@@ -1,7 +1,3 @@
-import os, sys
-src_path = os.path.abspath(os.path.join('..'))
-sys.path.append(src_path)
-
 from RAM import RAM
 from InstCPU import InstCPU
 from InstIO import InstIO
@@ -24,7 +20,7 @@ class ProgramLoaderTest(unittest.TestCase):
         
         #Preparando un programa de dos (2) instrucciones
         self.instruccion1 = InstCPU("2+2")
-        self.instruccion2 = InstIO("Leer de teclado")
+        self.instruccion2 = InstIO("Leer de teclado",2)
         
         self.program = Program("prog")
         self.program.addInstruction(self.instruccion1)

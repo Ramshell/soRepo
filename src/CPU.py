@@ -30,7 +30,7 @@ class CPU:
             if(self.inst.isIO()):
                 self.flagOfIoInstruction = True
                 self.package = [self.pcb,self.inst]
-                self.codDevice = self.inst.cod
+                self.codDevice = self.inst.deviceCod()
             else:
                 if(self.pcb.finished()):  #PREGUNTAR ANTES DE EJECUTAR
                     self.flagOfPCBEnding = True
@@ -43,23 +43,27 @@ class CPU:
             
             #VERIFICACION DE LOS REGISTROS AL FINAL
             if (self.flagOfIoInstruction):
+                print("IO")
                 self.interruptorManager.ioQueue(self.package,self.codDevice)
                 return
             if (self.flagOfPCBEnding):
+                print("KILL")
                 self.interruptorManager.kill(self.pcb)
                 return
             if(self.flagOfRafagaOfPCB):
+                print("TIMEOUT")
                 self.interruptorManager.timeOut(self.pcb)
                 self.disable()
                 return
             
     def fetch(self):
-        return self.memory.getDir(self.pcb.getBaseDir() + self.pcb.getPc())
-        self.pcb.incrementPc() #ANTE CADA FETCH SE INCREMENTA EL PC DEL PCB
+        self.inst = self.memory.getDir(self.pcb.getBaseDir() + self.pcb.getPc())
+        self.pcb.incrementPc()
+        return self.inst #ANTE CADA FETCH SE INCREMENTA EL PC DEL PCB
 
     def execute(self, instruction):
         instruction.run()
-        self.pcb.desincrementPriority()
+        self.pcb.decrementPriority()
 
     def enable(self):
         self.isEnabled=True

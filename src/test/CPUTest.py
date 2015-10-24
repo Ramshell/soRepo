@@ -2,11 +2,9 @@ import unittest
 from mockito.mocking import Mock
 from mockito.mockito import verify
 from mockito.mockito import when
-import os, sys
+
 from threading import *
 
-src_path = os.path.abspath(os.path.join('..'))
-sys.path.append(src_path)
 from ProgramLoader import ProgramLoader
 from RAM import RAM
 from InterruptorManager import InterruptorManager
@@ -44,7 +42,7 @@ class CPUTest(unittest.TestCase):
 
         self.instruction1 = InstCPU("Matar a Flanders")
         self.Instruction2 = InstCPU("Y Tambien A Selma")
-        self.instructionIO = InstIO("Soy de IO")
+        self.instructionIO = InstIO("Soy de IO",0)
 
         self.memory.putDir(0, self.instruction1)
         self.memory.putDir(1, self.Instruction2)
@@ -61,14 +59,15 @@ class CPUTest(unittest.TestCase):
 
     def test_when_fetching_third_intruction_then_IO_interruption(self):
         self.aPcb.runing()
-        self.cpu.setPCB(self.aPcb)
-        self.expected = self.instructionIO #Arrange
+        self.cpu.setPCB(self.aPcb) 
+        self.data = [self.aPcb , self.instructionIO] 
+        self.cod = 0 #Arrange
 
         self.cpu.tick()
         self.cpu.tick() #Act
         self.cpu.tick()
 
-        verify(self.interruptor).ioQueue(self.aPcb) #Assert
+        verify(self.interruptor).ioQueue(self.data,self.cod) #Assert
 
     def test_when_fetching_last_instruction_then_pcbEnd_interruption(self):
         self.anotherPcb = PCB(0,0,2,4) #The difference with aPcb, are their sizes... Arrange

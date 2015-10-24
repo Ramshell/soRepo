@@ -60,7 +60,7 @@ class PCB:
         self.burst = burst
         
     def rafagaIsOver(self):
-        return self.rafaga == 0
+        return self.burst == 0
     
     #prioridades
     

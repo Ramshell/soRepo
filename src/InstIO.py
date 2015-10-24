@@ -4,9 +4,12 @@ class InstIO(Instruction):
 
 		
 	def __init__(self,valor,cod):
-		Instruction.__init__(valor)
 		self.codDevice = cod
+		Instruction.__init__(self,valor)
         
 	def isIO(self):
 		return True
+	
+	def deviceCod(self):
+		return self.codDevice
 		

@@ -1,11 +1,8 @@
-import os, sys
-src_path = os.path.abspath(os.path.join('..'))
-sys.path.append(src_path)
-
-from InterruptorManager import InterruptorManager
 import unittest 
 from mockito.mocking import Mock
-from mockito.mockito import verify
+from mockito.mockito import verify, when
+from InterruptorManager import InterruptorManager
+from twisted.internet.test.test_serialport import DoNothing
 
 class InterruptorManagerTest(unittest.TestCase):
 
@@ -13,28 +10,28 @@ class InterruptorManagerTest(unittest.TestCase):
     def setUp(self):
         self.scheduler = Mock()
         self.disco = Mock()
-        self.coladeio = Mock()
+        self.iodelivery = Mock()
         self.ram = Mock()
         self.aPCB = Mock()
+        self.cod = 4
+        self.data = [self.aPCB,self.cod]
         
-        self.im = InterruptorManager(self.ram,self.scheduler,self.disco,self.coladeio)
+        self.im = InterruptorManager(self.ram,self.scheduler,self.disco,self.iodelivery)
     
     def test_signal_io_pcb (self):
-        self.im.ioQueue(self.aPCB)
-        
-        print("Test 1")
-        verify(self.coladeio).put(self.aPCB)
+        self.im.ioQueue(self.data,self.cod)
+
+        verify(self.iodelivery).putInQueue(self.data,self.cod)
         verify(self.scheduler).setPcbToCPU()
     
     def test_signal_of_pcb_end(self):
         self.im.kill(self.aPCB)
         
-        print("Test 2")
         verify(self.ram).clean()
         verify(self.scheduler).setPcbToCPU()
          
     def test_signal_of_timeout(self):
-        self.im.pcbQueue(self.aPCB)
+        self.im.timeOut(self.aPCB)
         
         verify(self.scheduler).setPcbToCPU()
         verify(self.scheduler).add(self.aPCB)

@@ -2,10 +2,6 @@ import unittest
 from mockito.mocking import Mock
 from mockito.mockito import verify
 from mockito.mockito import when
-import os, sys
-
-src_path = os.path.abspath(os.path.join('..'))
-sys.path.append(src_path)
 
 from InstIO import InstIO
 
