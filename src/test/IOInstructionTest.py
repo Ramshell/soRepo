@@ -10,7 +10,7 @@ class IOInstructionTest(unittest.TestCase):
 		def setUp(self):
 			self.ioInst = InstIO("Instruccion de impresora",0)
 			
-		def test_when_create_an_io_instruction_then_inheritance_works(self):
+		def test_when_create_an_io_instruction_then_codDevice_is_well_initialized(self):
 			self.instruction = self.ioInst #ARRANGE
 			
 			self.expected = 0 #ACT

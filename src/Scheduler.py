@@ -9,9 +9,10 @@ class Scheduler:
 
     def __init__(self, cpu, queue, burst,condition):
         '''
-        @param cpu: the cpu hardware
-        @param queue: the kernel's readyQueue
-        @param burst: the instruction's quantum to be executed by the cpu. -1 if inifinte.  
+        @param: cpu the cpu hardware
+        @param: queue: the kernel's readyQueue
+        @param: burst: the instruction's quantum to be executed by the cpu. -1 if inifinte. 
+        @param: condition: the condition is the current semaphore in the system 
         '''
         self.cpu = cpu
         self.readyQueue = queue
@@ -36,6 +37,9 @@ class Scheduler:
         self.condition.release()
     
     def assignRafaga(self, pcb):
+        '''
+        @param: the pcb to assign the burst
+        '''
         pcb.assignBurst(self.burst)
         
         

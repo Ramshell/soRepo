@@ -3,17 +3,20 @@ import time
 
 class Device(Thread):
 
-	def __init__(self,devName,queueAsoc,interruptorM):
+	def __init__(self,devName,interruptorM,queueAsoc=None):
 		Thread.__init__(self)
 		self.interruptor = interruptorM
 		self.switch = True
-		self.name = devName;
-		self.queue = queueAsoc;
+		self.name = devName
+		self.queue = queueAsoc
+		
+	def newqueue(self,queue):
+		self.queue = queue
 		
 
 	def run(self):
 		
-		 while (self.switch & True):
+		while (self.switch & True):
 			if (not self.queue.empty()):
 				self.data = self.queue.get()
 				self.proccess(self.data)
@@ -30,8 +33,7 @@ class Device(Thread):
 	
 	
 	def execute(self,instruction):
-		self.instruction = instruction
-		self.instruction.run()
+		instruction.run()
 	
 	def sizeOfQueue(self):
 		return self.queue.qsize()

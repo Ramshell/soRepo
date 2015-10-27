@@ -17,7 +17,7 @@ class TestSchedulerPriorityRoundRobin(unittest.TestCase):
     def setUp(self):
         
         
-        self.comparator = lambda pcb1,pcb2: pcb1.getPriority() > pcb2.getPriority()
+        self.comparator = lambda pcb1,pcb2: pcb1.getPriority() > pcb2.getPriority()#the greater, the better
         self.semaphore = Mock()
         self.myCpu = Mock()
         self.queue = OwnHeap(self.semaphore,self.comparator)

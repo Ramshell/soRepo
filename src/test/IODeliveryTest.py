@@ -24,7 +24,7 @@ class IODeliveryTest(unittest.TestCase):
 		
 		self.assertEquals(self.expected , self.value) #ASSERT
 	
-	def test_when_new_instruction_came_then_good_assigned_place(self):
+	def test_when_new_instruction_puts_the_data_in_the_expected_device_queue(self):
 		self.data = Mock() #ARRANGE
 		self.cod = 0 #CODIGO CORRESPONDIENTE A LA IMPRESORA 
 		

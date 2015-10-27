@@ -2,9 +2,8 @@ from threading import Thread
 from multiprocessing import Queue
 
 class InterruptorManager(Thread):
-  
-    
-    def __init__(self,memory,scheduler,hdd,ioDelivery): #ioDelivery
+         
+    def __init__(self,memory=None,scheduler=None,hdd=None,ioDelivery=None): #ioDelivery
         #AgregarProgramLoader
         self.memory = memory
         self.schPCB = scheduler
@@ -26,7 +25,7 @@ class InterruptorManager(Thread):
         self.schPCB.setPcbToCPU()
          
     def kill(self,pcb):
-        self.memory.clean()
+        self.memory.clean(pcb)
         self.schPCB.setPcbToCPU()
         
     def timeOut(self,pcb):
@@ -46,3 +45,14 @@ class InterruptorManager(Thread):
         pass
         #ACA iria self.programLoader.loadProcess(program)    
     
+    def setMemory(self, memory):
+        self.memory = memory
+    
+    def setScheduler(self, scheduler):
+        self.schPCB = scheduler
+        
+    def setDisk(self, disk):
+        self.hdd = disk
+        
+    def setIODelivery(self, iodelivery):
+        self.io = iodelivery

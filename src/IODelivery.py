@@ -14,8 +14,10 @@ class IODelivery:
 		else:
 			print("ERROR: -- DISPOSITIVO NO VALIDO!!! -- ")
 		
-	def newDevice(self):
-		self.queueDevices.append(Queue())
+	def newDevice(self,device):
+		self.newqueue = Queue()
+		device.newqueue(self.newqueue)
+		self.queueDevices.append(self.newqueue)
 		self.cant = self.cant +1
 		
 	def numberOfDevices(self):
