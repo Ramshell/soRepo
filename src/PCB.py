@@ -5,7 +5,7 @@ from WaitingPCB import *
 class PCB:
 
     #este lo crea el loader
-    def __init__(self, idP, base, size, priority):
+    def __init__(self, idP, base, size, priority=0):
         self.pc = 0
         self.pid = idP
         self.baseDir = base
