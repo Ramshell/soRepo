@@ -1,9 +1,3 @@
-'''
-Created on 13 de oct. de 2015
-
-@author: ramshell
-'''
-
 class TableOfPCB(object):
 
     def __init__(self):
@@ -22,4 +16,8 @@ class TableOfPCB(object):
         for pcb in self.table:
             #print(pcb.getPid(),"",pcb.getState(),"",pcb.getPC()," This is the priority",pcb.getPriority())
             print "Pid: {} PC: {} Priority: {} State: {} ".format(pcb.getPid(), pcb.getPc(), pcb.getPriority(), pcb.getState())
+
+    def countActiveProcess(self):
+        return len(self.table)
+    
         

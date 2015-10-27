@@ -17,6 +17,10 @@ from InterruptorManager import InterruptorManager
 from IODelivery import IODelivery
 from Device import Device
 from Queue import Queue
+from HardDisk import HardDisk
+from Program import Program
+from InstIO import InstIO
+from InstCPU import InstCPU
 
 
 class IntegrationTest(unittest.TestCase):
@@ -25,7 +29,7 @@ class IntegrationTest(unittest.TestCase):
     def setUp(self):
         #miscellaneous
         self.semaphore = Condition()
-        self.disk = Mock()
+        self.disk = HardDisk()
         self.comparator = lambda pcb1,pcb2: pcb1.getPriority() > pcb2.getPriority() #the greater, the better
         self.readyQueue = OwnHeap(self.semaphore, self.comparator)
         
@@ -51,10 +55,26 @@ class IntegrationTest(unittest.TestCase):
         self.imanager.setMemory(self.memory)
         self.imanager.setIODelivery(self.ioDelivery)
 
-    def test_when_probanding_todo_then_anding_todo(self):
-        pass
+        #loading programs
+        self.ioInstruction = InstIO('directory', 0)
+        self.cpuInstruction = InstCPU('1+1')
+        self.prog1 = Program('ls')
+        self.prog2 = Program('pwd')
+        
+        self.prog1.addInstruction(self.cpuInstruction)
+        self.prog2.addInstruction(self.ioInstruction)
+        
+        self.disk.setProgram(self.prog1)
+        self.disk.setProgram(self.prog2)
+        
+
+    def test_when_programLoader_loadProcessWithNoPriority_then_it_starts_the_expected_sequence(self):
+        self.progLoader.loadProcessWithNoPriority("ls")
+        self.progLoader.loadProcessWithPriority("pwd", 3)
+        self.table =self.progLoader.getPcbTable()
+        self.table.getPS()
+        self.assertEqual(2, self.table.countActiveProcess())
+        self.assertEquals(2 ,self.readyQueue.length())
+        self.assertEqual(self.cpuInstruction, self.memory.getDir(0))
 
 
-if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.testName']
-    unittest.main()

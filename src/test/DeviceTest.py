@@ -20,7 +20,7 @@ class Test(unittest.TestCase):
         self.printLine1 = InstIO("Impresion 1",0)
         self.printLine2 = InstIO("Impresion 2",0)
         self.queue = Queue()
-        self.device = Device("Printer",self.queue,self.interruptor) #0 equals to the device cod printer
+        self.device = Device("Printer",self.interruptor,self.queue) #0 equals to the device cod printer
         
         
     def test_when_process_is_called_the_instruccion_runs_and_ioDone_is_sent(self):

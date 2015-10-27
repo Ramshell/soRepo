@@ -3,7 +3,7 @@ from Queue import Queue
 
 class OwnHeap(object):
     
-    __slots__ = ('list', 'size', 'compareFunc','semaphore')
+    #__slots__ = ('list', 'size', 'compareFunc','semaphore')
 
     
     def __init__(self, semaphore,compareFunc):
@@ -140,6 +140,9 @@ class OwnHeap(object):
     
     def empty(self):
         return self.size == 0
+    
+    def length(self):
+        return self.size
     
 
         
