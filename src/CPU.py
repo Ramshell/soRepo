@@ -28,7 +28,6 @@ class CPU:
             self.interruptorManager.idleCPU()
         
         if(self.isEnabled):
-            print self.pcb.getBaseDir(), " ",self.pcb.getPc()
             self.semaphore.acquire()
             self.inst = self.fetch()
             if(self.inst.isIO()):
@@ -57,12 +56,12 @@ class CPU:
             if(self.flagOfRafagaOfPCB):
                 print("TIMEOUT")
                 self.interruptorManager.timeOut(self.pcb)
-                self.disable()
                 return
             
     def fetch(self):
         self.inst = self.memory.getDir(self.pcb.getBaseDir() + self.pcb.getPc())
         self.pcb.incrementPc()
+        self.pcb.decrementQuantum()
         return self.inst #ANTE CADA FETCH SE INCREMENTA EL PC DEL PCB
 
     def execute(self, instruction):

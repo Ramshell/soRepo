@@ -8,20 +8,20 @@ class Kernel(object):
     '''
 
 
-    def __init__(self, clock,programLoader,imanager,delivery):
+    def __init__(self, clock,programLoader,imanager,delivery,devices=[]):
         self.clock = clock
         self.programLoader = programLoader
         self.delivery = delivery
         self.imanager = imanager
+        self.devices = devices
         
     def estart(self):
         self.clock.start()
+        for device in self.devices:
+            device.start()
         
-    def newDevice(self,device):
-        self.delivery.newDevice(device)
-        
-    def run(self,programName):
-        self.pid = self.programLoader.loadProcessWithNoPriority(programName)
+    def run(self,programName,priority=0):
+        self.pid = self.programLoader.loadProcessWithPriority(programName,priority)
         return self.pid
     
     def ps(self):
@@ -33,6 +33,7 @@ class Kernel(object):
     def installNewDevice(self,deviceName):
         self.device = Device(deviceName,self.imanager)
         self.delivery.newDevice(self.device)
+        self.devices.append(self.device)
         
         
 

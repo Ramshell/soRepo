@@ -70,6 +70,9 @@ class PCB:
     def decrementPriority(self):
         if(self.priority > 0):
             self.priority = self.priority - 1
+            
+    def decrementQuantum(self):
+        self.burst = self.burst -1
         
 
         

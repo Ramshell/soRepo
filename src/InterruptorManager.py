@@ -34,7 +34,7 @@ class InterruptorManager(Thread):
         
     def timeOut(self,pcb):
         pcb.toReady()
-        self.schPCB.add(pcb)
+        self.schPCB.put(pcb)
         self.schPCB.setPcbToCPU()
     
     
@@ -43,7 +43,7 @@ class InterruptorManager(Thread):
     #
     def ioDone(self,pcb): #Esto no detiene estado del CPU, esto tampoco mantiene estado de quien dispare esta interrupcion
         pcb.toReady()
-        self.schPCB.add(pcb)
+        self.schPCB.put(pcb)
     
     def idleCPU(self):
         self.schPCB.setPcbToCPU()

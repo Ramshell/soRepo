@@ -20,13 +20,15 @@ class Scheduler:
         self.condition = condition
         
 
+    def put(self,pcb):
+        self.readyQueue.put(pcb)
         
     def setPcbToCPU(self):
         '''
         @invariant: sets the chosen pcb in the cpu if it exists. wait else
         '''
+        
         self.condition.acquire()
-        print self.readyQueue.empty()
         if self.readyQueue.empty():
             self.condition.wait()
         pcb = self.readyQueue.get()#this method also removes the element

@@ -13,7 +13,7 @@ class diskFactory(object):
     
     def basicHDD(self):
         self.sbl = Program("sublimeText")
-        self.instr1 = InstIO("io",0)
+        self.instr1 = InstIO("io",1)
         self.instr2 = InstCPU("sblm cpu")
         self.sbl.addInstruction(self.instr1)
         self.sbl.addInstruction(self.instr2)

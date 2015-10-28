@@ -9,6 +9,7 @@ from InstIO import InstIO
 from Queue import Queue
 from mockito import Mock
 from mockito.inorder import verify
+import time
 
 class Test(unittest.TestCase):
 
@@ -30,14 +31,15 @@ class Test(unittest.TestCase):
         verify(self.interruptor).ioDone(self.pcb1)#assert
     
 #     def test_when_nothing_to_process_then_waits_2_seconds(self):
-#         self.device.run()
-#         self.device.stop()
-#          
+#         self.device.start()
+#           
 #     def test_has_two_instructions_to_process_then_process_them(self):
 #         self.packageOne = [self.pcb1,self.printLine1]
 #         self.packageTwo = [self.pcb2,self.printLine2]
 #         self.queue.put(self.packageOne)
 #         self.queue.put(self.packageTwo)
-#          
-#         self.device.run()
+#           
+#         self.device.start()
+#         time.sleep(10)
+#         self.device.stop()
 

@@ -53,7 +53,7 @@ class OperativeSystemFactory:
     def withPriority(self):
         self.imanager = InterruptorManager()
         self.cpu = CPU(self.ram, self.imanager, self.condition)
-        self.func = lambda pcb1,pcb2: pcb1.getPriority() > pcb2.getPriority()
+        self.func = lambda pcb1,pcb2: pcb1.getPriority() >= pcb2.getPriority()
         self.queue = OwnHeap(self.condition,self.func)
         self.scheduler = Scheduler(self.cpu,self.queue,1,self.condition)
         return self.__build(self.queue,self.scheduler)
@@ -61,7 +61,7 @@ class OperativeSystemFactory:
     def roundRobin_withPriority(self,quantum):
         self.imanager = InterruptorManager()
         self.cpu = CPU(self.ram, self.imanager, self.condition)    
-        self.func = lambda pcb1,pcb2: pcb1.getPriority() > pcb2.getPriority()
+        self.func = lambda pcb1,pcb2: pcb1.getPriority() >= pcb2.getPriority()
         self.queue = OwnHeap(self.condition,self.func)
         self.scheduler = Scheduler(self.cpu,self.queue,quantum,self.condition)
         return self.__build(self.queue,self.scheduler)

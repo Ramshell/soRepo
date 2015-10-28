@@ -21,15 +21,15 @@ class Device(Thread):
 				self.data = self.queue.get()
 				self.proccess(self.data)
 			else:
-				print "Waiting for an instruction to process -", self.devName
 				time.sleep(2)		
 	
 	def proccess(self,data):
+		print "Executing from " , self.name , "..."
 		self.instruction = data[1]
 		self.pcb = data[0]
 		
 		self.execute(self.instruction)
-		self.interruptor.ioDone(self.pcb);
+		self.interruptor.ioDone(self.pcb)
 	
 	
 	def execute(self,instruction):
@@ -40,6 +40,4 @@ class Device(Thread):
 		
 	def stop(self):
 		self.switch = False #The Switch stands for ON / OFF Device.. True==ON, FALSE== OFF
-		
-	def start(self):
-		self.switch = True
+	

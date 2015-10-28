@@ -15,20 +15,19 @@ class Shell(Thread):
     def run(self):
         while(True):
             inst = raw_input("|: ")
-            print inst
             self.parse(inst)
             
         
     def setKernel(self,kernel):
         self.kernel = kernel
         
-    def execute(self,programName):
-        self.pid = self.kernel.run(programName)
+    def execute(self,programName,priority=0):
+        self.pid = self.kernel.run(programName,priority)
         print "successful execution with pid: ", self.pid
 
         
     def kill(self,pid):
-        pass
+        self.kernel.kill(pid)
     
     def ps(self):
         self.kernel.ps()
@@ -42,7 +41,10 @@ class Shell(Thread):
             
     def execBuildIn(self,inst):
         if inst[0] == "execute":
-            self.execute(inst[1])
+            if len(inst) > 2:
+                self.execute(inst[1],int(inst[2]))
+            else:
+                self.execute(inst[1])
             return
         if inst[0] == "pid":
             self.pid(inst[1])
