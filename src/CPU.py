@@ -10,7 +10,7 @@ class CPU:
         self.interruptorManager = interruptorManager
         #Modo usuario, modo
         self.isEnabled = False #True is enabled to work, user mode only, False kernel mode
-        self.pcb = PCB(0,0,0,0) 
+        self.pcb = None
         self.semaphore = semaphore
 
     def setPCB(self,pcb):
@@ -23,7 +23,10 @@ class CPU:
         self.flagOfIoInstruction = False
         self.flagOfPCBEnding = False
         self.flagOfRafagaOfPCB = False
-    
+        
+        if self.pcb is None:
+            self.interruptorManager.idleCPU()
+        
         if(self.isEnabled):
             self.semaphore.acquire()
             self.inst = self.fetch()
@@ -57,8 +60,10 @@ class CPU:
                 return
             
     def fetch(self):
+        print "este es antes de incrementar: ",self.pcb.getPc()
         self.inst = self.memory.getDir(self.pcb.getBaseDir() + self.pcb.getPc())
         self.pcb.incrementPc()
+        print "este es despues de incrementar: ",self.pcb.getPc()
         return self.inst #ANTE CADA FETCH SE INCREMENTA EL PC DEL PCB
 
     def execute(self, instruction):

@@ -15,6 +15,8 @@ from Queue import Queue
 from OwnHeap import OwnHeap
 from RAM import RAM
 from HardDisk import HardDisk
+from Kernel import Kernel
+from Device import Device
 
 class OperativeSystemFactory:
     '''
@@ -35,56 +37,58 @@ class OperativeSystemFactory:
     #TIPOS DE SCHEDULERS#
     #####################
     def roundRobin(self,quantum):
-        self.interruptor = InterruptorManager()
-        self.cpu = CPU(self.ram, self.interruptor, self.condition)
+        self.imanager = InterruptorManager()
+        self.cpu = CPU(self.ram, self.imanager, self.condition)
         self.queue = Queue()
         self.scheduler = Scheduler(self.cpu,self.queue,quantum,self.condition)
-        self.build(self.queue,self.scheduler)
+        return self.__build(self.queue,self.scheduler)
     
     def fifo(self):
-        self.interruptor = InterruptorManager()
-        self.cpu = CPU(self.ram, self.interruptor, self.condition)
+        self.imanager = InterruptorManager()
+        self.cpu = CPU(self.ram, self.imanager, self.condition)
         self.queue = Queue()
         self.scheduler = Scheduler(self.cpu,self.queue,-1,self.condition)
-        self.build(self.queue,self.scheduler)
+        return self.__build(self.queue,self.scheduler)
         
     def withPriority(self):
-        self.interruptor = InterruptorManager()
-        self.cpu = CPU(self.ram, self.interruptor, self.condition)
+        self.imanager = InterruptorManager()
+        self.cpu = CPU(self.ram, self.imanager, self.condition)
         self.func = lambda pcb1,pcb2: pcb1.getPriority() > pcb2.getPriority()
         self.queue = OwnHeap(self.condition,self.func)
         self.scheduler = Scheduler(self.cpu,self.queue,1,self.condition)
-        self.build(self.queue,self.scheduler)
+        return self.__build(self.queue,self.scheduler)
     
     def roundRobin_withPriority(self,quantum):
-        self.interruptor = InterruptorManager()
-        self.cpu = CPU(self.ram, self.interruptor, self.condition)    
+        self.imanager = InterruptorManager()
+        self.cpu = CPU(self.ram, self.imanager, self.condition)    
         self.func = lambda pcb1,pcb2: pcb1.getPriority() > pcb2.getPriority()
         self.queue = OwnHeap(self.condition,self.func)
         self.scheduler = Scheduler(self.cpu,self.queue,quantum,self.condition)
-        self.build(self.queue,self.scheduler)
+        return self.__build(self.queue,self.scheduler)
     
     
     
-    def build(self,queue,scheduler):
+    def __build(self,queue,scheduler):
         
         #miscellaneous
         self.ioDelivery = IODelivery()
-        
+        self.device = Device("printer",self.imanager)
+        self.ioDelivery.newDevice(self.device)
         #hardware
         self.progLoader = ProgramLoader(self.ram, self.disk, queue)
-        self.imanager = InterruptorManager()      
-        self.cpu = CPU(self.ram, self.imanager, self.condition)
-        
+
         #InterruptorManager
         self.imanager.setScheduler(scheduler)
         self.imanager.setDisk(self.disk)
         self.imanager.setMemory(self.ram)
         self.imanager.setIODelivery(self.ioDelivery)
+        self.imanager.setSemaphore(self.condition)
+        self.imanager.setPcbTable(self.progLoader.getPcbTable())
         
         self.clock = Clock(self.cpu) #THREAD VIVO!!!! 
         
-        #self.shell = Shell() HACER
+        return Kernel(self.clock,self.progLoader,self.imanager,self.ioDelivery)
+
         
         
 if __name__ == '__main__':

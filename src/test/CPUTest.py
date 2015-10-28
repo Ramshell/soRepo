@@ -52,6 +52,7 @@ class CPUTest(unittest.TestCase):
 
     def test_when_fetch_then_instruction_valid(self):
         self.expected = self.instruction1 #Arrange
+        self.cpu.setPCB(self.aPcb)
 
         self.value = self.cpu.fetch() #Act
 

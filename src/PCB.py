@@ -34,7 +34,7 @@ class PCB:
         return self.burst
 
     def finished(self):
-        return self.pc >= self.size
+        return self.pc >= self.size-1
     
     
     def getPid(self):

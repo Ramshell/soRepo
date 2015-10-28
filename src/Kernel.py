@@ -22,6 +22,9 @@ class Kernel(object):
         self.pid = self.programLoader.loadProcessWithNoPriority(programName)
         return self.pid
     
+    def ps(self):
+        self.programLoader.getPcbTable().getPS()
+    
     def kill(self,pid):
         self.imanager.kill(pid)
         

@@ -117,6 +117,7 @@ class OwnHeap(object):
         self.list[self.size] = newValue
         self.siftUp(self.size)
         self.size = self.size + 1
+        self.semaphore.notify()
         self.semaphore.release()
         
     def updateValue(self, index, newValue):

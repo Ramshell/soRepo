@@ -13,4 +13,3 @@ class Clock(Thread):
         while(True):
             self.cpu.tick()
             time.sleep(1)
-            print("espere 1 segundo")

@@ -13,7 +13,8 @@ class ProgramLoader:
         self.pcbTable = TableOfPCB()
         
     def loadProcessWithNoPriority(self,program):
-        self.loadProcessWithPriority(program,0)
+        return self.loadProcessWithPriority(program,0)
+
     
     def loadProcessWithPriority(self,program, priority):
         self.myProgram = self.hdd.getProgram(program)

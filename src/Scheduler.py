@@ -33,6 +33,7 @@ class Scheduler:
         if pcb is None:
             raise Exception('Pcb is Null')
         self.assignRafaga(pcb)
+        pcb.runing()
         self.cpu.setPCB(pcb)
         self.condition.release()
     

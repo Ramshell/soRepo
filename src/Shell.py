@@ -6,12 +6,13 @@ class Shell(Thread):
     __slots__ = ["buildIn"]
 
 
-    def __init__(self):
+    def __init__(self,kernel=None):
         Thread.__init__(self)
         self.buildIn = ["execute","ps","kill"]
+        self.kernel=kernel
+        
         
     def run(self):
-        self.kernel.estart()
         while(True):
             inst = raw_input("|: ")
             print inst
@@ -30,7 +31,7 @@ class Shell(Thread):
         print "killing: ", pid
     
     def ps(self):
-        print "psing: "
+        self.kernel.ps()
     
     def parse(self,inst):
         self.aux = inst.split(' ')

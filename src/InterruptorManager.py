@@ -29,7 +29,7 @@ class InterruptorManager(Thread):
     def kill(self,pid):
         self.pcb =self.pcbTable.getPCB(pid)
         self.pcbTable.delete(self.pcb)
-        self.memory.clean(self.pcb)
+        #self.memory.clean(self.pcb)
         self.schPCB.setPcbToCPU()
         
     def timeOut(self,pcb):
@@ -45,9 +45,8 @@ class InterruptorManager(Thread):
         pcb.toReady()
         self.schPCB.add(pcb)
     
-    def new(self,program):
-        pass
-        #ACA iria self.programLoader.loadProcess(program)    
+    def idleCPU(self):
+        self.schPCB.setPcbToCPU()
     
     def setMemory(self, memory):
         self.memory = memory
