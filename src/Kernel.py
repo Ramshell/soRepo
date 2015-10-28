@@ -1,4 +1,6 @@
 from multiprocessing.connection import deliver_challenge
+from Device import Device
+
 
 class Kernel(object):
     '''
@@ -6,7 +8,7 @@ class Kernel(object):
     '''
 
 
-    def __init__(self, clock,programLoader,delivery,imanager):
+    def __init__(self, clock,programLoader,imanager,delivery):
         self.clock = clock
         self.programLoader = programLoader
         self.delivery = delivery
@@ -27,5 +29,14 @@ class Kernel(object):
     
     def kill(self,pid):
         self.imanager.kill(pid)
+    
+    def installNewDevice(self,deviceName):
+        self.device = Device(deviceName,self.imanager)
+        self.delivery.newDevice(self.device)
+        
+        
+
+        
+
         
         

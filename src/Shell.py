@@ -28,14 +28,13 @@ class Shell(Thread):
 
         
     def kill(self,pid):
-        print "killing: ", pid
+        pass
     
     def ps(self):
         self.kernel.ps()
     
     def parse(self,inst):
         self.aux = inst.split(' ')
-        print self.aux
         if self.aux[0] in self.buildIn:
             self.execBuildIn(self.aux)
         else:

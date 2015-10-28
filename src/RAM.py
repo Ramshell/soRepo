@@ -10,7 +10,7 @@ class RAM:
         self.libre = 0
         
     def getMemoryScope(self,size):
-        return len(self.content) + 1
+        return len(self.content)
     
     def getDir(self, i):
         return self.content[i]
@@ -22,5 +22,5 @@ class RAM:
     def delete(self):
         pass
 
-    def clean(self):
+    def clean(self,pcb):
         pass

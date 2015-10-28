@@ -29,7 +29,7 @@ class InterruptorManager(Thread):
     def kill(self,pid):
         self.pcb =self.pcbTable.getPCB(pid)
         self.pcbTable.delete(self.pcb)
-        #self.memory.clean(self.pcb)
+        self.memory.clean(self.pcb)
         self.schPCB.setPcbToCPU()
         
     def timeOut(self,pcb):

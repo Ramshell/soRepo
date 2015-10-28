@@ -72,8 +72,8 @@ class OperativeSystemFactory:
         
         #miscellaneous
         self.ioDelivery = IODelivery()
-        self.device = Device("printer",self.imanager)
-        self.ioDelivery.newDevice(self.device)
+#         self.device = Device("printer",self.imanager)
+#         self.ioDelivery.newDevice(self.device)
         #hardware
         self.progLoader = ProgramLoader(self.ram, self.disk, queue)
 

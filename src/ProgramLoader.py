@@ -20,7 +20,7 @@ class ProgramLoader:
         self.myProgram = self.hdd.getProgram(program)
         self.direc = self.memory.getMemoryScope(self.myProgram.size())
         self.miPCB = PCB(self.getNextId(),self.direc,self.myProgram.size(), priority)
-        self.miPCB.toReady() #POSIBLEMENTE CAMBIE, medio al pedo el estado new en PCB
+        self.miPCB.toReady()
         self.processQueue.put(self.miPCB)
         self.pcbTable.addPCB(self.miPCB)
         for inst in self.myProgram.getInstructions():

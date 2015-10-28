@@ -11,6 +11,8 @@ if __name__ == '__main__':
     disk = diskFc.basicHDD()
     osFc = OperativeSystemFactory(disk,RAM(1000))
     os = osFc.roundRobin_withPriority(10)
+    os.installNewDevice("printer")
+    os.installNewDevice("screen")
     os.estart()
     shell = Shell(os)
     shell.start()

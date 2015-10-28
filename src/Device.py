@@ -21,7 +21,7 @@ class Device(Thread):
 				self.data = self.queue.get()
 				self.proccess(self.data)
 			else:
-				print("Waiting for an instruction to process")
+				print "Waiting for an instruction to process -", self.devName
 				time.sleep(2)		
 	
 	def proccess(self,data):

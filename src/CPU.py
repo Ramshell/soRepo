@@ -28,6 +28,7 @@ class CPU:
             self.interruptorManager.idleCPU()
         
         if(self.isEnabled):
+            print self.pcb.getBaseDir(), " ",self.pcb.getPc()
             self.semaphore.acquire()
             self.inst = self.fetch()
             if(self.inst.isIO()):
@@ -60,10 +61,8 @@ class CPU:
                 return
             
     def fetch(self):
-        print "este es antes de incrementar: ",self.pcb.getPc()
         self.inst = self.memory.getDir(self.pcb.getBaseDir() + self.pcb.getPc())
         self.pcb.incrementPc()
-        print "este es despues de incrementar: ",self.pcb.getPc()
         return self.inst #ANTE CADA FETCH SE INCREMENTA EL PC DEL PCB
 
     def execute(self, instruction):
