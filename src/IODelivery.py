@@ -19,6 +19,7 @@ class IODelivery:
 		device.newqueue(self.newqueue)
 		self.queueDevices.append(self.newqueue)
 		self.cant = self.cant +1
+		device.start()
 		
 	def numberOfDevices(self):
 		return self.cant

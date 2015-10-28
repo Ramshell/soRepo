@@ -25,10 +25,12 @@ class ProgramLoader:
         for inst in self.myProgram.getInstructions():
             self.memory.putDir(self.direc,inst)
             self.direc = self.direc + 1
+        return self.pids
     
     def getPcbTable(self):
         return self.pcbTable
     
     
     def getNextId(self):
-        return self.pids +1  
+        self.pids = self.pids +1
+        return self.pids

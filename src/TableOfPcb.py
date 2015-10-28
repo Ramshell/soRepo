@@ -11,6 +11,12 @@ class TableOfPCB(object):
         
     def contains(self,pcb):
         return self.table.count(pcb)> 0
+    
+    def getPCB(self,pid):
+        for pcb in self.table:
+            if pcb.getPid() == pid:
+                return pcb
+        return None
         
     def getPS(self):
         for pcb in self.table:

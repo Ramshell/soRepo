@@ -32,12 +32,12 @@ class Test(unittest.TestCase):
 #     def test_when_nothing_to_process_then_waits_2_seconds(self):
 #         self.device.run()
 #         self.device.stop()
-#         
+#          
 #     def test_has_two_instructions_to_process_then_process_them(self):
 #         self.packageOne = [self.pcb1,self.printLine1]
 #         self.packageTwo = [self.pcb2,self.printLine2]
 #         self.queue.put(self.packageOne)
 #         self.queue.put(self.packageTwo)
-#         
+#          
 #         self.device.run()
 

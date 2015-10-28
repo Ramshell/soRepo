@@ -31,7 +31,7 @@ class ProgramLoaderTest(unittest.TestCase):
         
         self.progLoader.loadProcessWithNoPriority("programa")
         
-        self.assertEquals(self.progLoader.getNextId() , 1)
+        self.assertEquals(self.progLoader.getNextId() , 2)
 
 
 if __name__ == "__main__":
