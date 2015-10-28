@@ -48,7 +48,7 @@ class CPU:
                 return
             if (self.flagOfPCBEnding):
                 print("KILL")
-                self.interruptorManager.kill(self.pcb)
+                self.interruptorManager.kill(self.pcb.getPid())
                 return
             if(self.flagOfRafagaOfPCB):
                 print("TIMEOUT")
