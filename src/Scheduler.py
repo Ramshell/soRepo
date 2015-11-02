@@ -2,7 +2,6 @@
 from threading import Thread
 from multiprocessing import Queue
 from OwnHeap import OwnHeap
-from validate import ValidateError
 
 class Scheduler:
 
