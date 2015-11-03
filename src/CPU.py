@@ -19,12 +19,14 @@ class CPU:
 
 
     def tick(self):
+        print "tick", self.isEnabled
         #REGISTROS DEL CPU
         self.flagOfIoInstruction = False
         self.flagOfPCBEnding = False
         self.flagOfRafagaOfPCB = False
         
         if self.pcb is None:
+            print "estoy pidiendo un pcb"
             self.interruptorManager.idleCPU()
         
         if(self.isEnabled):
@@ -47,6 +49,7 @@ class CPU:
             #VERIFICACION DE LOS REGISTROS AL FINAL
             if (self.flagOfIoInstruction):
                 print("IO")
+                self.disable()
                 self.interruptorManager.ioQueue(self.package,self.codDevice)
                 return
             if (self.flagOfPCBEnding):

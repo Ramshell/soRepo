@@ -26,7 +26,7 @@ class Scheduler:
         '''
         @invariant: sets the chosen pcb in the cpu if it exists. wait else
         '''
-        
+
         self.condition.acquire()
         if self.readyQueue.empty():
             self.condition.wait()
@@ -35,6 +35,7 @@ class Scheduler:
             raise Exception('Pcb is Null')
         self.assignRafaga(pcb)
         pcb.runing()
+        print "seteando pcb al cpu"
         self.cpu.setPCB(pcb)
         self.condition.release()
     

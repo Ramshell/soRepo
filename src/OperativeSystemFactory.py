@@ -12,7 +12,7 @@ from InterruptorManager import InterruptorManager
 from IODelivery import IODelivery
 from clock import Clock
 from Queue import Queue
-from OwnHeap import OwnHeap
+from OwnHeap import OwnHeap, OwnQueue
 from RAM import RAM
 from HardDisk import HardDisk
 from Kernel import Kernel
@@ -39,14 +39,14 @@ class OperativeSystemFactory:
     def roundRobin(self,quantum):
         self.imanager = InterruptorManager()
         self.cpu = CPU(self.ram, self.imanager, self.condition)
-        self.queue = Queue()
+        self.queue = OwnQueue(self.condition)
         self.scheduler = Scheduler(self.cpu,self.queue,quantum,self.condition)
         return self.__build(self.queue,self.scheduler)
     
     def fifo(self):
         self.imanager = InterruptorManager()
-        self.cpu = CPU(self.ram, self.imanager, self.condition)
-        self.queue = Queue()
+        self.cpu = CPU(self.ram, self.imanager, self.condition)    
+        self.queue = OwnQueue(self.condition)
         self.scheduler = Scheduler(self.cpu,self.queue,-1,self.condition)
         return self.__build(self.queue,self.scheduler)
         
@@ -55,7 +55,7 @@ class OperativeSystemFactory:
         self.cpu = CPU(self.ram, self.imanager, self.condition)
         self.func = lambda pcb1,pcb2: pcb1.getPriority() >= pcb2.getPriority()
         self.queue = OwnHeap(self.condition,self.func)
-        self.scheduler = Scheduler(self.cpu,self.queue,1,self.condition)
+        self.scheduler = Scheduler(self.cpu,self.queue,-1,self.condition)
         return self.__build(self.queue,self.scheduler)
     
     def roundRobin_withPriority(self,quantum):

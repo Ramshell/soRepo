@@ -34,6 +34,9 @@ class Shell(Thread):
     
     def parse(self,inst):
         self.aux = inst.split(' ')
+        if(self.aux[0]=='?'):
+            print self.buildIn
+            return
         if self.aux[0] in self.buildIn:
             self.execBuildIn(self.aux)
         else:
@@ -60,14 +63,15 @@ class Shell(Thread):
                 if inst[1] == man.name:
                     man.printManual()
                     return
-            else:
-                print "No manual entry for", inst[1]
-                return
+            self.printProgramManual(inst[1])
         else:
             self.kill(inst[1])
     
     def setManuals(self,manuals):
         self.manuals = manuals
+        
+    def printProgramManual(self,programName):
+        self.kernel.manual(programName).printManual()
         
 if __name__ == '__main__':
     shell = Shell()

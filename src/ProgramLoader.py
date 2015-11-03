@@ -12,6 +12,10 @@ class ProgramLoader:
         self.processQueue = processQueue
         self.pcbTable = TableOfPCB()
         
+    def manual(self,programName):
+        print self.hdd.getProgram(programName).getManual()
+        return self.hdd.getProgram(programName).getManual()
+        
     def loadProcessWithNoPriority(self,program):
         return self.loadProcessWithPriority(program,0)
 

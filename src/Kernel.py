@@ -35,6 +35,9 @@ class Kernel(object):
         self.delivery.newDevice(self.device)
         self.devices.append(self.device)
         
+    def manual(self,programName):
+        return self.programLoader.manual(programName)
+        
         
 
         

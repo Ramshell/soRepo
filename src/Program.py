@@ -1,12 +1,11 @@
 
 class Program:
     
-    def __init__ (self,name):
+    def __init__ (self,name,manual=None):
         self.instructions = []
         self.name = name
-    
-    #def __init__(self, instructions):
-    #    self.instructions = instructions
+        self.manual = manual
+
         
         
     def size(self):
@@ -14,6 +13,12 @@ class Program:
     
     def getInstructions(self):
         return self.instructions
+    
+    def addManual(self,manual):
+        self.manual = manual
+        
+    def getManual(self):
+        return self.manual
     
     def addInstruction(self, instruction):
         self.instructions.append(instruction)

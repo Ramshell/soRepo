@@ -146,6 +146,16 @@ class OwnHeap(object):
         return self.size
     
 
+class OwnQueue(Queue):
+    
+    def __init__(self,semaphore):
+        self.semaphore = semaphore
+        Queue.__init__(self)
         
     
+    def put(self, item, block=True, timeout=None):
+        self.semaphore.acquire()
+        Queue.put(self, item, block=block, timeout=timeout)        
+        self.semaphore.notify()
+        self.semaphore.release()
     

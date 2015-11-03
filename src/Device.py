@@ -21,7 +21,7 @@ class Device(Thread):
 				self.data = self.queue.get()
 				self.proccess(self.data)
 			else:
-				time.sleep(2)		
+				time.sleep(.2)		
 	
 	def proccess(self,data):
 		print "Executing from " , self.name , "..."
