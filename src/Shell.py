@@ -1,16 +1,16 @@
 from threading import Thread
-
+from Manual import Manual
 
 class Shell(Thread):
     
     __slots__ = ["buildIn"]
 
 
-    def __init__(self,kernel=None):
+    def __init__(self,kernel=None, manuals=None):
         Thread.__init__(self)
-        self.buildIn = ["execute","ps","kill"]
+        self.buildIn = ["execute","ps","kill", "man"]
         self.kernel=kernel
-        
+        self.manuals = manuals
         
     def run(self):
         while(True):
@@ -52,10 +52,23 @@ class Shell(Thread):
         if inst[0] == "ps":
             self.ps()
             return
+        if inst[0] == "man":
+            if len(inst) == 1:
+                print "what manual page do you want?"
+                return
+            for man in self.manuals:
+                if inst[1] == man.name:
+                    man.printManual()
+                    return
+            else:
+                print "No manual entry for", inst[1]
+                return
         else:
             self.kill(inst[1])
-            
-
+    
+    def setManuals(self,manuals):
+        self.manuals = manuals
+        
 if __name__ == '__main__':
     shell = Shell()
     shell.start()
