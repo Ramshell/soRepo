@@ -14,9 +14,15 @@ class diskFactory(object):
     def basicHDD(self):
         self.sbl = Program("sublimeText")
         self.instr1 = InstIO("io",1)
+        self.instr10 = InstIO("io",0)
+        self.instr01 = InstIO("io",0)
+        self.instr111 = InstIO("io",1)
         self.instr2 = InstCPU("sblm cpu")
         self.sbl.addInstruction(self.instr1)
         self.sbl.addInstruction(self.instr2)
+        self.sbl.addInstruction(self.instr10)
+        self.sbl.addInstruction(self.instr01)
+        self.sbl.addInstruction(self.instr111)
         
         self.vim = Program("vim")
         self.instrVim1 = InstCPU("vim 1")

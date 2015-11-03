@@ -13,6 +13,7 @@ class RAM:
         return len(self.content)
     
     def getDir(self, i):
+        print "getDir", i
         return self.content[i]
     
     def putDir(self, i, inst):

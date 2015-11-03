@@ -28,21 +28,21 @@ class CPU:
             self.interruptorManager.idleCPU()
         
         if(self.isEnabled):
-            self.semaphore.acquire()
-            self.inst = self.fetch()
-            if(self.inst.isIO()):
-                self.flagOfIoInstruction = True
-                self.package = [self.pcb,self.inst]
-                self.codDevice = self.inst.deviceCod()
+            if(self.pcb.finished()):  #PREGUNTAR ANTES DE EJECUTAR
+                self.flagOfPCBEnding = True
             else:
-                if(self.pcb.finished()):  #PREGUNTAR ANTES DE EJECUTAR
-                    self.flagOfPCBEnding = True
+                self.semaphore.acquire()
+                self.inst = self.fetch()
+                if(self.inst.isIO()):
+                    self.flagOfIoInstruction = True
+                    self.package = [self.pcb,self.inst]
+                    self.codDevice = self.inst.deviceCod()
                 else:
                     self.execute(self.inst)
-                if(self.pcb.rafagaIsOver()):
-                    self.flagOfRafagaOfPCB = True
-                        
-            self.semaphore.release()
+                    if(self.pcb.rafagaIsOver()):
+                        self.flagOfRafagaOfPCB = True
+                            
+                self.semaphore.release()
             
             #VERIFICACION DE LOS REGISTROS AL FINAL
             if (self.flagOfIoInstruction):

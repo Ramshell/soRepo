@@ -9,8 +9,8 @@ if __name__ == '__main__':
     
     diskFc = diskFactory()
     disk = diskFc.basicHDD()
-    osFc = OperativeSystemFactory(disk,RAM(1000))
-    os = osFc.roundRobin_withPriority(2)
+    osFc = OperativeSystemFactory(disk,RAM(65535))
+    os = osFc.roundRobin_withPriority(5)
     os.installNewDevice("printer")
     os.installNewDevice("screen")
     os.estart()
