@@ -39,5 +39,5 @@ class InterruptorManagerTest(unittest.TestCase):
         self.imanager.timeOut(self.aPCB)
         
         verify(self.scheduler).setPcbToCPU()
-        verify(self.scheduler).add(self.aPCB)
+        verify(self.scheduler).put(self.aPCB)
         

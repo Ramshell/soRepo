@@ -77,5 +77,6 @@ class CPUTest(unittest.TestCase):
 
         self.cpu.tick() #Act
         self.cpu.tick()
+        self.cpu.tick()
 
-        verify(self.interruptor,2).kill(self.anotherPcb.getPid()) #Assert
+        verify(self.interruptor,1).kill(self.anotherPcb.getPid()) #Assert
