@@ -14,12 +14,19 @@ class PCB:
         #esto lo cambia scheduler
         self.burst = -1
         self.priority = priority
+        self.flagZ=False
+        self.flagS=False
     #
     # Metodos comunes!!!! 
     #
     def incrementPc(self):
         self.state.incrementarPC(self)
 
+    def getFlagZ(self):
+        return self.flagZ
+    
+    def getFlagS(self):
+        return self.flagS
         
     def getBaseDir(self):
         return self.baseDir

@@ -40,18 +40,18 @@ class CPUTest(unittest.TestCase):
         #self.cpu2= CPU(self.memoria,self.inMan2)
         self.clock = Clock(self.cpu)
 
-        self.instruction1 = InstCPU("Matar a Flanders")
+        self.mov = InstCPU("Matar a Flanders")
         self.Instruction2 = InstCPU("Y Tambien A Selma")
         self.instructionIO = InstIO("Soy de IO",0)
 
-        self.memory.putDir(0, self.instruction1)
+        self.memory.putDir(0, self.mov)
         self.memory.putDir(1, self.Instruction2)
         self.memory.putDir(2, self.instructionIO)
         self.aPcb = PCB(0,0,3,4)
         
 
     def test_when_fetch_then_instruction_valid(self):
-        self.expected = self.instruction1 #Arrange
+        self.expected = self.mov #Arrange
         self.cpu.setPCB(self.aPcb)
 
         self.value = self.cpu.fetch() #Act
