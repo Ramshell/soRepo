@@ -2,7 +2,10 @@ from InstCPU import InstCPU
 
 class Mov(InstCPU):
     
-
+    '''
+    @note: the objective of this instruction is replace the value allocated in a direction
+           of the ram with another value allocated in the ram.   
+    '''
 
     def __init__(self, relativePositionWhereToMove,relativePositionFrom):
         self.relativePositionWhereToMove=relativePositionWhereToMove
@@ -22,8 +25,14 @@ class Mov(InstCPU):
         
 class MovLiteral(InstCPU):
     
-    def __init__(self, relativePositionWhereToMove,literalValue):
-        self.relativePositionWhereToMove=relativePositionWhereToMove
+
+    '''
+    @note: the objective of this instruction is replace the value allocated in a direction of the ram
+           with another value  
+    '''
+    
+    def __init__(self, name,relativePositionWhereToMove,literalValue):
+        self.relativePositionWhereToMove = relativePositionWhereToMove
         self.literalValue=literalValue
         InstCPU.__init__(self, "MovLiteral")
     

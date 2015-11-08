@@ -10,7 +10,7 @@ class Shell(Thread):
         Thread.__init__(self)
         self.buildIn = ["execute","ps","kill", "man"]
         self.kernel=kernel
-        self.manuals = manuals
+        self.chargeManuals()
         
     def run(self):
         while(True):
@@ -63,12 +63,25 @@ class Shell(Thread):
                 if inst[1] == man.name:
                     man.printManual()
                     return
-            self.printProgramManual(inst[1])
+            print "No manual entry for", inst[1]
+            return    
+            #self.printProgramManual(inst[1])
         else:
             self.kill(inst[1])
     
     def setManuals(self,manuals):
         self.manuals = manuals
+        
+    def chargeManuals(self):
+        self.manuals = []
+        manexe = Manual("execute", "run a program", ["a program"])
+        manps = Manual("ps", "see the pcb information like pid, state and pc")
+        mankill = Manual("kill", "close a program", ["a process"])
+        manman = Manual("man", "see the manual of a program, utility or function",["a program","an important function","a system's command"])
+        self.manuals.append(manexe)
+        self.manuals.append(manps)
+        self.manuals.append(mankill)
+        self.manuals.append(manman)
         
     def printProgramManual(self,programName):
         self.kernel.manual(programName).printManual()
