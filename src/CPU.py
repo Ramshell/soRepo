@@ -38,6 +38,7 @@ class CPU:
                     self.package = [self.pcb,self.inst]
                     self.codDevice = self.inst.deviceCod()
                 else:
+                    print self.pcb.getPc()
                     self.execute(self.inst)
                     if(self.pcb.rafagaIsOver()):
                         self.flagOfRafagaOfPCB = True

@@ -20,8 +20,8 @@ class Kernel(object):
         for device in self.devices:
             device.start()
         
-    def run(self,programName,priority=0):
-        self.pid = self.programLoader.loadProcessWithPriority(programName,priority)
+    def run(self,programName,priority=0,args=[]):
+        self.pid = self.programLoader.loadProcessWithPriority(programName,priority,args)
         return self.pid
     
     def ps(self):

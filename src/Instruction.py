@@ -10,7 +10,10 @@ class Instruction:
         
         
     def run(self):
-        print(self.value)    
+        print(self.value)
+        
+    def instructionInstance(self,memory=None,pcb=None):
+        return self
     
     @abstractmethod
     def isIO(self):

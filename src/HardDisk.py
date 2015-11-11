@@ -15,7 +15,7 @@ class HardDisk(object):
     def getProgram(self, name):
         
         if self.exists(name):
-            raise Exception('Program not founded')
+            raise Exception('ProgramTest not founded')
         self.prog = self.programs[name]
         return self.prog
     

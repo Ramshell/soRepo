@@ -17,7 +17,12 @@ class RAM:
     
     def putDir(self, i, inst):
         self.content[i]=inst
-        self.libre = self.libre + 1 
+        self.libre = self.libre + 1
+    
+    def reserve(self,number):
+        absolutePosition = self.libre
+        self.libre = self.libre + number
+        return absolutePosition
     
     def delete(self):
         pass

@@ -21,8 +21,8 @@ class Shell(Thread):
     def setKernel(self,kernel):
         self.kernel = kernel
         
-    def execute(self,programName,priority=0):
-        self.pid = self.kernel.run(programName,priority)
+    def execute(self,programName,priority=0,args=[]):
+        self.pid = self.kernel.run(programName,priority,args)
         print "successful execution with pid: ", self.pid
 
         
@@ -44,6 +44,9 @@ class Shell(Thread):
             
     def execBuildIn(self,inst):
         if inst[0] == "execute":
+            if len(inst) > 3:
+                self.execute(inst[1],int(inst[2]),inst[3:])
+                return
             if len(inst) > 2:
                 self.execute(inst[1],int(inst[2]))
             else:

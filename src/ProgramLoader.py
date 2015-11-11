@@ -16,20 +16,22 @@ class ProgramLoader:
         print self.hdd.getProgram(programName).getManual()
         return self.hdd.getProgram(programName).getManual()
         
-    def loadProcessWithNoPriority(self,program):
-        return self.loadProcessWithPriority(program,0)
+    def loadProcessWithNoPriority(self,program,args=[]):
+        return self.loadProcessWithPriority(program,0,args)
 
     
-    def loadProcessWithPriority(self,program, priority):
+    def loadProcessWithPriority(self,program, priority,args=[]):
         self.myProgram = self.hdd.getProgram(program)
+        self.myProgram.initializePreValues(args)
         self.direc = self.memory.getMemoryScope(self.myProgram.size())
         self.miPCB = PCB(self.getNextId(),self.direc,self.myProgram.size(), priority)
+        for inst in self.myProgram.getInstructions():
+            self.memory.putDir(self.direc,inst.instructionInstance(self.memory,self.miPCB))
+            self.direc = self.direc + 1
+        self.memory.reserve(self.myProgram.variableSize)
         self.miPCB.toReady()
         self.processQueue.put(self.miPCB)
         self.pcbTable.addPCB(self.miPCB)
-        for inst in self.myProgram.getInstructions():
-            self.memory.putDir(self.direc,inst)
-            self.direc = self.direc + 1
         return self.pids
     
     def getPcbTable(self):

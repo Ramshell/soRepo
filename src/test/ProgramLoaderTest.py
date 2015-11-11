@@ -1,7 +1,7 @@
 from RAM import RAM
 from InstCPU import InstCPU
 from InstIO import InstIO
-from Program import Program
+import ProgramTest.Program
 import unittest 
 from mockito.mocking import Mock
 from ProgramLoader import ProgramLoader
@@ -22,7 +22,7 @@ class ProgramLoaderTest(unittest.TestCase):
         self.instruccion1 = InstCPU("2+2")
         self.instruccion2 = InstIO("Leer de teclado",2)
         
-        self.program = Program("prog")
+        self.program = ProgramTest("prog")
         self.program.addInstruction(self.instruccion1)
         self.program.addInstruction(self.instruccion2)
         

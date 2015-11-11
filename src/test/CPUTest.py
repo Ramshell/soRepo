@@ -11,7 +11,7 @@ from InterruptorManager import InterruptorManager
 from InstIO import InstIO
 from InstCPU import InstCPU
 from Instruction import Instruction
-from Program import Program
+import Program
 from CPU import CPU
 from PCB import PCB
 from clock import Clock
@@ -30,7 +30,7 @@ class CPUTest(unittest.TestCase):
         self.hdd = Mock()
         self.queue = Mock()
         #self.aPcb = Mock()
-        self.interruptor = Mock()
+
         self.interruptor2 = Mock()
         self.interruptor = Mock()
 
