@@ -6,7 +6,7 @@ class InstIO(Instruction):
 	def __init__(self,valor,cod):
 		self.codDevice = cod
 		Instruction.__init__(self,valor)
-        
+		
 	def isIO(self):
 		return True
 	
