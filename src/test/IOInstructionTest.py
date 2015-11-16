@@ -3,7 +3,7 @@ from mockito.mocking import Mock
 from mockito.mockito import verify
 from mockito.mockito import when
 
-from InstIO import InstIO
+from Instructions.InstIO import InstIO
 
 class IOInstructionTest(unittest.TestCase):
 	

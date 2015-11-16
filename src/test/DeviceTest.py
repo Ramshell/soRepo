@@ -5,7 +5,7 @@ Created on 23/10/2015
 '''
 import unittest
 from Device import Device
-from InstIO import InstIO
+from Instructions.InstIO import InstIO
 from Queue import Queue
 from mockito import Mock
 from mockito.inorder import verify

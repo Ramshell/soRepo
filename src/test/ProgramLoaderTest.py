@@ -1,11 +1,11 @@
 from RAM import RAM
-from InstCPU import InstCPU
-from InstIO import InstIO
 from Program import Program
 import unittest 
 from mockito.mocking import Mock
 from ProgramLoader import ProgramLoader
 from mockito.mockito import when
+from Instructions.InstCPU import InstCPU
+from Instructions.InstIO import InstIO
 
 
 class ProgramLoaderTest(unittest.TestCase):
