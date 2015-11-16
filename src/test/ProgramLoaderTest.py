@@ -1,6 +1,6 @@
 from RAM import RAM
-from InstCPU import InstCPU
-from InstIO import InstIO
+from Instructions.InstCPU import InstCPU
+from Instructions.InstIO import InstIO
 import ProgramTest.Program
 import unittest 
 from mockito.mocking import Mock

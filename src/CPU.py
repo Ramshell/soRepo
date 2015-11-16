@@ -1,6 +1,7 @@
 from InterruptorManager import InterruptorManager
 from threading import *
 from PCB import PCB
+from util.FileLogger import FileLogger
 
 class CPU:
 
@@ -12,6 +13,9 @@ class CPU:
         self.isEnabled = False #True is enabled to work, user mode only, False kernel mode
         self.pcb = None
         self.semaphore = semaphore
+        
+        self.logger = FileLogger("../../log/cpu_log")
+        
 
     def setPCB(self,pcb):
         self.pcb = pcb
@@ -47,16 +51,16 @@ class CPU:
             
             #VERIFICACION DE LOS REGISTROS AL FINAL
             if (self.flagOfIoInstruction):
-                print("IO")
+                self.logger.log("I/O interruption")
                 self.disable()
                 self.interruptorManager.ioQueue(self.package,self.codDevice)
                 return
             if (self.flagOfPCBEnding):
-                print("KILL")
+                self.logger.log("Kill Signal")
                 self.interruptorManager.kill(self.pcb.getPid())
                 return
             if(self.flagOfRafagaOfPCB):
-                print("TIMEOUT")
+                self.logger.log("TimeOut Signal")
                 self.interruptorManager.timeOut(self.pcb)
                 return
             

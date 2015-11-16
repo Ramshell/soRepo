@@ -7,7 +7,7 @@ import unittest
 from Program import Program
 from Instructions.Assembly import *
 from Manual import Manual
-from InstIO import InstIO
+from Instructions.InstIO import InstIO
 from RAM import RAM
 from PCB import PCB
 from mockito.mocking import Mock

@@ -1,17 +1,10 @@
 import unittest
 from mockito.mocking import Mock
 from mockito.mockito import verify
-from mockito.mockito import when
-
-from threading import *
-
-from ProgramLoader import ProgramLoader
 from RAM import RAM
-from InterruptorManager import InterruptorManager
-from InstIO import InstIO
-from InstCPU import InstCPU
-from Instruction import Instruction
-import Program
+from threading import RLock
+from Instructions.InstIO import InstIO
+from Instructions.InstCPU import InstCPU
 from CPU import CPU
 from PCB import PCB
 from clock import Clock

@@ -1,5 +1,6 @@
 from threading import Thread
 import time
+from util.FileLogger import FileLogger
 
 class Device(Thread):
 
@@ -9,6 +10,8 @@ class Device(Thread):
 		self.switch = True
 		self.name = devName
 		self.queue = queueAsoc
+		
+		self.logger = FileLogger("../../log/"+self.name)
 		
 	def newqueue(self,queue):
 		self.queue = queue
@@ -25,6 +28,7 @@ class Device(Thread):
 	
 	def proccess(self,data):
 		print "Executing from " , self.name , "..."
+		self.logger.log("Executing...")
 		self.instruction = data[1]
 		self.pcb = data[0]
 		

@@ -19,8 +19,9 @@ from Device import Device
 from Queue import Queue
 from HardDisk import HardDisk
 import ProgramTest.Program
-from InstIO import InstIO
-from InstCPU import InstCPU
+from Instructions.InstIO import InstIO
+from Instructions.InstCPU import InstCPU
+
 
 
 class IntegrationTest(unittest.TestCase):
