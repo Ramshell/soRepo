@@ -18,11 +18,9 @@ from IODelivery import IODelivery
 from Device import Device
 from Queue import Queue
 from HardDisk import HardDisk
-import ProgramTest.Program
-from Instructions.InstIO import InstIO
+from Program import Program
 from Instructions.InstCPU import InstCPU
-
-
+from Instructions.InstIO import InstIO
 
 class IntegrationTest(unittest.TestCase):
 
@@ -59,8 +57,8 @@ class IntegrationTest(unittest.TestCase):
         #loading programs
         self.ioInstruction = InstIO('directory', 0)
         self.cpuInstruction = InstCPU('1+1')
-        self.prog1 = ProgramTest('ls')
-        self.prog2 = ProgramTest('pwd')
+        self.prog1 = Program('ls')
+        self.prog2 = Program('pwd')
         
         self.prog1.addInstruction(self.cpuInstruction)
         self.prog2.addInstruction(self.ioInstruction)

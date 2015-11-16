@@ -58,21 +58,20 @@ class Test(unittest.TestCase):
         self.memory.putDir(9,5)
         self.pcb = PCB(0,0,self.fibbo.size())
         self.pcb.runing()
-        self.instrFibbo1.setCurrentPosition(9, self.memory)
-        self.instrFibbo2.setCurrentPosition(9, self.memory)
-        self.instrFibbo3.setCurrentPosition(9, self.memory,self.pcb)
-        self.instrFibbo4.setCurrentPosition(9, self.pcb)
-        self.instrFibbo5.setCurrentPosition(9, self.memory)
-        self.instrFibbo6.setCurrentPosition(9, self.memory)
-        self.instrFibbo7.setCurrentPosition(9, self.memory)
-        self.instrFibbo8.setCurrentPosition(9, self.pcb)
+        self.instrFibbo1.setCurrentPosition(self.pcb, self.memory)
+        self.instrFibbo2.setCurrentPosition(self.pcb, self.memory)
+        self.instrFibbo3.setCurrentPosition(self.pcb, self.memory)
+        self.instrFibbo4.setCurrentPosition(self.pcb, self.memory)
+        self.instrFibbo5.setCurrentPosition(self.pcb, self.memory)
+        self.instrFibbo6.setCurrentPosition(self.pcb, self.memory)
+        self.instrFibbo7.setCurrentPosition(self.pcb, self.memory)
+        self.instrFibbo8.setCurrentPosition(self.pcb, self.memory)
         
         self.interruptor = Mock()
 
         self.semaphore = RLock()
 
         self.cpu = CPU(self.memory,self.interruptor, self.semaphore)
-        self.clock = Clock(self.cpu)
 
     def test_factorial_gives_the_correct_value(self):
         self.cpu.setPCB(self.pcb)
