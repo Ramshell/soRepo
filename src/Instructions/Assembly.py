@@ -4,7 +4,7 @@ from util.FileLogger import FileLogger
 class Mov(InstCPU):
     
     '''
-    @note: the objective of this instruction is replace the value allocated in a direction
+    @note: the goal of this instruction is replace the value allocated in a direction
            of the ram with another value allocated in the ram.   
     '''
 
@@ -34,11 +34,11 @@ class MovLiteral(InstCPU):
     
 
     '''
-    @note: the objective of this instruction is replace the value allocated in a direction of the ram
+    @note: the goal of this instruction is replace the value allocated in a direction of the ram
            with another value  
     '''
     
-    def __init__(self,relativePositionWhereToMove,literalValue):
+    def __init__(self, relativePositionWhereToMove,literalValue):
         self.relativePositionWhereToMove = relativePositionWhereToMove
         self.literalValue=literalValue
         InstCPU.__init__(self, "MovLiteral")
