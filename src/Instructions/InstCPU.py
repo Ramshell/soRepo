@@ -11,4 +11,4 @@ class InstCPU(Instruction):
         return False
     
     def run(self):
-        self.logger.log(self.value)   
+        pass

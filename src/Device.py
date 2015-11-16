@@ -27,7 +27,6 @@ class Device(Thread):
 				time.sleep(.2)		
 	
 	def proccess(self,data):
-		print "Executing from " , self.name , "..."
 		self.logger.log("Executing...")
 		self.instruction = data[1]
 		self.pcb = data[0]

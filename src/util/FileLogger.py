@@ -17,3 +17,4 @@ class FileLogger:
         self.file = open(self.dir,"a")
         self.message = "// " + self.date + " - " + txt + " //" + "\n"
         self.file.write(self.message)
+        self.file.close()

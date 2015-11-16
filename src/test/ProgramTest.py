@@ -33,7 +33,7 @@ class Test(unittest.TestCase):
         self.instrFibbo6 = AddLiteral(2,1)
         self.instrFibbo7 = AddLiteral(0,-1)
         self.instrFibbo8 = Jmp(2)
-        self.instrFibbo9 = InstIO("printeando el resultado",0)
+        self.instrFibbo9 = ScreenPrint("printeando el resultado")
         
         self.fibbo.addInstruction(self.instrFibbo1)
         self.fibbo.addInstruction(self.instrFibbo2)
