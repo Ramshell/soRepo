@@ -51,7 +51,7 @@ class Test(unittest.TestCase):
         self.pcbAuxiliar2.incrementPc()
         self.jump.setCurrentPosition(self.pcbAuxiliar2,self.memory)#the absolute position doesn't matter
         self.jump.run()
-        self.assertEquals(self.pcbAuxiliar.getPc(), 0)
+        self.assertEquals(self.pcbAuxiliar2.getPc(), 0)
          
          
     def test_when_cmp_2_equal_values_then_it_sets_the_pcb_flagZ_as_True(self):
