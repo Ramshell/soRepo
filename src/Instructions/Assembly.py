@@ -14,7 +14,7 @@ class Mov(InstCPU):
         InstCPU.__init__(self, "Mov")
         self.logger = FileLogger("../../log/assembly_log")
      
-    def setCurrentPosition(self,pcb=None,memory):
+    def setCurrentPosition(self,pcb,memory):
         self.absolutePosition = pcb.getBaseDir() + pcb.size
         self.ram = memory
         
