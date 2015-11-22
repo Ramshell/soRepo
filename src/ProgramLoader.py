@@ -5,8 +5,9 @@ class ProgramLoader:
 
 
 
-    def __init__(self, memory,hdd,processQueue):
+    def __init__(self, memory,hdd,processQueue,mmu):
         self.memory = memory
+        self.mmu = mmu
         self.hdd = hdd
         self.pids = 0
         self.processQueue = processQueue
@@ -23,12 +24,14 @@ class ProgramLoader:
     def loadProcessWithPriority(self,program, priority,args=[]):
         self.myProgram = self.hdd.getProgram(program)
         self.myProgram.initializePreValues(args)
-        self.direc = self.memory.getMemoryScope(self.myProgram.size())
-        self.miPCB = PCB(self.getNextId(),self.direc,self.myProgram.size(), priority)
-        for inst in self.myProgram.getInstructions():
-            self.memory.putDir(self.direc,inst.instructionInstance(self.memory,self.miPCB))
-            self.direc = self.direc + 1
-        self.memory.reserve(self.myProgram.variableSize)
+        self.pages = self.mmu.getMemoryScope(self.myProgram)
+        self.miPCB = PCB(self.getNextId(),self.pages,self.myProgram.size(), priority,self.mmu.getFrameSize())
+        self.instructions = self.myProgram.getInstructions()
+        current = 0
+        for i in self.pages:
+            for j in xrange(self.mmu.getFrameSize()):
+                self.memory.putDir(self.mmu.fromPageToAbsolutePosition(i) + j, self.instructions[current].instructionInstance(self.memory,self.miPCB))
+                current = current+1
         self.miPCB.toReady()
         self.processQueue.put(self.miPCB)
         self.pcbTable.addPCB(self.miPCB)

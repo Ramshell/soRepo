@@ -5,22 +5,26 @@ from WaitingPCB import *
 class PCB:
 
     #este lo crea el loader
-    def __init__(self, idP, base, size, priority=0):
+    def __init__(self, idP, pages, size, priority=0, frameSize=1):
         self.pc = 0
         self.pid = idP
-        self.baseDir = base
+        self.pages = pages
         self.size = size
         self.state = ReadyPCB()
         #esto lo cambia scheduler
         self.burst = -1
         self.priority = priority
+        self.frameSize = frameSize
         self.flagZ=False
         self.flagS=False
     #
-    # Metodos comunes!!!! 
+    # Metodos comunes
     #
     def incrementPc(self):
         self.state.incrementarPC(self)
+        
+    def getCurrentPage(self):
+        return self.pages[self.pc / self.frameSize]
 
     def getFlagZ(self):
         return self.flagZ
@@ -28,8 +32,8 @@ class PCB:
     def getFlagS(self):
         return self.flagS
         
-    def getBaseDir(self):
-        return self.baseDir
+    def getPages(self):
+        return self.pages
 
     def getPc(self):
         return self.pc
@@ -51,7 +55,7 @@ class PCB:
         return self.state.name()
     
     #
-    # Cambios de state 
+    # Cambios de estado 
     #
     def toReady(self):
         self.state = ReadyPCB()

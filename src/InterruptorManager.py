@@ -3,9 +3,9 @@ from multiprocessing import Queue
 
 class InterruptorManager(Thread):
          
-    def __init__(self,memory=None,scheduler=None,hdd=None,ioDelivery=None,semaphore=None,pcbTable=None): #ioDelivery
+    def __init__(self,mmu=None,scheduler=None,hdd=None,ioDelivery=None,semaphore=None,pcbTable=None): #ioDelivery
         #AgregarProgramLoader
-        self.memory = memory
+        self.mmu = mmu
         self.schPCB = scheduler
         self.io = ioDelivery
         self.hdd = hdd
@@ -28,7 +28,7 @@ class InterruptorManager(Thread):
     def kill(self,pid):
         self.pcb =self.pcbTable.getPCB(pid)
         self.pcbTable.delete(self.pcb)
-        self.memory.clean(self.pcb)
+        self.mmu.clean(self.pcb)
         self.schPCB.setPcbToCPU()
         
     def timeOut(self,pcb):
