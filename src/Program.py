@@ -13,7 +13,7 @@ class Program:
     def initializePreValues(self,args):
         index = 0
         for arg in args:
-            print "seteando valor ", arg, " en posicion", 0
+            print "Setting value ", arg, " at position:", 0
             #self.logger.log("Seteando valor "+str(arg)+" en posicion 0")
             self.instructions.insert(index, MovLiteral(index,int(arg)))
             index = index +1

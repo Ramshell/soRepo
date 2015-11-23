@@ -1,4 +1,3 @@
-from Scheduler import Scheduler
 from Shell import Shell
 from OperativeSystemFactory import OperativeSystemFactory
 from discFactory import diskFactory

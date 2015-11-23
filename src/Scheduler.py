@@ -35,7 +35,7 @@ class Scheduler:
             raise Exception('Pcb is Null')
         self.assignRafaga(pcb)
         pcb.runing()
-        print "seteando pcb al cpu"
+        print "Setting new process to CPU"
         self.cpu.setPCB(pcb)
         self.condition.release()
     

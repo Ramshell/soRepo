@@ -28,7 +28,8 @@ class Mov(InstCPU):
         value = self.ram.getDir(self.absolutePosition+self.relativePositionFrom)
         
         self.ram.putDir(self.absolutePosition+self.relativePositionWhereToMove, value)
-        self.logger.log("Escribi "+str(value)+" en la posicion "+(str(self.absolutePosition+self.relativePositionWhereToMove)))
+        #self.logger.log("Escribi "+str(value)+" en la posicion "+(str(self.absolutePosition+self.relativePositionWhereToMove)))
+        print "MOV--- " , str(value) , " at position " , (str(self.absolutePosition+self.relativePositionWhereToMove))
         
 class MovLiteral(InstCPU):
     
@@ -56,8 +57,8 @@ class MovLiteral(InstCPU):
     def run(self):
         value = self.literalValue
         self.ram.putDir(self.absolutePosition+self.relativePositionWhereToMove, value)
-        self.logger.log("Escribi "+str(value)+" en la posicion "+str(self.absolutePosition+self.relativePositionWhereToMove))
-        
+        #self.logger.log("Escribi "+str(value)+" en la posicion "+str(self.absolutePosition+self.relativePositionWhereToMove))
+        print "MOV LITERAL--- " , str(value) , " at position " , str(self.absolutePosition+self.relativePositionWhereToMove)
         
 class Add(InstCPU):
     def __init__(self, relativePositionWhereToMove,relativePositionFrom):
@@ -80,8 +81,8 @@ class Add(InstCPU):
         anotherValueToSum = self.ram.getDir(self.absolutePosition+self.relativePositionWhereToMove)
         
         self.ram.putDir(self.absolutePosition+self.relativePositionWhereToMove, valueToSum+anotherValueToSum)
-        self.logger.log("Escribi "+str(valueToSum+anotherValueToSum)+" en la posicion "+str(self.absolutePosition+self.relativePositionWhereToMove))
-        
+        #self.logger.log("Escribi "+str(valueToSum+anotherValueToSum)+" en la posicion "+str(self.absolutePosition+self.relativePositionWhereToMove))
+        print "ADD--- " , str(valueToSum+anotherValueToSum) , " at position " , str(self.absolutePosition+self.relativePositionWhereToMove)
 
 class Mul(InstCPU):
     def __init__(self, relativePositionWhereToMove,relativePositionFrom):
@@ -104,7 +105,8 @@ class Mul(InstCPU):
         anotherValueToMul = self.ram.getDir(self.absolutePosition+self.relativePositionWhereToMove)
         
         self.ram.putDir(self.absolutePosition+self.relativePositionWhereToMove, valueToMul*anotherValueToMul)
-        self.logger.log("Escribi "+str(valueToMul*anotherValueToMul)+" en la posicion "+str(self.absolutePosition+self.relativePositionWhereToMove))
+        #self.logger.log("Escribi "+str(valueToMul*anotherValueToMul)+" en la posicion "+str(self.absolutePosition+self.relativePositionWhereToMove))
+        print "MUL--- " , str(valueToMul*anotherValueToMul) , " at position " , str(self.absolutePosition+self.relativePositionWhereToMove)
 
         
 class AddLiteral(InstCPU):
@@ -128,8 +130,9 @@ class AddLiteral(InstCPU):
         valueToSum = self.literalValue
         anotherValueToSum = self.ram.getDir(self.absolutePosition+self.relativePositionWhereToMove)
         self.ram.putDir(self.absolutePosition+self.relativePositionWhereToMove, valueToSum+anotherValueToSum)
-        self.logger.log("Escribi "+str(valueToSum+anotherValueToSum)+" en la posicion"+str(self.absolutePosition+self.relativePositionWhereToMove))
-        
+        #self.logger.log("Escribi "+str(valueToSum+anotherValueToSum)+" en la posicion"+str(self.absolutePosition+self.relativePositionWhereToMove))
+        print "ADD LITERAL--- " , str(valueToSum+anotherValueToSum) , " at position " , str(self.absolutePosition+self.relativePositionWhereToMove)
+
 
 class MulLiteral(InstCPU):
     
@@ -152,7 +155,8 @@ class MulLiteral(InstCPU):
         valueToMul = self.literalValue
         anotherValueToMul = self.ram.getDir(self.absolutePosition+self.relativePositionWhereToMove)
         self.ram.putDir(self.absolutePosition+self.relativePositionWhereToMove, valueToMul*anotherValueToMul)
-        self.logger.log("Escribi "+str(valueToMul*anotherValueToMul)+" en la posicion"+str(self.absolutePosition+self.relativePositionWhereToMove))
+        #self.logger.log("Escribi "+str(valueToMul*anotherValueToMul)+" en la posicion"+str(self.absolutePosition+self.relativePositionWhereToMove))
+        print "MUL LITERAL--- " , str(valueToMul*anotherValueToMul) , " at position " , str(self.absolutePosition+self.relativePositionWhereToMove)
 
         
 class Jmp(InstCPU):
@@ -345,5 +349,6 @@ class ScreenPrint(InstIO):
         self.logger = FileLogger("../../log/Printer")
     
     def run(self):
-        self.logger.log("Ejecutando desde impresora...")
+        #self.logger.log("Ejecutando desde impresora...")
+        print "-.-.-.-.Executin from Printer.-.-.-.-"        
         self.logger.log(self.message)
