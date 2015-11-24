@@ -16,4 +16,5 @@ class InstIO(Instruction):
 		return self.codDevice
 	
 	def run(self):
-		self.logger.log(self.value)
+		#self.logger.log(self.value)
+		print self.value

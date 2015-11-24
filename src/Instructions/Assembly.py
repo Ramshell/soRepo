@@ -12,23 +12,14 @@ class Mov(InstCPU):
         self.relativePositionWhereToMove=relativePositionWhereToMove
         self.relativePositionFrom=relativePositionFrom
         InstCPU.__init__(self, "Mov")
-        self.logger = FileLogger("../../log/assembly_log")
-     
-    def setCurrentPosition(self,pcb,memory):
-        self.absolutePosition = pcb.getBaseDir() + pcb.size
-        self.ram = memory
+    
         
-    def instructionInstance(self,memory,pcb):
-        insToReturn = Mov(self.relativePositionWhereToMove,self.relativePositionFrom)
-        insToReturn.setCurrentPosition(pcb, memory)
-        return insToReturn
+    def run(self,pcb,memory,mmu):
+        InstCPU.run(self,pcb,memory,mmu)
+        value = memory.getDir(self.absoluteDataPosition(pcb,mmu,self.relativePositionFrom))
         
-    def run(self):
-        InstCPU.run(self)
-        value = self.ram.getDir(self.absolutePosition+self.relativePositionFrom)
-        
-        self.ram.putDir(self.absolutePosition+self.relativePositionWhereToMove, value)
-        self.logger.log("Escribi "+str(value)+" en la posicion "+(str(self.absolutePosition+self.relativePositionWhereToMove)))
+        memory.putDir(self.absoluteDataPosition(pcb, mmu, self.relativePositionWhereToMove), value)
+        print "Escribi", value," en la posicion ", self.absoluteDataPosition(pcb, mmu, self.relativePositionWhereToMove)
         
 class MovLiteral(InstCPU):
     
@@ -44,20 +35,11 @@ class MovLiteral(InstCPU):
         InstCPU.__init__(self, "MovLiteral")
         self.logger = FileLogger("../../log/assembly_log")
     
-    def setCurrentPosition(self,pcb,memory):
-        self.absolutePosition = pcb.getBaseDir() + pcb.size
-        self.ram = memory
-        
-    def instructionInstance(self,memory,pcb):
-        insToReturn = MovLiteral(self.relativePositionWhereToMove,self.literalValue)
-        insToReturn.setCurrentPosition(pcb, memory)
-        return insToReturn
-    
-    def run(self):
-        InstCPU.run(self)
+    def run(self,pcb,memory,mmu):
+        InstCPU.run(self,pcb,memory,mmu)
         value = self.literalValue
-        self.ram.putDir(self.absolutePosition+self.relativePositionWhereToMove, value)
-        self.logger.log("Escribi "+str(value)+" en la posicion "+str(self.absolutePosition+self.relativePositionWhereToMove))
+        memory.putDir(self.absoluteDataPosition(pcb, mmu, self.relativePositionWhereToMove), value)
+        #self.logger.log("Escribi "+str(value)+" en la posicion "+str(self.absolutePosition+self.relativePositionWhereToMove))
         
         
 class Add(InstCPU):
@@ -67,23 +49,15 @@ class Add(InstCPU):
         InstCPU.__init__(self, "Add")
         self.logger = FileLogger("../../log/assembly_log")
      
-    def setCurrentPosition(self,pcb,memory):
-        self.absolutePosition = pcb.getBaseDir() + pcb.size
-        self.ram = memory
         
-    def instructionInstance(self,memory,pcb):
-        insToReturn = Add(self.relativePositionWhereToMove,self.relativePositionFrom)
-        insToReturn.setCurrentPosition(pcb, memory)
-        return insToReturn
+    def run(self,pcb,memory,mmu):
+        InstCPU.run(self,pcb,memory,mmu)
+        valueToSum = memory.getDir(self.absoluteDataPosition(pcb, mmu,self.relativePositionFrom))
+        anotherValueToSum = memory.getDir(self.absoluteDataPosition(pcb, mmu,self.relativePositionWhereToMove))
         
-    def run(self):
-        InstCPU.run(self)
-        valueToSum = self.ram.getDir(self.absolutePosition+self.relativePositionFrom)
-        anotherValueToSum = self.ram.getDir(self.absolutePosition+self.relativePositionWhereToMove)
+        memory.putDir(self.absoluteDataPosition(pcb, mmu,self.relativePositionWhereToMove), valueToSum+anotherValueToSum)
         
-        self.ram.putDir(self.absolutePosition+self.relativePositionWhereToMove, valueToSum+anotherValueToSum)
-        self.logger.log("Escribi "+str(valueToSum+anotherValueToSum)+" en la posicion "+str(self.absolutePosition+self.relativePositionWhereToMove))
-        
+                
 
 class Mul(InstCPU):
     def __init__(self, relativePositionWhereToMove,relativePositionFrom):
@@ -92,22 +66,15 @@ class Mul(InstCPU):
         InstCPU.__init__(self, "MUL")
         self.logger = FileLogger("../../log/assembly_log")
      
-    def setCurrentPosition(self,pcb,memory):
-        self.absolutePosition = pcb.getBaseDir() + pcb.size
-        self.ram = memory
+    
         
-    def instructionInstance(self,memory,pcb):
-        insToReturn = Mul(self.relativePositionWhereToMove,self.relativePositionFrom)
-        insToReturn.setCurrentPosition(pcb, memory)
-        return insToReturn
+    def run(self,pcb,memory,mmu):
+        InstCPU.run(self,pcb,memory,mmu)
+        valueToMul = memory.getDir(self.absoluteDataPosition(pcb, mmu,self.relativePositionFrom))
+        anotherValueToMul = memory.getDir(self.absoluteDataPosition(pcb, mmu,self.relativePositionWhereToMove))
         
-    def run(self):
-        InstCPU.run(self)
-        valueToMul = self.ram.getDir(self.absolutePosition+self.relativePositionFrom)
-        anotherValueToMul = self.ram.getDir(self.absolutePosition+self.relativePositionWhereToMove)
-        
-        self.ram.putDir(self.absolutePosition+self.relativePositionWhereToMove, valueToMul*anotherValueToMul)
-        self.logger.log("Escribi "+str(valueToMul*anotherValueToMul)+" en la posicion"+str(self.absolutePosition+self.relativePositionWhereToMove))
+        memory.putDir(self.absoluteDataPosition(pcb, mmu,self.relativePositionWhereToMove), valueToMul*anotherValueToMul)
+        #self.logger.log("Escribi "+str(valueToMul*anotherValueToMul)+" en la posicion"+str(self.absolutePosition+self.relativePositionWhereToMove))
 
         
 class AddLiteral(InstCPU):
@@ -117,22 +84,14 @@ class AddLiteral(InstCPU):
         self.literalValue=literalValue
         InstCPU.__init__(self, "AddLiteral")
         self.logger = FileLogger("../../log/assembly_log")
+
     
-    def setCurrentPosition(self,pcb,memory):
-        self.absolutePosition = pcb.getBaseDir() + pcb.size
-        self.ram = memory
-        
-    def instructionInstance(self,memory,pcb):
-        insToReturn = AddLiteral(self.relativePositionWhereToMove,self.literalValue)
-        insToReturn.setCurrentPosition(pcb, memory)
-        return insToReturn
-    
-    def run(self):
-        InstCPU.run(self)
+    def run(self,pcb,memory,mmu):
+        InstCPU.run(self,pcb,memory,mmu)
         valueToSum = self.literalValue
-        anotherValueToSum = self.ram.getDir(self.absolutePosition+self.relativePositionWhereToMove)
-        self.ram.putDir(self.absolutePosition+self.relativePositionWhereToMove, valueToSum+anotherValueToSum)
-        self.logger.log("Escribi "+str(valueToSum+anotherValueToSum)+" en la posicion"+str(self.absolutePosition+self.relativePositionWhereToMove))
+        anotherValueToSum = memory.getDir(self.absoluteDataPosition(pcb, mmu,self.relativePositionWhereToMove))
+        memory.putDir(self.absoluteDataPosition(pcb, mmu,self.relativePositionWhereToMove), valueToSum+anotherValueToSum)
+        #self.logger.log("Escribi "+str(valueToSum+anotherValueToSum)+" en la posicion"+str(self.absolutePosition+self.relativePositionWhereToMove))
         
 
 class MulLiteral(InstCPU):
@@ -143,43 +102,25 @@ class MulLiteral(InstCPU):
         InstCPU.__init__(self, "MulLiteral")
         self.logger = FileLogger("../../log/assembly_log")
     
-    def setCurrentPosition(self,pcb,memory):
-        self.absolutePosition = pcb.getBaseDir() + pcb.size
-        self.ram = memory
-        
-    def instructionInstance(self,memory,pcb):
-        insToReturn = MulLiteral(self.relativePositionWhereToMove,self.literalValue)
-        insToReturn.setCurrentPosition(pcb, memory)
-        return insToReturn
     
-    def run(self):
-        InstCPU.run(self)
+    def run(self,pcb,memory,mmu):
+        InstCPU.run(self,pcb,memory,mmu)
         valueToMul = self.literalValue
-        anotherValueToMul = self.ram.getDir(self.absolutePosition+self.relativePositionWhereToMove)
-        self.ram.putDir(self.absolutePosition+self.relativePositionWhereToMove, valueToMul*anotherValueToMul)
-        self.logger.log("Escribi "+str(valueToMul*anotherValueToMul)+" en la posicion"+str(self.absolutePosition+self.relativePositionWhereToMove))
+        anotherValueToMul = memory.getDir(self.absoluteDataPosition(pcb, mmu,self.relativePositionWhereToMove))
+        memory.putDir(self.absoluteDataPosition(pcb, mmu,self.relativePositionWhereToMove), valueToMul*anotherValueToMul)
+        #self.logger.log("Escribi "+str(valueToMul*anotherValueToMul)+" en la posicion"+str(self.absolutePosition+self.relativePositionWhereToMove))
 
         
 class Jmp(InstCPU):
-    def __init__(self, relativePositionWhereToMove,pcb=None):
+    def __init__(self, relativePositionWhereToMove):
         self.relativePositionWhereToMove=relativePositionWhereToMove
-        self.pcb=pcb
         InstCPU.__init__(self, "JMP")
         self.logger = FileLogger("../../log/assembly_log")
         
-    def setCurrentPosition(self,pcb,memory):
-        self.absolutePosition = pcb.getBaseDir() + pcb.size
-        self.ram = memory
-        self.pcb = pcb
         
-    def instructionInstance(self,memory,pcb):
-        insToReturn = Jmp(self.relativePositionWhereToMove)
-        insToReturn.setCurrentPosition(pcb, memory)
-        return insToReturn
-        
-    def run(self):
-        InstCPU.run(self)
-        self.pcb.pc = self.relativePositionWhereToMove
+    def run(self,pcb,memory,mmu):
+        InstCPU.run(self,pcb,memory,mmu)
+        pcb.pc = self.relativePositionWhereToMove
         
 
 
@@ -190,164 +131,93 @@ class Cmp(InstCPU):
         InstCPU.__init__(self, "CMP")
         self.logger = FileLogger("../../log/assembly_log")
      
-    def setCurrentPosition(self,pcb,memory):
-        self.absolutePosition = pcb.getBaseDir() + pcb.size
-        self.ram = memory
-        self.pcb = pcb
         
-    def instructionInstance(self,memory,pcb):
-        insToReturn = Cmp(self.relativePositionToCompare,self.relativePositionToCompare2)
-        insToReturn.setCurrentPosition(pcb, memory)
-        return insToReturn
-        
-    def run(self):
-        InstCPU.run(self)
-        valueToCompare = self.ram.getDir(self.absolutePosition+self.relativePositionToCompare)
-        anotherValueToCompare = self.ram.getDir(self.absolutePosition+self.relativePositionToCompare2)
+    def run(self,pcb,memory,mmu):
+        InstCPU.run(self,pcb,memory,mmu)
+        valueToCompare = memory.getDir(self.absoluteDataPosition(pcb, mmu,self.relativePositionToCompare))
+        anotherValueToCompare = memory.getDir(self.absoluteDataPosition(pcb, mmu,self.relativePositionToCompare2))
         res = valueToCompare - anotherValueToCompare
         if(res == 0):
-            self.pcb.flagZ = True
+            pcb.flagZ = True
         if(res < 0):
-            self.pcb.flagS = True
+            pcb.flagS = True
             
             
 class CmpLiteral(InstCPU):
-    def __init__(self, relativePositionToCompare,valueLiteral,pcb=None):
+    def __init__(self, relativePositionToCompare,valueLiteral):
         self.relativePositionToCompare=relativePositionToCompare
         self.valueLiteral=valueLiteral
-        self.pcb = pcb
         InstCPU.__init__(self, "CMP")
         self.logger = FileLogger("../../log/assembly_log")
-     
-    def setCurrentPosition(self,pcb,memory):
-        self.absolutePosition = pcb.getBaseDir() + pcb.size
-        self.ram = memory
-        self.pcb = pcb
         
-    def instructionInstance(self,memory,pcb):
-        insToReturn = CmpLiteral(self.relativePositionToCompare,self.valueLiteral)
-        insToReturn.setCurrentPosition(pcb, memory)
-        return insToReturn
-        
-    def run(self):
-        InstCPU.run(self)
-        valueToCompare = self.ram.getDir(self.absolutePosition+self.relativePositionToCompare)
+    def run(self,pcb,memory,mmu):
+        InstCPU.run(self,pcb,memory,mmu)
+        valueToCompare = memory.getDir(self.absoluteDataPosition(pcb, mmu,self.relativePositionToCompare))
         res = valueToCompare - self.valueLiteral        
         if(res == 0):
-            self.pcb.flagZ = True
+            pcb.flagZ = True
         if(res < 0):
-            self.pcb.flagS = True
+            pcb.flagS = True
 
 
         
 class Je(InstCPU):
-    def __init__(self, displacement,pcb=None):
+    def __init__(self, displacement):
         self.displacement=displacement
-        self.pcb=pcb
         InstCPU.__init__(self, "JE")
         self.logger = FileLogger("../../log/assembly_log")
         
-    def setCurrentPosition(self,pcb,memory):
-        self.absolutePosition = pcb.getBaseDir() + pcb.size
-        self.ram = memory
-        self.pcb = pcb
         
-    def instructionInstance(self,memory,pcb):
-        insToReturn = Je(self.displacement)
-        insToReturn.setCurrentPosition(pcb, memory)
-        return insToReturn
-        
-    def run(self):
-        InstCPU.run(self)
-        if self.pcb.getFlagZ():
-            self.pcb.pc = self.pcb.pc+self.displacement
+    def run(self,pcb,memory,mmu):
+        InstCPU.run(self,pcb,memory,mmu)
+        if pcb.getFlagZ():
+            pcb.pc = pcb.pc+self.displacement
 
 class Jne(InstCPU):
-    def __init__(self, displacement,pcb=None):
+    def __init__(self, displacement):
         self.displacement=displacement
-        self.pcb=pcb
         InstCPU.__init__(self, "JE")
         self.logger = FileLogger("../../log/assembly_log")
         
-    def setCurrentPosition(self,pcb,memory):
-        self.absolutePosition = pcb.getBaseDir() + pcb.size
-        self.ram = memory
-        self.pcb = pcb
         
-    def instructionInstance(self,memory,pcb):
-        insToReturn = Jne(self.displacement)
-        insToReturn.setCurrentPosition(pcb, memory)
-        return insToReturn
-        
-    def run(self):
-        InstCPU.run(self)
-        if not self.pcb.getFlagZ():
-            self.pcb.pc = self.pcb.pc+self.displacement
+    def run(self,pcb,memory,mmu):
+        InstCPU.run(self,pcb,memory,mmu)
+        if not pcb.getFlagZ():
+            pcb.pc = pcb.pc+self.displacement
             
 class Jl(InstCPU):
-    def __init__(self, displacement,pcb=None):
+    def __init__(self, displacement):
         self.displacement=displacement
-        self.pcb=pcb
         InstCPU.__init__(self, "JL")
         self.logger = FileLogger("../../log/assembly_log")
         
-    def setCurrentPosition(self,pcb,memory):
-        self.absolutePosition = pcb.getBaseDir() + pcb.size
-        self.ram = memory
-        self.pcb = pcb
         
-    def instructionInstance(self,memory,pcb):
-        insToReturn = Jl(self.displacement)
-        insToReturn.setCurrentPosition(pcb, memory)
-        return insToReturn
-        
-    def run(self):
-        InstCPU.run(self)
-        if self.pcb.getFlagS():
-            self.pcb.pc = self.pcb.pc+self.displacement
+    def run(self,pcb,memory,mmu):
+        InstCPU.run(self,pcb,memory,mmu)
+        if pcb.getFlagS():
+            pcb.pc = pcb.pc+self.displacement
             
             
 class Jle(InstCPU):
-    def __init__(self, displacement,pcb=None):
+    def __init__(self, displacement):
         self.displacement=displacement
-        self.pcb=pcb
         InstCPU.__init__(self, "JLE")
         self.logger = FileLogger("../../log/assembly_log")
         
-    def setCurrentPosition(self,pcb,memory):
-        self.absolutePosition = pcb.getBaseDir() + pcb.size
-        self.ram = memory
-        self.pcb = pcb
         
-    def instructionInstance(self,memory,pcb):
-        insToReturn = Jle(self.displacement)
-        insToReturn.setCurrentPosition(pcb, memory)
-        return insToReturn
-        
-    def run(self):
-        InstCPU.run(self)
-        if self.pcb.getFlagS() or self.pcb.getFlagZ():
-            self.pcb.pc = self.pcb.pc+self.displacement
+    def run(self,pcb,memory,mmu):
+        InstCPU.run(self,pcb,memory,mmu)
+        if pcb.getFlagS() or pcb.getFlagZ():
+            pcb.pc = pcb.pc+self.displacement
             
 class Jnl(InstCPU):
-    def __init__(self, displacement,pcb=None):
+    def __init__(self, displacement):
         self.displacement=displacement
-        self.pcb=pcb
         InstCPU.__init__(self, "JNL")
         self.logger = FileLogger("../../log/assembly_log")
+
         
-    def setCurrentPosition(self,pcb,memory):
-        self.absolutePosition = pcb.getBaseDir() + pcb.size
-        self.ram = memory
-        self.pcb = pcb
-        
-    def instructionInstance(self,memory,pcb):
-        insToReturn = Jnl(self.displacement)
-        insToReturn.setCurrentPosition(pcb, memory)
-        return insToReturn
-        
-    def run(self):
-        InstCPU.run(self)
-        if not self.pcb.getFlagS():
-            self.pcb.pc = self.pcb.pc+self.displacement
-    
+    def run(self,pcb,memory,mmu):
+        InstCPU.run(self,pcb,memory,mmu)
+        if not pcb.getFlagS():
+            pcb.pc = pcb.pc+self.displacement

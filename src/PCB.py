@@ -5,7 +5,7 @@ from WaitingPCB import *
 class PCB:
 
     #este lo crea el loader
-    def __init__(self, idP, pages, size, priority=0, frameSize=1):
+    def __init__(self, idP, pages, size, priority=0, frameSize=1,dataScope=[]):
         self.pc = 0
         self.pid = idP
         self.pages = pages
@@ -15,6 +15,7 @@ class PCB:
         self.burst = -1
         self.priority = priority
         self.frameSize = frameSize
+        self.dataScope= dataScope
         self.flagZ=False
         self.flagS=False
     #
@@ -25,6 +26,10 @@ class PCB:
         
     def getCurrentPage(self):
         return self.pages[self.pc / self.frameSize]
+    
+    def getDataPage(self,relativePosition):
+        return self.dataScope[relativePosition / self.frameSize]
+        
 
     def getFlagZ(self):
         return self.flagZ

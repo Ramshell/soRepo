@@ -24,13 +24,16 @@ class ProgramLoader:
     def loadProcessWithPriority(self,program, priority,args=[]):
         self.myProgram = self.hdd.getProgram(program)
         self.myProgram.initializePreValues(args)
-        self.pages = self.mmu.getMemoryScope(self.myProgram)
-        self.miPCB = PCB(self.getNextId(),self.pages,self.myProgram.size(), priority,self.mmu.getFrameSize())
+        self.scope = self.mmu.getMemoryScope(self.myProgram)
+        self.pages = self.scope.getListInstructionPages()
+        self.dataScope = self.scope.getListDataPages()
+        self.miPCB = PCB(self.getNextId(),self.pages,self.myProgram.size(), priority,self.mmu.getFrameSize(),self.dataScope)
         self.instructions = self.myProgram.getInstructions()
         current = 0
         for i in self.pages:
             for j in xrange(self.mmu.getFrameSize()):
-                self.memory.putDir(self.mmu.fromPageToAbsolutePosition(i) + j, self.instructions[current].instructionInstance(self.memory,self.miPCB))
+                if current >= len(self.instructions): break
+                self.memory.putDir(self.mmu.fromPageToAbsolutePosition(i) + j, self.instructions[current])
                 current = current+1
         self.miPCB.toReady()
         self.processQueue.put(self.miPCB)

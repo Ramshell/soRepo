@@ -52,27 +52,30 @@ class CPU:
             
             #VERIFICACION DE LOS REGISTROS AL FINAL
             if (self.flagOfIoInstruction):
-                self.logger.log("I/O interruption")
+                #self.logger.log("I/O interruption")
+                print "I/O Signal"
                 self.disable()
                 self.interruptorManager.ioQueue(self.package,self.codDevice)
                 return
             if (self.flagOfPCBEnding):
-                self.logger.log("Kill Signal")
+                #self.logger.log("Kill Signal")
+                print "END Signal"
                 self.interruptorManager.kill(self.pcb.getPid())
                 return
             if(self.flagOfRafagaOfPCB):
-                self.logger.log("TimeOut Signal")
+                #self.logger.log("TimeOut Signal")
+                print "TIMEOUT Signal"
                 self.interruptorManager.timeOut(self.pcb)
                 return
             
     def fetch(self):
-        self.inst = self.memory.getDir(self.mmu.fromPageToAbsolutePosition(self.pcb.getCurrentPage()) + self.pcb.getPc())
+        self.inst = self.memory.getDir(self.mmu.fromPageToAbsolutePosition(self.pcb.getCurrentPage()) + self.pcb.getPc() % self.mmu.getFrameSize())
         self.pcb.incrementPc()
         self.pcb.decrementQuantum()
         return self.inst #ANTE CADA FETCH SE INCREMENTA EL PC DEL PCB
 
     def execute(self, instruction):
-        instruction.run()
+        instruction.run(self.pcb, self.memory,self.mmu)
         self.pcb.decrementPriority()
 
     def enable(self):

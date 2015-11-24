@@ -3,8 +3,7 @@ from multiprocessing import Queue
 
 class InterruptorManager(Thread):
          
-    def __init__(self,mmu=None,scheduler=None,hdd=None,ioDelivery=None,semaphore=None,pcbTable=None): #ioDelivery
-        #AgregarProgramLoader
+    def __init__(self,mmu=None,scheduler=None,hdd=None,ioDelivery=None,semaphore=None,pcbTable=None):
         self.mmu = mmu
         self.schPCB = scheduler
         self.io = ioDelivery
@@ -47,8 +46,8 @@ class InterruptorManager(Thread):
     def idleCPU(self):
         self.schPCB.setPcbToCPU()
     
-    def setMemory(self, memory):
-        self.memory = memory
+    def setMmu(self, mmu):
+        self.mmu = mmu
     
     def setScheduler(self, scheduler):
         self.schPCB = scheduler
