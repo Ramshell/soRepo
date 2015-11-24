@@ -11,21 +11,21 @@ class CPU:
 
         self.memory = memory
         self.interruptorManager = interruptorManager
-        #Modo usuario, modo
-        self.isEnabled = False #True is enabled to work, user mode only, False kernel mode
+        # Modo usuario, modo
+        self.isEnabled = False  # True is enabled to work, user mode only, False kernel mode
         self.pcb = None
         self.semaphore = semaphore
         
         self.logger = FileLogger("../../log/cpu_log")
         
 
-    def setPCB(self,pcb):
+    def setPCB(self, pcb):
         self.pcb = pcb
         self.enable()
 
 
     def tick(self):
-        #REGISTROS DEL CPU
+        # REGISTROS DEL CPU
         self.flagOfIoInstruction = False
         self.flagOfPCBEnding = False
         self.flagOfRafagaOfPCB = False
@@ -34,14 +34,14 @@ class CPU:
             self.interruptorManager.idleCPU()
         
         if(self.isEnabled):
-            if(self.pcb.finished()):  #PREGUNTAR ANTES DE EJECUTAR
+            if(self.pcb.finished()):  # PREGUNTAR ANTES DE EJECUTAR
                 self.flagOfPCBEnding = True
             else:
                 self.semaphore.acquire()
                 self.inst = self.fetch()
                 if(self.inst.isIO()):
                     self.flagOfIoInstruction = True
-                    self.package = [self.pcb,self.inst]
+                    self.package = [self.pcb, self.inst]
                     self.codDevice = self.inst.deviceCod()
                 else:
                     print self.pcb.getPc()
@@ -51,18 +51,21 @@ class CPU:
                             
                 self.semaphore.release()
             
-            #VERIFICACION DE LOS REGISTROS AL FINAL
+            # VERIFICACION DE LOS REGISTROS AL FINAL
             if (self.flagOfIoInstruction):
-                self.logger.log("I/O interruption")
+                #self.logger.log("I/O interruption")
+                print "I/O Signal"
                 self.disable()
-                self.interruptorManager.ioQueue(self.package,self.codDevice)
+                self.interruptorManager.ioQueue(self.package, self.codDevice)
                 return
             if (self.flagOfPCBEnding):
-                self.logger.log("Kill Signal")
+                #self.logger.log("Kill Signal")
+                print "END Signal"
                 self.interruptorManager.kill(self.pcb.getPid())
                 return
             if(self.flagOfRafagaOfPCB):
-                self.logger.log("TimeOut Signal")
+                #self.logger.log("TimeOut Signal")
+                print "TIMEOUT Signal"
                 self.interruptorManager.timeOut(self.pcb)
                 return
             
@@ -70,14 +73,14 @@ class CPU:
         self.inst = self.memory.getDir(self.pcb.getBaseDir() + self.pcb.getPc())
         self.pcb.incrementPc()
         self.pcb.decrementQuantum()
-        return self.inst #ANTE CADA FETCH SE INCREMENTA EL PC DEL PCB
+        return self.inst  # ANTE CADA FETCH SE INCREMENTA EL PC DEL PCB
 
     def execute(self, instruction):
         instruction.run()
         self.pcb.decrementPriority()
 
     def enable(self):
-        self.isEnabled=True
+        self.isEnabled = True
 
     def disable(self):
-        self.isEnabled=False
+        self.isEnabled = False

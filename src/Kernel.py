@@ -1,5 +1,3 @@
-from multiprocessing.connection import deliver_challenge
-
 from Device import Device
 
 

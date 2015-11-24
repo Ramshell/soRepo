@@ -20,14 +20,14 @@ class InterruptorManagerTest(unittest.TestCase):
         self.aPCB = Mock()
         when(self.pcbTable).getPCB(0).thenReturn(self.aPCB)
         self.cod = 4
-        self.data = [self.aPCB,self.cod]
+        self.data = [self.aPCB, self.cod]
         
-        self.imanager = InterruptorManager(self.ram,self.scheduler,self.disco,self.iodelivery,self.condition,self.pcbTable)
+        self.imanager = InterruptorManager(self.ram, self.scheduler, self.disco, self.iodelivery, self.condition, self.pcbTable)
     
     def test_when_signal_ioQueue_then_IM_puts_the_pcb_in_the_ioQueue (self):
-        self.imanager.ioQueue(self.data,self.cod)
+        self.imanager.ioQueue(self.data, self.cod)
 
-        verify(self.iodelivery).putInQueue(self.data,self.cod)
+        verify(self.iodelivery).putInQueue(self.data, self.cod)
         verify(self.scheduler).setPcbToCPU()
     
     def test_when_kill_signal_then_cleans_the_memory(self):

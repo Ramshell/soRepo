@@ -18,9 +18,9 @@ class HardDisk(object):
             return None
         return self.programs[name]
     
-    def setProgram(self,program):
+    def setProgram(self, program):
         self.programs[program.name] = program
-            
+
     def deleteProgram(self, name):
         del self.programs[name]
     

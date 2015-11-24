@@ -6,7 +6,7 @@ from CPU import CPU
 
 class Clock(Thread):
 
-    def __init__(self,cpu):
+    def __init__(self, cpu):
         Thread.__init__(self)
         self.cpu = cpu
 

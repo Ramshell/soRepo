@@ -17,11 +17,11 @@ class ProgramLoaderTest(unittest.TestCase):
         self.coladeprocesos = Mock()
         self.ram = RAM(10)
         
-        self.progLoader = ProgramLoader(self.ram,self.disco,self.coladeprocesos)
+        self.progLoader = ProgramLoader(self.ram, self.disco, self.coladeprocesos)
         
-        #Preparando un programa de dos (2) instrucciones
+        # Preparando un programa de dos (2) instrucciones
         self.instruccion1 = InstCPU("2+2")
-        self.instruccion2 = InstIO("Leer de teclado",2)
+        self.instruccion2 = InstIO("Leer de teclado", 2)
         
         self.program = Program("prog")
         self.program.addInstruction(self.instruccion1)

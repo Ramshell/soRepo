@@ -8,7 +8,7 @@ from OwnHeap import OwnHeap
 class Scheduler:
 
 
-    def __init__(self, cpu, queue, burst,condition):
+    def __init__(self, cpu, queue, burst, condition):
         '''
         @param: cpu the cpu hardware
         @param: queue: the kernel's readyQueue
@@ -21,7 +21,7 @@ class Scheduler:
         self.condition = condition
         
 
-    def put(self,pcb):
+    def put(self, pcb):
         self.readyQueue.put(pcb)
         
     def setPcbToCPU(self):
@@ -32,7 +32,7 @@ class Scheduler:
         self.condition.acquire()
         if self.readyQueue.empty():
             self.condition.wait()
-        pcb = self.readyQueue.get()#this method also removes the element
+        pcb = self.readyQueue.get()  # this method also removes the element
         if pcb is None:
             raise Exception('Pcb is Null')
         self.assignRafaga(pcb)

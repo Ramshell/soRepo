@@ -4,20 +4,20 @@ from util.FileLogger import FileLogger
 
 class Program:
     
-    def __init__ (self,name,manual=None,variableSize=0):
+    def __init__ (self, name, manual=None, variableSize=0):
         self.instructions = []
         self.name = name
         self.manual = manual
         self.variableSize = variableSize
         self.logger = FileLogger("../../log/progLoader_log")
 
-    def initializePreValues(self,args):
+    def initializePreValues(self, args):
         index = 0
         for arg in args:
             print "Setting value ", arg, " at position:", 0
-            #self.logger.log("Seteando valor "+str(arg)+" en posicion 0")
-            self.instructions.insert(index, MovLiteral(index,int(arg)))
-            index = index +1
+            # self.logger.log("Seteando valor "+str(arg)+" en posicion 0")
+            self.instructions.insert(index, MovLiteral(index, int(arg)))
+            index = index + 1
         
     def size(self):
         return len(self.instructions)
@@ -25,7 +25,7 @@ class Program:
     def getInstructions(self):
         return self.instructions
     
-    def addManual(self,manual):
+    def addManual(self, manual):
         self.manual = manual
         
     def getManual(self):

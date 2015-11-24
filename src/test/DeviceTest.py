@@ -20,17 +20,17 @@ class Test(unittest.TestCase):
         self.pcb1 = Mock()
         self.pcb2 = Mock()
         self.interruptor = Mock()
-        self.printLine1 = InstIO("Impresion 1",0)
-        self.printLine2 = InstIO("Impresion 2",0)
+        self.printLine1 = InstIO("Impresion 1", 0)
+        self.printLine2 = InstIO("Impresion 2", 0)
         self.queue = Queue()
-        self.device = Device("Printer",self.interruptor,self.queue) #0 equals to the device cod printer
+        self.device = Device("Printer", self.interruptor, self.queue)  # 0 equals to the device cod printer
         
         
     def test_when_process_is_called_the_instruccion_runs_and_ioDone_is_sent(self):
-        self.packageOne = [self.pcb1,self.printLine1]
-        self.device.proccess(self.packageOne)#arrange
+        self.packageOne = [self.pcb1, self.printLine1]
+        self.device.proccess(self.packageOne)  # arrange
         
-        verify(self.interruptor).ioDone(self.pcb1)#assert
+        verify(self.interruptor).ioDone(self.pcb1)  # assert
     
 #     def test_when_nothing_to_process_then_waits_2_seconds(self):
 #         self.device.start()

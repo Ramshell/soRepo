@@ -9,17 +9,17 @@ class RAM:
         self.size = size
         self.libre = 0
         
-    def getMemoryScope(self,size):
+    def getMemoryScope(self, size):
         return self.libre
     
     def getDir(self, i):
         return self.content[i]
     
     def putDir(self, i, inst):
-        self.content[i]=inst
+        self.content[i] = inst
         self.libre = self.libre + 1
     
-    def reserve(self,number):
+    def reserve(self, number):
         absolutePosition = self.libre
         self.libre = self.libre + number
         return absolutePosition
@@ -27,5 +27,5 @@ class RAM:
     def delete(self):
         pass
 
-    def clean(self,pcb):
+    def clean(self, pcb):
         pass
