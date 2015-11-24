@@ -12,4 +12,4 @@ class Clock(Thread):
     def run(self):
         while(True):
             self.cpu.tick()
-            time.sleep(0.1)
+            time.sleep(0.5)

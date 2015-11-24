@@ -7,7 +7,7 @@ from mockito.mockito import when
 from Instructions.InstCPU import InstCPU
 from Instructions.InstIO import InstIO
 from mockito.mockito import verify
-from memoryManagement.MMU import MMU
+from memoryManagement.MMU import MMU, Scope
 
 
 class ProgramLoaderTest(unittest.TestCase):
@@ -37,7 +37,8 @@ class ProgramLoaderTest(unittest.TestCase):
     def test_load_a_program_pcb_creation(self):
         when(self.disco).getProgram("programa").thenReturn(self.program)
         when(self.mmu).getFrameSize().thenReturn(1)
-        when(self.mmu).getMemoryScope(self.program).thenReturn([0,23])
+        self.scope = Scope([0,23],[123])
+        when(self.mmu).getMemoryScope(self.program).thenReturn(self.scope)
         when(self.mmu).fromPageToAbsolutePosition(0).thenReturn(0)
         when(self.mmu).fromPageToAbsolutePosition(23).thenReturn(23)
         when(self.disco).getProgram("programa").thenReturn(self.program)
@@ -53,7 +54,8 @@ class ProgramLoaderTest(unittest.TestCase):
     def test_load_a_program_pcb_creation_with_1_page(self):
         when(self.disco).getProgram("programa").thenReturn(self.program)
         when(self.mmu).getFrameSize().thenReturn(2)
-        when(self.mmu).getMemoryScope(self.program).thenReturn([23])
+        self.scope = Scope([23],[45])
+        when(self.mmu).getMemoryScope(self.program).thenReturn(self.scope)
         when(self.mmu).fromPageToAbsolutePosition(23).thenReturn(46)
         when(self.disco).getProgram("programa").thenReturn(self.program)
         

@@ -16,6 +16,7 @@ from mockito.mockito import when
 from threading import *
 from CPU import CPU
 from clock import Clock
+from memoryManagement.MMU import MMU
 
 
 class Test(unittest.TestCase):
@@ -46,6 +47,7 @@ class Test(unittest.TestCase):
         self.fibbo.addInstruction(self.instrFibbo9)
         
         self.memory = RAM(65535)
+        self.mmu = MMU(10,self.memory)
         self.memory.putDir(0,self.instrFibbo1)
         self.memory.putDir(1,self.instrFibbo2)
         self.memory.putDir(2,self.instrFibbo3)
@@ -55,23 +57,15 @@ class Test(unittest.TestCase):
         self.memory.putDir(6,self.instrFibbo7)
         self.memory.putDir(7,self.instrFibbo8)
         self.memory.putDir(8,self.instrFibbo9)
-        self.memory.putDir(9,5)
-        self.pcb = PCB(0,0,self.fibbo.size())
+        self.memory.putDir(10,5)
+        self.pcb = PCB(0,[0],self.fibbo.size(),0,10,[1])
         self.pcb.runing()
-        self.instrFibbo1.setCurrentPosition(self.pcb, self.memory)
-        self.instrFibbo2.setCurrentPosition(self.pcb, self.memory)
-        self.instrFibbo3.setCurrentPosition(self.pcb, self.memory)
-        self.instrFibbo4.setCurrentPosition(self.pcb, self.memory)
-        self.instrFibbo5.setCurrentPosition(self.pcb, self.memory)
-        self.instrFibbo6.setCurrentPosition(self.pcb, self.memory)
-        self.instrFibbo7.setCurrentPosition(self.pcb, self.memory)
-        self.instrFibbo8.setCurrentPosition(self.pcb, self.memory)
         
         self.interruptor = Mock()
 
         self.semaphore = RLock()
 
-        self.cpu = CPU(self.memory,self.interruptor, self.semaphore)
+        self.cpu = CPU(self.memory,self.interruptor, self.semaphore,self.mmu)
 
     def test_factorial_gives_the_correct_value(self):
         self.cpu.setPCB(self.pcb)

@@ -21,6 +21,7 @@ from HardDisk import HardDisk
 from Program import Program
 from Instructions.InstCPU import InstCPU
 from Instructions.InstIO import InstIO
+from memoryManagement.MMU import MMU
 
 class IntegrationTest(unittest.TestCase):
 
@@ -34,10 +35,11 @@ class IntegrationTest(unittest.TestCase):
         
         #hardware
         self.memory = RAM(1000)
+        self.mmu = MMU(1,self.memory)
         self.ioDelivery = IODelivery()
-        self.progLoader = ProgramLoader(self.memory, self.disk, self.readyQueue)
+        self.progLoader = ProgramLoader(self.memory, self.disk, self.readyQueue,self.mmu)
         self.imanager = InterruptorManager()      
-        self.cpu = CPU(self.memory, self.imanager, self.semaphore)
+        self.cpu = CPU(self.memory, self.imanager, self.semaphore,self.mmu)
         self.scheduler = Scheduler(self.cpu, self.readyQueue , 5, self.semaphore)
 
         
@@ -51,7 +53,7 @@ class IntegrationTest(unittest.TestCase):
         #im 
         self.imanager.setScheduler(self.scheduler)
         self.imanager.setDisk(self.disk)
-        self.imanager.setMemory(self.memory)
+        self.imanager.setMmu(self.mmu)
         self.imanager.setIODelivery(self.ioDelivery)
 
         #loading programs
