@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 """Show messages in two new console windows simultaneously."""
-import sys
 import platform
 from subprocess import Popen
+import sys
+
 
 messages = 'This is Console1', 'This is Console2'
 

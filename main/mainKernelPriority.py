@@ -1,8 +1,8 @@
-from Shell import Shell
 from OperativeSystemFactory import OperativeSystemFactory
-from discFactory import diskFactory
 from RAM import RAM
-from Manual import Manual
+from Shell import Shell
+from discFactory import diskFactory
+
 
 if __name__ == '__main__':
     

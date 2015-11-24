@@ -1,6 +1,8 @@
 from threading import Thread
 import time
+
 from util.FileLogger import FileLogger
+
 
 class Device(Thread):
 

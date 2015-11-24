@@ -1,10 +1,11 @@
-import unittest
 import itertools
+import unittest
+
+from PCB import PCB
 from mockito.mocking import Mock
 from mockito.mockito import verify
 from mockito.mockito import when
 
-from PCB import PCB
 
 class PCBTest(unittest.TestCase):
     

@@ -1,7 +1,9 @@
 
-from threading import Thread
 from multiprocessing import Queue
+from threading import Thread
+
 from OwnHeap import OwnHeap
+
 
 class Scheduler:
 

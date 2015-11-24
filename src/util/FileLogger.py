@@ -1,5 +1,3 @@
-from datetime import datetime
-
 '''
 Logs every print of system, on a file called "fileDir"
 
@@ -7,6 +5,10 @@ Logs every print of system, on a file called "fileDir"
 @author: Leutwyler Nicolas
 @author: Laime Jesus 
 '''
+
+from datetime import datetime
+
+
 class FileLogger:
     
     def __init__(self,fileDir):

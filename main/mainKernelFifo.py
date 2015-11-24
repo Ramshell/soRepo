@@ -1,9 +1,10 @@
+from Manual import Manual
+from OperativeSystemFactory import OperativeSystemFactory
+from RAM import RAM
 from Scheduler import Scheduler
 from Shell import Shell
-from OperativeSystemFactory import OperativeSystemFactory
 from discFactory import diskFactory
-from RAM import RAM
-from Manual import Manual
+
 
 if __name__ == '__main__':
     diskFc = diskFactory()

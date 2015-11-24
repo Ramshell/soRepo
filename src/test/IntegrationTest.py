@@ -5,22 +5,24 @@ Created on 27 de oct. de 2015
 @author: iGzo
 @author: Exilio
 '''
-import unittest
-from ProgramLoader import ProgramLoader
-from mockito.mocking import Mock
-from OwnHeap import OwnHeap
-from RAM import RAM
-from Scheduler import Scheduler
-from CPU import CPU
-from threading import Condition
-from InterruptorManager import InterruptorManager
-from IODelivery import IODelivery
-from Device import Device
 from Queue import Queue
+from threading import Condition
+import unittest
+
+from CPU import CPU
+from Device import Device
 from HardDisk import HardDisk
-from Program import Program
+from IODelivery import IODelivery
 from Instructions.InstCPU import InstCPU
 from Instructions.InstIO import InstIO
+from InterruptorManager import InterruptorManager
+from OwnHeap import OwnHeap
+from Program import Program
+from ProgramLoader import ProgramLoader
+from RAM import RAM
+from Scheduler import Scheduler
+from mockito.mocking import Mock
+
 
 class IntegrationTest(unittest.TestCase):
 

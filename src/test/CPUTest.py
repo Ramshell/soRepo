@@ -1,19 +1,22 @@
-import unittest
-from mockito.mocking import Mock
-from mockito.mockito import verify
-from RAM import RAM
-from threading import RLock
-from Instructions.InstIO import InstIO
-from Instructions.InstCPU import InstCPU
-from CPU import CPU
-from PCB import PCB
-from clock import Clock
-
 '''
 @author Laime Jesus
 @author Leutwyler Nicolas
 @author Sandoval Lucas
 '''
+
+from threading import RLock
+import unittest
+
+from CPU import CPU
+from Instructions.InstCPU import InstCPU
+from Instructions.InstIO import InstIO
+from PCB import PCB
+from RAM import RAM
+from clock import Clock
+from mockito.mocking import Mock
+from mockito.mockito import verify
+
+
 class CPUTest(unittest.TestCase):
 
     def setUp(self):

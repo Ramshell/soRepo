@@ -1,5 +1,7 @@
 from threading import Thread
+
 from Manual import Manual
+
 
 class Shell(Thread):
     
@@ -8,9 +10,9 @@ class Shell(Thread):
 
     def __init__(self,kernel=None, manuals=None):
         Thread.__init__(self)
-        self.buildIn = ["?","execute","ps","pid","kill", "man"]
+        self.buildIn = {'execute' : self.execute, '?' : self.help, 'ps' : self.ps, 'kill' : self.kill, 'man' : self.manual}
         self.kernel=kernel
-        self.manuals = self.chargeManuals()
+        self.manuals = self.createManuals()
         
     def run(self):
         while(True):
@@ -59,60 +61,38 @@ class Shell(Thread):
         print "i don't have anything"
         
     def ps(self, args):
-        #si le pones args deberia tirar error o te olvias de los args?
         self.kernel.ps()
     
     def pid(self, args):
-        #como le pido el pid???
         pass
     
     def parse(self, command_line):
         command = command_line.split(' ')
-        #that command exist?
-        exist = self.buildIn.count(command[0])
-        if(exist != 0):
-            #index of that program
-            inst_index = self.buildIn.index(command[0])
-            #trying to exec that command
-            self.execBuildIn(inst_index, command)
+        program = command[0]
+        
+        if(program in self.buildIn):
+            self.buildIn[program](command)
         else:
-            print "syntax error ", command_line, " is not a command"
-            
-    def execBuildIn(self, inst_index, command):
-        #"?","execute","ps","pid","kill", "man"
-        if inst_index == 0:
-            self.help(command)
-        if inst_index == 1:
-            self.execute(command)
-        if inst_index == 2:
-            self.ps(command)
-            return
-        if inst_index == 3:
-            self.pid(command)
-            return
-        if inst_index == 4:
-            self.kill(command)
-            return
-        if inst_index == 5:
-            self.manual(command)
-            return
+            self.dir_print("syntax error " + command_line + " is not a command")
         
     def manual(self, command):
         args = len(command)
+        #no params
         if args == 1:
             self.dir_print("what manual page do you want?")
             return
+        #just 1 param
         if args == 2:
             self.print_manual(command[1])
+        #show the manual for each command
         if args > 2:
             command.pop(0)
             for arg in command:
                 self.print_manual(arg)
 
     def print_manual(self, man):
-        exist = self.exist_manual(man)
-        if exist >= 0:
-            self.manuals[exist].printManual()
+        if man in self.manuals:
+            self.manuals[man].printManual()
         else:
             in_disk_manual = self.fetch_man_in_disk(man)
             if in_disk_manual is not None:
@@ -124,27 +104,18 @@ class Shell(Thread):
         return self.kernel.manual(man)
         
     def no_exist_manual(self, arg):
-        print "No manual entry for", arg
-    
-    def exist_manual(self, name):
-        i = 0
-        for manual in self.manuals:
-            if manual.name == name:
-                return i
-            i = i + 1
-        return -1
-            
-    def chargeManuals(self):
-        self.manuals = []
+        self.dir_print("No manual entry for " + arg)
+                
+    def createManuals(self):
+        #creating manuals
         manexe = Manual("execute", "run a program", ["a program"])
         manps = Manual("ps", "displays information about a selection of the active processes.")
         mankill = Manual("kill", "Terminate process with given signal, send a signal to a process", ["a process"])
-        manman = Manual("man", "see the manual of a program, utility or function",["a program","an important function","a system's command"])
-        self.manuals.append(manexe)
-        self.manuals.append(manps)
-        self.manuals.append(mankill)
-        self.manuals.append(manman)
-        return self.manuals
+        manman = Manual("man", "see the manual of a program, utility or function",["a program","an important function","a system's command"])        
+        #my manual
+        manuals = {manexe.name : manexe, manps.name : manps, mankill.name : mankill, manman.name : manman}
+        
+        return manuals
         
     def printProgramManual(self,programName):
         self.kernel.manual(programName).printManual()

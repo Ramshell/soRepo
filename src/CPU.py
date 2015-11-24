@@ -1,7 +1,9 @@
-from InterruptorManager import InterruptorManager
 from threading import *
+
+from InterruptorManager import InterruptorManager
 from PCB import PCB
 from util.FileLogger import FileLogger
+
 
 class CPU:
 

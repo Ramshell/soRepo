@@ -1,8 +1,11 @@
 
 import unittest
-from RAM import RAM
+
 from Assembly import *
 from PCB import PCB
+from RAM import RAM
+
+
 class Test(unittest.TestCase):
 
 

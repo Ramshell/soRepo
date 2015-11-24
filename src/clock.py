@@ -1,6 +1,8 @@
 from threading import Thread
-from CPU import CPU
 import time
+
+from CPU import CPU
+
 
 class Clock(Thread):
 

@@ -1,9 +1,10 @@
 import unittest
+
+from Instructions.InstIO import InstIO
 from mockito.mocking import Mock
 from mockito.mockito import verify
 from mockito.mockito import when
 
-from Instructions.InstIO import InstIO
 
 class IOInstructionTest(unittest.TestCase):
 	

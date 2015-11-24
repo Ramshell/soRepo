@@ -1,8 +1,10 @@
+from twisted.internet.test.test_serialport import DoNothing
 import unittest 
+
+from InterruptorManager import InterruptorManager
 from mockito.mocking import Mock
 from mockito.mockito import verify, when
-from InterruptorManager import InterruptorManager
-from twisted.internet.test.test_serialport import DoNothing
+
 
 class InterruptorManagerTest(unittest.TestCase):
 

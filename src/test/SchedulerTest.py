@@ -1,13 +1,15 @@
 
-import unittest
 import itertools
+from threading import Condition
+import unittest
+
+from OwnHeap import OwnHeap
+from PCB import *
+from Scheduler import *
 from mockito.mocking import Mock
 from mockito.mockito import verify
 from mockito.mockito import when
-from Scheduler import *
-from PCB import *
-from threading import Condition
-from OwnHeap import OwnHeap
+
 
 class TestSchedulerPriorityRoundRobin(unittest.TestCase):
     

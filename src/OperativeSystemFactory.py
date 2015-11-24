@@ -4,19 +4,21 @@ Created on 27/10/2015
 @author: exilio
 '''
 
-from ProgramLoader import ProgramLoader
-from Scheduler import Scheduler
-from CPU import CPU
-from threading import Condition
-from InterruptorManager import InterruptorManager
-from IODelivery import IODelivery
-from clock import Clock
 from Queue import Queue
-from OwnHeap import OwnHeap, OwnQueue
-from RAM import RAM
-from HardDisk import HardDisk
-from Kernel import Kernel
+from threading import Condition
+
+from CPU import CPU
 from Device import Device
+from HardDisk import HardDisk
+from IODelivery import IODelivery
+from InterruptorManager import InterruptorManager
+from Kernel import Kernel
+from OwnHeap import OwnHeap, OwnQueue
+from ProgramLoader import ProgramLoader
+from RAM import RAM
+from Scheduler import Scheduler
+from clock import Clock
+
 
 class OperativeSystemFactory:
     '''

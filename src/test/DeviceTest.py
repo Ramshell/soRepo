@@ -3,13 +3,15 @@ Created on 23/10/2015
 
 @author: exilio
 '''
+from Queue import Queue
+import time
 import unittest
+
 from Device import Device
 from Instructions.InstIO import InstIO
-from Queue import Queue
 from mockito import Mock
 from mockito.inorder import verify
-import time
+
 
 class Test(unittest.TestCase):
 

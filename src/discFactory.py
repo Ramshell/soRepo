@@ -1,9 +1,10 @@
-from Program import Program
-from Instructions.InstIO import InstIO
-from Instructions.InstCPU import InstCPU
 from HardDisk import HardDisk
-from Manual import Manual
 from Instructions.Assembly import *
+from Instructions.InstCPU import InstCPU
+from Instructions.InstIO import InstIO
+from Manual import Manual
+from Program import Program
+
 
 class diskFactory(object):
     

@@ -1,5 +1,6 @@
-from threading import Thread
 from multiprocessing import Queue
+from threading import Thread
+
 
 class InterruptorManager(Thread):
          

@@ -1,6 +1,7 @@
 from Instructions.Assembly import MovLiteral
 from util.FileLogger import FileLogger
 
+
 class Program:
     
     def __init__ (self,name,manual=None,variableSize=0):

@@ -1,6 +1,7 @@
 from Instruction import Instruction
 from util.FileLogger import FileLogger
 
+
 class InstCPU(Instruction):
     
     def __init__(self,name):

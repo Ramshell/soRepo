@@ -1,5 +1,6 @@
-import copy
 from Queue import Queue
+import copy
+
 
 class OwnHeap(object):
     

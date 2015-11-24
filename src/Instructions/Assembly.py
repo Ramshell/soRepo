@@ -1,6 +1,7 @@
 from InstCPU import InstCPU
-from util.FileLogger import FileLogger
 from Instructions.InstIO import InstIO
+from util.FileLogger import FileLogger
+
 
 class Mov(InstCPU):
     

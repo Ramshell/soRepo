@@ -12,7 +12,7 @@ class Manual(object):
     def setArguments(self, arguments):
         self.arguments = arguments
     
-    def printManual(self):
+    def printManual(self, impressor = None):
         print "Name: ", self.name
         if self.description != None:
             print "Description: ", self.name, "was created to ", self.description

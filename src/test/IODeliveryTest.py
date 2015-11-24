@@ -1,11 +1,11 @@
+from threading import *
 import unittest
+
+from IODelivery import IODelivery
 from mockito.mocking import Mock
 from mockito.mockito import verify
 from mockito.mockito import when
 
-from threading import *
-
-from IODelivery import IODelivery
 
 class IODeliveryTest(unittest.TestCase):
 	
