@@ -24,6 +24,8 @@ class RAM:
         self.libre = self.libre + number
         return absolutePosition
     
+    
+    
     def delete(self):
         pass
 

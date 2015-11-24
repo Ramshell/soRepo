@@ -1,3 +1,15 @@
+import unittest
+from mockito.mocking import Mock
+from mockito.mockito import verify
+from RAM import RAM
+from threading import RLock
+from Instructions.InstIO import InstIO
+from Instructions.InstCPU import InstCPU
+from CPU import CPU
+from PCB import PCB
+from clock import Clock
+from memoryManagement.MMU import MMU
+
 '''
 @author Laime Jesus
 @author Leutwyler Nicolas
@@ -21,6 +33,7 @@ class CPUTest(unittest.TestCase):
 
     def setUp(self):
         self.memory = RAM(65535)
+        self.mmu = MMU(1,self.memory)
 
         self.scheduler = Mock()
         self.hdd = Mock()
@@ -32,8 +45,8 @@ class CPUTest(unittest.TestCase):
 
         self.semaphore = RLock()
 
-        self.cpu = CPU(self.memory, self.interruptor, self.semaphore)
-        # self.cpu2= CPU(self.memoria,self.inMan2)
+        self.cpu = CPU(self.memory,self.interruptor, self.semaphore,self.mmu)
+        #self.cpu2= CPU(self.memoria,self.inMan2)
         self.clock = Clock(self.cpu)
 
         self.mov = InstCPU("Matar a Flanders")
@@ -43,7 +56,7 @@ class CPUTest(unittest.TestCase):
         self.memory.putDir(0, self.mov)
         self.memory.putDir(1, self.Instruction2)
         self.memory.putDir(2, self.instructionIO)
-        self.aPcb = PCB(0, 0, 3, 4)
+        self.aPcb = PCB(0,[0,1,2],3,4,1,[123])
         
 
     def test_when_fetch_then_instruction_valid(self):
@@ -67,7 +80,7 @@ class CPUTest(unittest.TestCase):
         verify(self.interruptor).ioQueue(self.data, self.cod)  # Assert
 
     def test_when_fetching_last_instruction_then_pcbEnd_interruption(self):
-        self.anotherPcb = PCB(0, 0, 2, 4)  # The difference with aPcb, are their sizes... Arrange
+        self.anotherPcb = PCB(0,[0,1],2,4,1,[123]) #The difference with aPcb, are their sizes... Arrange
         self.anotherPcb.runing()
         self.cpu.setPCB(self.anotherPcb)
 

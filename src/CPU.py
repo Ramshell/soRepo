@@ -7,7 +7,7 @@ from util.FileLogger import FileLogger
 
 class CPU:
 
-    def __init__(self, memory, interruptorManager, semaphore):
+    def __init__(self, memory, interruptorManager, semaphore,mmu):
 
         self.memory = memory
         self.interruptorManager = interruptorManager
@@ -15,6 +15,7 @@ class CPU:
         self.isEnabled = False  # True is enabled to work, user mode only, False kernel mode
         self.pcb = None
         self.semaphore = semaphore
+        self.mmu = mmu
         
         self.logger = FileLogger("../../log/cpu_log")
         
@@ -70,13 +71,13 @@ class CPU:
                 return
             
     def fetch(self):
-        self.inst = self.memory.getDir(self.pcb.getBaseDir() + self.pcb.getPc())
+        self.inst = self.memory.getDir(self.mmu.fromPageToAbsolutePosition(self.pcb.getCurrentPage()) + self.pcb.getPc() % self.mmu.getFrameSize())
         self.pcb.incrementPc()
         self.pcb.decrementQuantum()
         return self.inst  # ANTE CADA FETCH SE INCREMENTA EL PC DEL PCB
 
     def execute(self, instruction):
-        instruction.run()
+        instruction.run(self.pcb, self.memory,self.mmu)
         self.pcb.decrementPriority()
 
     def enable(self):

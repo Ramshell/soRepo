@@ -13,3 +13,7 @@ class InstIO(Instruction):
 	
 	def deviceCod(self):
 		return self.codDevice
+            
+	def run(self):
+		#self.logger.log(self.value)
+		print self.value
