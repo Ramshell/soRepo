@@ -3,8 +3,8 @@ from multiprocessing import Queue
 
 class InterruptorManager(Thread):
          
-    def __init__(self,memory=None,scheduler=None,hdd=None,ioDelivery=None,semaphore=None,pcbTable=None): #ioDelivery
-        #AgregarProgramLoader
+    def __init__(self, memory=None, scheduler=None, hdd=None, ioDelivery=None, semaphore=None, pcbTable=None):  # ioDelivery
+        # AgregarProgramLoader
         self.memory = memory
         self.schPCB = scheduler
         self.io = ioDelivery
@@ -20,18 +20,18 @@ class InterruptorManager(Thread):
     #
     # Provenientes de Operaciones de CPU 
     #    
-    def ioQueue(self,data,cod):
+    def ioQueue(self, data, cod):
         data[0].toWaiting()
-        self.io.putInQueue(data,cod)
+        self.io.putInQueue(data, cod)
         self.schPCB.setPcbToCPU()
          
-    def kill(self,pid):
-        self.pcb =self.pcbTable.getPCB(pid)
+    def kill(self, pid):
+        self.pcb = self.pcbTable.getPCB(pid)
         self.pcbTable.delete(self.pcb)
         self.memory.clean(self.pcb)
         self.schPCB.setPcbToCPU()
         
-    def timeOut(self,pcb):
+    def timeOut(self, pcb):
         pcb.toReady()
         self.schPCB.put(pcb)
         self.schPCB.setPcbToCPU()
@@ -40,7 +40,7 @@ class InterruptorManager(Thread):
     #
     # Provenientes por I/0 
     #
-    def ioDone(self,pcb): #Esto no detiene estado del CPU, esto tampoco mantiene estado de quien dispare esta interrupcion
+    def ioDone(self, pcb):  # Esto no detiene estado del CPU, esto tampoco mantiene estado de quien dispare esta interrupcion
         pcb.toReady()
         self.schPCB.put(pcb)
     
@@ -59,8 +59,8 @@ class InterruptorManager(Thread):
     def setIODelivery(self, iodelivery):
         self.io = iodelivery
         
-    def setSemaphore(self,semaphore):
+    def setSemaphore(self, semaphore):
         self.semaphore = semaphore
         
-    def setPcbTable(self,pcbTable):
+    def setPcbTable(self, pcbTable):
         self.pcbTable = pcbTable

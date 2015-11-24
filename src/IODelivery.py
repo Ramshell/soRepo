@@ -8,24 +8,24 @@ class IODelivery:
 		self.cant = 0
 		
 	
-	def putInQueue(self,data,deviceCod):
+	def putInQueue(self, data, deviceCod):
 		if (self.exist(deviceCod)):
 			self.queueDevices[deviceCod].put(data)
 		else:
 			print("ERROR: -- DISPOSITIVO NO VALIDO!!! -- ")
 		
-	def newDevice(self,device):
+	def newDevice(self, device):
 		self.newqueue = Queue()
 		device.newqueue(self.newqueue)
 		self.queueDevices.append(self.newqueue)
-		self.cant = self.cant +1
+		self.cant = self.cant + 1
 		
 	def numberOfDevices(self):
 		return self.cant
 	
-	def numberOfInstructions(self,codDevice):
+	def numberOfInstructions(self, codDevice):
 		if (self.exist(codDevice)):
 			return self.queueDevices[codDevice].qsize()
 		
-	def exist(self,codDevice):
+	def exist(self, codDevice):
 		return codDevice < self.cant

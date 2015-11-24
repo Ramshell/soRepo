@@ -24,14 +24,14 @@ class Test(unittest.TestCase):
     
     def setUp(self):
         self.fibbo = Program("fibbo")
-        #the relative position 0 has the n
-        self.instrFibbo1 = MovLiteral(1,1)
-        self.instrFibbo2 = MovLiteral(2,1)
-        self.instrFibbo3 = CmpLiteral(0,1)
+        # the relative position 0 has the n
+        self.instrFibbo1 = MovLiteral(1, 1)
+        self.instrFibbo2 = MovLiteral(2, 1)
+        self.instrFibbo3 = CmpLiteral(0, 1)
         self.instrFibbo4 = Jle(5)
-        self.instrFibbo5 = Mul(1,2)
-        self.instrFibbo6 = AddLiteral(2,1)
-        self.instrFibbo7 = AddLiteral(0,-1)
+        self.instrFibbo5 = Mul(1, 2)
+        self.instrFibbo6 = AddLiteral(2, 1)
+        self.instrFibbo7 = AddLiteral(0, -1)
         self.instrFibbo8 = Jmp(2)
         self.instrFibbo9 = ScreenPrint("printeando el resultado")
         
@@ -46,17 +46,17 @@ class Test(unittest.TestCase):
         self.fibbo.addInstruction(self.instrFibbo9)
         
         self.memory = RAM(65535)
-        self.memory.putDir(0,self.instrFibbo1)
-        self.memory.putDir(1,self.instrFibbo2)
-        self.memory.putDir(2,self.instrFibbo3)
-        self.memory.putDir(3,self.instrFibbo4)
-        self.memory.putDir(4,self.instrFibbo5)
-        self.memory.putDir(5,self.instrFibbo6)
-        self.memory.putDir(6,self.instrFibbo7)
-        self.memory.putDir(7,self.instrFibbo8)
-        self.memory.putDir(8,self.instrFibbo9)
-        self.memory.putDir(9,5)
-        self.pcb = PCB(0,0,self.fibbo.size())
+        self.memory.putDir(0, self.instrFibbo1)
+        self.memory.putDir(1, self.instrFibbo2)
+        self.memory.putDir(2, self.instrFibbo3)
+        self.memory.putDir(3, self.instrFibbo4)
+        self.memory.putDir(4, self.instrFibbo5)
+        self.memory.putDir(5, self.instrFibbo6)
+        self.memory.putDir(6, self.instrFibbo7)
+        self.memory.putDir(7, self.instrFibbo8)
+        self.memory.putDir(8, self.instrFibbo9)
+        self.memory.putDir(9, 5)
+        self.pcb = PCB(0, 0, self.fibbo.size())
         self.pcb.runing()
         self.instrFibbo1.setCurrentPosition(self.pcb, self.memory)
         self.instrFibbo2.setCurrentPosition(self.pcb, self.memory)
@@ -71,7 +71,7 @@ class Test(unittest.TestCase):
 
         self.semaphore = RLock()
 
-        self.cpu = CPU(self.memory,self.interruptor, self.semaphore)
+        self.cpu = CPU(self.memory, self.interruptor, self.semaphore)
 
     def test_factorial_gives_the_correct_value(self):
         self.cpu.setPCB(self.pcb)
@@ -89,5 +89,5 @@ class Test(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.testName']
+    # import sys;sys.argv = ['', 'Test.testName']
     unittest.main()

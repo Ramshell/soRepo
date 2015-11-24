@@ -8,7 +8,7 @@ from Manual import Manual
 if __name__ == '__main__':
     diskFc = diskFactory()
     disk = diskFc.basicHDD()
-    osFc = OperativeSystemFactory(disk,RAM(65535))
+    osFc = OperativeSystemFactory(disk, RAM(65535))
     os = osFc.fifo()
     os.installNewDevice("printer")
     os.installNewDevice("screen")

@@ -3,9 +3,9 @@ from util.FileLogger import FileLogger
 
 class InstCPU(Instruction):
     
-    def __init__(self,name):
+    def __init__(self, name):
         Instruction.__init__(self, name)
-        self.logger = FileLogger("../../log/cpu_log")
+        #self.logger = FileLogger("../../log/cpu_log")
     
     def isIO(self):
         return False

@@ -4,16 +4,16 @@ from util.FileLogger import FileLogger
 
 class Device(Thread):
 
-	def __init__(self,devName,interruptorM,queueAsoc=None):
+	def __init__(self, devName, interruptorM, queueAsoc=None):
 		Thread.__init__(self)
 		self.interruptor = interruptorM
 		self.switch = True
 		self.name = devName
 		self.queue = queueAsoc
 		
-		self.logger = FileLogger("../../log/"+self.name)
+		self.logger = FileLogger("../../log/" + self.name)
 		
-	def newqueue(self,queue):
+	def newqueue(self, queue):
 		self.queue = queue
 		
 
@@ -26,8 +26,8 @@ class Device(Thread):
 			else:
 				time.sleep(.2)		
 	
-	def proccess(self,data):
-		#self.logger.log("Executing...")
+	def proccess(self, data):
+		# self.logger.log("Executing...")
 		print "Executing... Device ... " + self.name
 		self.instruction = data[1]
 		self.pcb = data[0]
@@ -36,12 +36,12 @@ class Device(Thread):
 		self.interruptor.ioDone(self.pcb)
 	
 	
-	def execute(self,instruction):
+	def execute(self, instruction):
 		instruction.run()
 	
 	def sizeOfQueue(self):
 		return self.queue.qsize()
 		
 	def stop(self):
-		self.switch = False #The Switch stands for ON / OFF Device.. True==ON, FALSE== OFF
+		self.switch = False  # The Switch stands for ON / OFF Device.. True==ON, FALSE== OFF
 	

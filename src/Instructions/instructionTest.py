@@ -8,19 +8,19 @@ class Test(unittest.TestCase):
 
     def setUp(self):
         self.memory = RAM(65535)
-        self.pcbAuxiliar2 = PCB(0,0,0)
+        self.pcbAuxiliar2 = PCB(0, 0, 0)
         self.memory.putDir(0, 4)
         self.memory.putDir(1, 5)
         self.memory.putDir(2, 5)
-        self.mov = Mov(0,1)
-        self.movLiteral= MovLiteral(0,78)
-        self.add = Add(0,1)
-        self.addLiteral = AddLiteral(0,67)
+        self.mov = Mov(0, 1)
+        self.movLiteral = MovLiteral(0, 78)
+        self.add = Add(0, 1)
+        self.addLiteral = AddLiteral(0, 67)
         self.jump = Jmp(0)
-        self.cmpEqual = Cmp(1,2)
-        self.cmpLess = Cmp(0,1)
-        self.cmpLiteralEqual=CmpLiteral(0,4)
-        self.cmpLiteralLess=CmpLiteral(2,7)
+        self.cmpEqual = Cmp(1, 2)
+        self.cmpLess = Cmp(0, 1)
+        self.cmpLiteralEqual = CmpLiteral(0, 4)
+        self.cmpLiteralLess = CmpLiteral(2, 7)
         self.je = Je(3)
         self.jl = Jl(3)
         
@@ -49,7 +49,7 @@ class Test(unittest.TestCase):
         self.pcbAuxiliar2.runing()
         self.pcbAuxiliar2.incrementPc()
         self.pcbAuxiliar2.incrementPc()
-        self.jump.setCurrentPosition(self.pcbAuxiliar2,self.memory)#the absolute position doesn't matter
+        self.jump.setCurrentPosition(self.pcbAuxiliar2, self.memory)  # the absolute position doesn't matter
         self.jump.run()
         self.assertEquals(self.pcbAuxiliar2.getPc(), 0)
          
@@ -79,14 +79,14 @@ class Test(unittest.TestCase):
         self.assertTrue(self.pcbAuxiliar2.getFlagS())
          
     def test_when_JE_a_pcb_with_the_flagZ_on_then_it_makes_the_displacement(self):
-        self.pcbAuxiliar2.flagZ=True
+        self.pcbAuxiliar2.flagZ = True
         self.je.setCurrentPosition(self.pcbAuxiliar2, self.memory)
         self.je.run()
         self.assertEquals(3, self.pcbAuxiliar2.getPc())
          
     def test_when_JL_a_pcb_with_the_flagS_ON_then_it_makes_the_displacement(self):
-        self.pcbAuxiliar2.flagS=True
-        self.jl.setCurrentPosition(self.pcbAuxiliar2, self.memory )
+        self.pcbAuxiliar2.flagS = True
+        self.jl.setCurrentPosition(self.pcbAuxiliar2, self.memory)
         self.jl.run()
         self.assertEquals(3, self.pcbAuxiliar2.getPc())
         

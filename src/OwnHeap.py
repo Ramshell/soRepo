@@ -3,23 +3,23 @@ from Queue import Queue
 
 class OwnHeap(object):
     
-    #__slots__ = ('list', 'size', 'compareFunc','semaphore')
+    # __slots__ = ('list', 'size', 'compareFunc','semaphore')
 
     
-    def __init__(self, semaphore,compareFunc):
+    def __init__(self, semaphore, compareFunc):
         self.list = [None] * 1000
         self.size = 0
         self.compareFunc = compareFunc
         self.semaphore = semaphore
         
-    def parent(self,i):
-        return (i - 1)//2  
+    def parent(self, i):
+        return (i - 1) // 2  
 
-    def lChild(self,i):
-        return 2*i + 1
+    def lChild(self, i):
+        return 2 * i + 1
     
-    def rChild(self,i):
-        return 2*i + 2
+    def rChild(self, i):
+        return 2 * i + 2
     
     
     def get(self):
@@ -47,7 +47,7 @@ class OwnHeap(object):
         a = self.list
         swapIndex = self.first_of_3(curIndex)
         while (swapIndex != curIndex):
-            (a[swapIndex], a[curIndex]) = (a[curIndex], a[swapIndex]) # swap
+            (a[swapIndex], a[curIndex]) = (a[curIndex], a[swapIndex])  # swap
             curIndex = swapIndex
             swapIndex = self.first_of_3(curIndex)
             
@@ -68,24 +68,24 @@ class OwnHeap(object):
         lt = self.lChild(index)
         rt = self.rChild(index)
         thisVal = self.list[index]
-        if rt < self.size:        # If there are both left and right children
+        if rt < self.size:  # If there are both left and right children
             lVal = self.list[lt]
             rVal = self.list[rt]
             if self.compareFunc(lVal, thisVal)    \
             or self.compareFunc(rVal, thisVal):
                 if self.compareFunc(lVal, rVal):
-                    return lt # The left child goes first
+                    return lt  # The left child goes first
                 else:
-                    return rt # The right child goes first
+                    return rt  # The right child goes first
             else:
-                    return index # This one goes first
-        elif lt < self.size: # If there is only a left child
+                    return index  # This one goes first
+        elif lt < self.size:  # If there is only a left child
             lVal = self.list[lt]
             if self.compareFunc(lVal, thisVal):
-                return lt # The left child goes first
+                return lt  # The left child goes first
             else:
-                return index # This one goes first
-        else: # There are no children
+                return index  # This one goes first
+        else:  # There are no children
             return index
         
         
@@ -101,7 +101,7 @@ class OwnHeap(object):
         i = startIndex
         a = self.list
         while i > 0 and not self.compareFunc(a[self.parent(i)], a[i]):
-            (a[self.parent(i)], a[i]) = (a[i], a[self.parent(i)])     # swap
+            (a[self.parent(i)], a[i]) = (a[i], a[self.parent(i)])  # swap
             i = self.parent(i)
             
             
@@ -148,7 +148,7 @@ class OwnHeap(object):
 
 class OwnQueue(Queue):
     
-    def __init__(self,semaphore):
+    def __init__(self, semaphore):
         self.semaphore = semaphore
         Queue.__init__(self)
         

@@ -1,15 +1,16 @@
 from threading import Thread
 from Manual import Manual
+from Exceptions.InvalidProgramException import InvalidProgramException
 
 class Shell(Thread):
     
     __slots__ = ["buildIn"]
 
 
-    def __init__(self,kernel=None, manuals=None):
+    def __init__(self, kernel=None, manuals=None):
         Thread.__init__(self)
-        self.buildIn = ["?","execute","ps","pid","kill", "man"]
-        self.kernel=kernel
+        self.buildIn = ["?", "execute", "ps", "pid", "kill", "man"]
+        self.kernel = kernel
         self.manuals = self.chargeManuals()
         
     def run(self):
@@ -18,36 +19,35 @@ class Shell(Thread):
             self.parse(inst)
             
         
-    def setKernel(self,kernel):
+    def setKernel(self, kernel):
         self.kernel = kernel
+                
+    def execute(self, command):
+        print command
+        programaBuiltIn = command.pop(0) #This is from Shell, we don't need this
         
-    def execute(self,command):
-        args = len(command)
-        if args == 1:
-            print "Give me some program to execute"
-            return
+        if len(command) == 0:
+            raise InvalidProgramException("No Program to Run")
+        
+        programToExecute = command.pop(0)
+        
+        if len(command) == 0:
+            self.real_execute(programToExecute,0, command)
         else:
-            program = command.pop(0)[0]
-            #i need to fix it
-            #poss_args = program.max_args(command)
-            if args > 3:
-                self.real_execute(program,int(command[2]),command[3:])
-                return
-            if args > 2:
-                self.real_execute(program,int(command[2]))
-            else:
-                self.real_execute(program)
+            assignedPriority = int(command.pop(0))
+            print assignedPriority
+            self.real_execute(programToExecute, assignedPriority , command)
 
-    def real_execute(self,program_name,priority=0,args=[]):        
-        self.pid = self.kernel.run(program_name,priority,args)
+    def real_execute(self, program_name, priority=0, args=[]): 
+        self.pid = self.kernel.run(program_name, priority, args)
         print "successful execution with pid: ", self.pid
         
-    def kill(self,args):
-        #si le pones args deberia tirar error o te olvias de los args?                
+    def kill(self, args):
+        # si le pones args deberia tirar error o te olvias de los args?                
         self.kernel.kill(args[1])
     
     def help(self, args):
-        #si le pones args deberia tirar error o te olvias de los args?
+        # si le pones args deberia tirar error o te olvias de los args?
         print "NSN bash, version 0.0.0(1)-release shortly in linux-windows-mac-os"
         print "These shell commands are defined internally. Type `help' to see this list."
         print "Type help 'name' to find out more about the function 'name'"
@@ -59,31 +59,36 @@ class Shell(Thread):
         print "i don't have anything"
         
     def ps(self, args):
-        #si le pones args deberia tirar error o te olvias de los args?
+        # si le pones args deberia tirar error o te olvias de los args?
         self.kernel.ps()
     
     def pid(self, args):
-        #como le pido el pid???
+        # como le pido el pid???
         pass
     
     def parse(self, command_line):
         command = command_line.split(' ')
-        #that command exist?
+        # that command exist?
         exist = self.buildIn.count(command[0])
         if(exist != 0):
-            #index of that program
+            # index of that program
             inst_index = self.buildIn.index(command[0])
-            #trying to exec that command
+            # trying to exec that command
             self.execBuildIn(inst_index, command)
         else:
             print "syntax error ", command_line, " is not a command"
             
     def execBuildIn(self, inst_index, command):
-        #"?","execute","ps","pid","kill", "man"
+        # "?","execute","ps","pid","kill", "man"
         if inst_index == 0:
             self.help(command)
         if inst_index == 1:
-            self.execute(command)
+            
+            try:
+                self.execute(command)
+            except InvalidProgramException as e:
+                print e
+                
         if inst_index == 2:
             self.ps(command)
             return
@@ -139,14 +144,14 @@ class Shell(Thread):
         manexe = Manual("execute", "run a program", ["a program"])
         manps = Manual("ps", "displays information about a selection of the active processes.")
         mankill = Manual("kill", "Terminate process with given signal, send a signal to a process", ["a process"])
-        manman = Manual("man", "see the manual of a program, utility or function",["a program","an important function","a system's command"])
+        manman = Manual("man", "see the manual of a program, utility or function", ["a program", "an important function", "a system's command"])
         self.manuals.append(manexe)
         self.manuals.append(manps)
         self.manuals.append(mankill)
         self.manuals.append(manman)
         return self.manuals
         
-    def printProgramManual(self,programName):
+    def printProgramManual(self, programName):
         self.kernel.manual(programName).printManual()
     
     def dir_print(self, to_print, impressor=None):

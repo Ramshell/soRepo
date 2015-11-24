@@ -11,20 +11,20 @@ from OwnHeap import OwnHeap
 
 class TestSchedulerPriorityRoundRobin(unittest.TestCase):
     
-    def repeat(self,f, N):
+    def repeat(self, f, N):
         for _ in itertools.repeat(None, N): f()
 
     def setUp(self):
         
         
-        self.comparator = lambda pcb1,pcb2: pcb1.getPriority() > pcb2.getPriority()#the greater, the better
+        self.comparator = lambda pcb1, pcb2: pcb1.getPriority() > pcb2.getPriority()  # the greater, the better
         self.semaphore = Mock()
         self.myCpu = Mock()
-        self.queue = OwnHeap(self.semaphore,self.comparator)
-        self.myScheduler = Scheduler(self.myCpu,self.queue,1,self.semaphore)#Priority Round Robin
-        self.highPriorityPCB = PCB( 1, 1, 5, 10)
-        self.higherPriorityPCB = PCB( 1, 1, 5, 15)  
-        self.lowPriorityPCB = PCB( 2, 6, 5, 1)
+        self.queue = OwnHeap(self.semaphore, self.comparator)
+        self.myScheduler = Scheduler(self.myCpu, self.queue, 1, self.semaphore)  # Priority Round Robin
+        self.highPriorityPCB = PCB(1, 1, 5, 10)
+        self.higherPriorityPCB = PCB(1, 1, 5, 15)  
+        self.lowPriorityPCB = PCB(2, 6, 5, 1)
         self.queue.put(self.highPriorityPCB)
         self.queue.put(self.higherPriorityPCB)
         self.queue.put(self.lowPriorityPCB)

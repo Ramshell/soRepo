@@ -10,7 +10,7 @@ class Instruction:
     def run(self):
         pass
         
-    def instructionInstance(self,memory=None,pcb=None):
+    def instructionInstance(self, memory=None, pcb=None):
         return self
     
     @abstractmethod

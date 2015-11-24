@@ -13,16 +13,16 @@ class HardDisk(object):
         self.programs = {}
     
     def getProgram(self, name):
-        #return self.programs.get(name)
+        # return self.programs.get(name)
         if self.no_exists(name):
-            #raise Exception('ProgramTest not founded')
+            # raise Exception('ProgramTest not founded')
             return None
         return self.programs[name]
     
-    def setProgram(self,program):
+    def setProgram(self, program):
         self.programs[program.name] = program
         
-    def no_exists(self,name):
+    def no_exists(self, name):
         self.prog = self.programs.get(name)
         return self.prog is None
     
