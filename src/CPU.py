@@ -42,10 +42,10 @@ class CPU:
                 self.inst = self.fetch()
                 if(self.inst.isIO()):
                     self.flagOfIoInstruction = True
+                    self.inst.setValue(self.pcb,self.memory,self.mmu)
                     self.package = [self.pcb, self.inst]
                     self.codDevice = self.inst.deviceCod()
                 else:
-                    print self.pcb.getPc()
                     self.execute(self.inst)
                     if(self.pcb.rafagaIsOver()):
                         self.flagOfRafagaOfPCB = True
@@ -71,6 +71,7 @@ class CPU:
                 return
             
     def fetch(self):
+        print "busco la inst en: ", self.mmu.fromPageToAbsolutePosition(self.pcb.getCurrentPage()) + self.pcb.getPc() % self.mmu.getFrameSize()
         self.inst = self.memory.getDir(self.mmu.fromPageToAbsolutePosition(self.pcb.getCurrentPage()) + self.pcb.getPc() % self.mmu.getFrameSize())
         self.pcb.incrementPc()
         self.pcb.decrementQuantum()

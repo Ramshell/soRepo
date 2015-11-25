@@ -37,6 +37,8 @@ class Kernel(object):
     def manual(self,programName):
         return self.programLoader.manual(programName)
         
+    def in_disk(self, programName):
+        return self.programLoader.in_disk(programName)
         
 
         

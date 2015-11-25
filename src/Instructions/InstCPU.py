@@ -11,8 +11,7 @@ class InstCPU(Instruction):
     def isIO(self):
         return False
     
-    def absoluteDataPosition(self,pcb,mmu,position):
-        return mmu.fromPageToAbsolutePosition(pcb.getDataPage(position))+ (position % mmu.getFrameSize())
+    
     
     def absoluteInstructionPosition(self,pcb,mmu,position):
         return mmu.fromPageToAbsolutePosition(pcb.getCurrentPage(position))+ (position % mmu.getFrameSize())

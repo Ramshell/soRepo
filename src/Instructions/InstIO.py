@@ -11,9 +11,13 @@ class InstIO(Instruction):
 	def isIO(self):
 		return True
 	
+	
 	def deviceCod(self):
 		return self.codDevice
             
 	def run(self):
 		#self.logger.log(self.value)
 		print self.value
+		
+	def setValue(self,pcb,memory,mmu):
+		pass

@@ -236,9 +236,25 @@ class ScreenPrint(InstIO):
     
     def __init__(self, message):
         self.message = message
-        #self.logger = FileLogger("../../log/Printer")
+        self.codDevice = 0
+        
+    def setValue(self,pcb,memory,mmu):
+        pass
     
     def run(self):
-        # self.logger.log("Ejecutando desde impresora...")
         print "-.-.-.-.Executin from Printer.-.-.-.-"        
-        #self.logger.log(self.message)
+
+        
+        
+class ScreenPrintValue(InstIO):
+    
+    def __init__(self, relativePositionWhereTheValueIs):
+        self.relativePositionWhereTheValueIs = relativePositionWhereTheValueIs
+        self.codDevice = 0
+        
+    def setValue(self,pcb,memory,mmu):
+        self.value = memory.getDir(self.absoluteDataPosition(pcb, mmu,self.relativePositionWhereTheValueIs))
+    
+    def run(self):
+        valueToPrint = self.value
+        print valueToPrint
