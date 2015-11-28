@@ -12,16 +12,15 @@ class PCB:
         self.pages = pages
         self.size = size
         self.state = ReadyPCB()
-        # esto lo cambia scheduler
+        
+        # The scheduler change this value
         self.burst = -1
         self.priority = priority
         self.frameSize = frameSize
         self.dataScope= dataScope
         self.flagZ=False
         self.flagS=False
-    #
-    # Metodos comunes
-    #
+
     def incrementPc(self):
         self.state.incrementarPC(self)
         
@@ -31,7 +30,6 @@ class PCB:
     def getDataPage(self,relativePosition):
         return self.dataScope[relativePosition / self.frameSize]
         
-
     def getFlagZ(self):
         return self.flagZ
     
@@ -53,16 +51,12 @@ class PCB:
     def finished(self):
         return self.pc >= self.size
     
-    
     def getPid(self):
         return self.pid
     
     def getState(self):
         return self.state.name()
     
-    #
-    # Cambios de estado 
-    #
     def toReady(self):
         self.state = ReadyPCB()
         
@@ -71,15 +65,12 @@ class PCB:
                 
     def runing(self):
         self.state = RuningPCB()
-    
-    # asignacion de rafaga
+
     def assignBurst(self, burst):
         self.burst = burst
         
     def rafagaIsOver(self):
         return self.burst == 0
-    
-    # prioridades
     
     def getPriority(self):
         return self.priority

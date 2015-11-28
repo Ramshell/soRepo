@@ -6,7 +6,7 @@ class InstCPU(Instruction):
     
     def __init__(self, name):
         Instruction.__init__(self, name)
-        #self.logger = FileLogger("../../log/cpu_log")
+        self.logger = FileLogger("../log/cpu_log")
     
     def isIO(self):
         return False
@@ -17,5 +17,4 @@ class InstCPU(Instruction):
         return mmu.fromPageToAbsolutePosition(pcb.getCurrentPage(position))+ (position % mmu.getFrameSize())
     
     def run(self,pcb, mmu,memory):
-        #self.logger.log(self.value) 
-        print self.value  
+        self.logger.log(self.value) 

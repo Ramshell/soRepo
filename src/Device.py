@@ -13,7 +13,7 @@ class Device(Thread):
 		self.name = devName
 		self.queue = queueAsoc
 		
-		self.logger = FileLogger("../../log/" + self.name)
+		self.logger = FileLogger("../log/" + self.name)
 		
 	def newqueue(self, queue):
 		self.queue = queue
@@ -30,7 +30,7 @@ class Device(Thread):
 	
 
 	def proccess(self,data):
-		print "Executing from " , self.name , "..."
+		self.logger.log("Executing from " +self.name + "...")
 		self.instruction = data[1]
 		self.pcb = data[0]
 		

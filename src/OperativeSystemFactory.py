@@ -78,13 +78,8 @@ class OperativeSystemFactory:
         
         # miscellaneous
         self.ioDelivery = IODelivery()
-#         self.device = Device("printer",self.imanager)
-#         self.ioDelivery.newDevice(self.device)
-
         #hardware
         self.progLoader = ProgramLoader(self.ram, self.disk, queue,self.mmu)
-
-
         # InterruptorManager
         self.imanager.setScheduler(scheduler)
         self.imanager.setDisk(self.disk)
@@ -92,8 +87,7 @@ class OperativeSystemFactory:
         self.imanager.setIODelivery(self.ioDelivery)
         self.imanager.setSemaphore(self.condition)
         self.imanager.setPcbTable(self.progLoader.getPcbTable())
-        
-        self.clock = Clock(self.cpu)  #THREAD VIVO!!!! 
+        self.clock = Clock(self.cpu)
         
         return Kernel(self.clock, self.progLoader, self.imanager, self.ioDelivery)
 

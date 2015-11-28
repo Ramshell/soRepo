@@ -17,7 +17,7 @@ class CPU:
         self.semaphore = semaphore
         self.mmu = mmu
         
-        self.logger = FileLogger("../../log/cpu_log")
+        self.logger = FileLogger("../log/cpu_log")
         
 
     def setPCB(self, pcb):
@@ -54,24 +54,21 @@ class CPU:
             
             # VERIFICACION DE LOS REGISTROS AL FINAL
             if (self.flagOfIoInstruction):
-                #self.logger.log("I/O interruption")
-                print "I/O Signal"
+                self.logger.log("I/O Signal")
                 self.disable()
                 self.interruptorManager.ioQueue(self.package, self.codDevice)
                 return
             if (self.flagOfPCBEnding):
-                #self.logger.log("Kill Signal")
-                print "END Signal"
+                self.logger.log("Kill Signal")
                 self.interruptorManager.kill(self.pcb.getPid())
                 return
             if(self.flagOfRafagaOfPCB):
-                #self.logger.log("TimeOut Signal")
-                print "TIMEOUT Signal"
+                self.logger.log("TimeOut Signal")
                 self.interruptorManager.timeOut(self.pcb)
                 return
             
     def fetch(self):
-        print "busco la inst en: ", self.mmu.fromPageToAbsolutePosition(self.pcb.getCurrentPage()) + self.pcb.getPc() % self.mmu.getFrameSize()
+        self.logger.log("Fetching instruction "+ str(self.mmu.fromPageToAbsolutePosition(self.pcb.getCurrentPage()) + self.pcb.getPc() % self.mmu.getFrameSize()))
         self.inst = self.memory.getDir(self.mmu.fromPageToAbsolutePosition(self.pcb.getCurrentPage()) + self.pcb.getPc() % self.mmu.getFrameSize())
         self.pcb.incrementPc()
         self.pcb.decrementQuantum()

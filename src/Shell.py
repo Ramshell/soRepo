@@ -31,7 +31,7 @@ class Shell(Thread):
             return
         programToExecute = command.pop(0)
         if(not self.kernel.in_disk(programToExecute)):
-            #raise InvalidProgramException(programToExecute + " doesnot exist")
+            #raise InvalidProgramException(programToExecute + " does not exist")
             print programToExecute + " doesn't exist"
             return
         
@@ -44,14 +44,13 @@ class Shell(Thread):
 
     def real_execute(self, program_name, priority=0, args=[]): 
         self.pid = self.kernel.run(program_name, priority, args)
-        print "successful execution with pid: ", self.pid
-        self.dir_print("successful execution with pid: ")
+        self.dir_print("Successful execution with pid: "+str(self.pid))
         
     #shell function        
     def kill(self, args):
         #args deberia ser un pid o varios pids
         if len(args) == 1:
-            self.dir_print("give me some pid to kill")
+            self.dir_print("Give me some pid to kill")
             return
         for arg in args:
             try:
@@ -79,6 +78,7 @@ class Shell(Thread):
     #shell function        
     def ps(self, args):
         self.kernel.ps()
+        
     #shell function pcb need to say what program have apcb
     def pid(self, args):
         pass

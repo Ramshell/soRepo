@@ -9,13 +9,12 @@ class Program:
         self.name = name
         self.manual = manual
         self.variableSize = variableSize
-        self.logger = FileLogger("../../log/progLoader_log")
+        self.logger = FileLogger("../log/progLoader_log")
 
     def initializePreValues(self, args):
         index = 0
         for arg in args:
-            print "Setting value ", arg, " at position:", 0
-            # self.logger.log("Seteando valor "+str(arg)+" en posicion 0")
+            self.logger.log("Setting value " +arg+ " at position:")
             self.instructions.insert(index, MovLiteral(index, int(arg)))
             index = index + 1
         

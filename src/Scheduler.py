@@ -1,8 +1,4 @@
-
-from multiprocessing import Queue
-from threading import Thread
-
-from OwnHeap import OwnHeap
+from util.FileLogger import FileLogger
 
 
 class Scheduler:
@@ -19,6 +15,7 @@ class Scheduler:
         self.readyQueue = queue
         self.burst = burst
         self.condition = condition
+        self.logger = FileLogger("../log/scheduler_log")
         
 
     def put(self, pcb):
@@ -37,7 +34,7 @@ class Scheduler:
             raise Exception('Pcb is Null')
         self.assignRafaga(pcb)
         pcb.runing()
-        print "Setting new process to CPU"
+        self.logger.log("Setting new process to CPU")
         self.cpu.setPCB(pcb)
         self.condition.release()
     
