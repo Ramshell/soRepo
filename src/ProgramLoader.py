@@ -7,6 +7,10 @@ class ProgramLoader:
 
 
     def __init__(self, memory,hdd,processQueue,mmu):
+        """
+        Constructor it requires a memory, a hard disk, a process queue and a memory management unity
+        """
+        
         self.memory = memory
         self.mmu = mmu
         self.hdd = hdd
@@ -15,16 +19,29 @@ class ProgramLoader:
         self.pcbTable = TableOfPCB()
         
     def manual(self, programName):
+        """
+        @param programName: the name of a program
+        @return the manual of a program called programName
+        """
         return self.hdd.getProgram(programName)
         
     def in_disk(self, program_name):
+        """
+        @param program_name: the program's name to looking for
+        @return it tells if a program_name is in disk
+        """
         return program_name in self.hdd.programs
         
-    def loadProcessWithNoPriority(self, program, args=[]):
-        return self.loadProcessWithPriority(program, 0, args)
-
-    
-    def loadProcessWithPriority(self, program, priority, args=[]):
+    def loadProcess(self, program, priority=0,args=[]):
+        """
+        @note: this method load a program into the ram 
+        
+        @param program: the next program to load
+               priority: the priority of the program
+               args: the arguments with the program will be loaded
+        @return: 
+        """
+        
         self.myProgram = self.hdd.getProgram(program)
         self.myProgram.initializePreValues(args)
         self.scope = self.mmu.getMemoryScope(self.myProgram)
