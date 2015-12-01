@@ -34,12 +34,12 @@ class ProgramLoader:
         
     def loadProcess(self, program, priority=0,args=[]):
         """
-        @note: this method load a program into the ram 
+        @note: this method load a program into the ram
         
         @param program: the next program to load
                priority: the priority of the program
-               args: the arguments with the program will be loaded
-        @return: 
+               args: the program will be loaded with this args
+        @return: the program id
         """
         
         self.myProgram = self.hdd.getProgram(program)

@@ -48,9 +48,12 @@ class InterruptorManager(Thread):
         @param pid: ID of the process to be terminated 
         """
         self.pcb = self.pcbTable.getPCB(pid)
+        if self.pcb is None:
+            return None
+        self.schPCB.cpu.pcb = None
         self.pcbTable.delete(self.pcb)
         self.mmu.clean(self.pcb)
-        self.schPCB.setPcbToCPU()
+        self.schPCB.cpu.enable()
         
     def timeOut(self, pcb):
         """

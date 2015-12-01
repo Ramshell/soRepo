@@ -27,4 +27,4 @@ class Clock(Thread):
         '''
         while(True):
             self.cpu.tick()
-            time.sleep(0.5)
+            time.sleep(1)

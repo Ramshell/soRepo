@@ -70,8 +70,7 @@ class CPU:
                     if(self.pcb.rafagaIsOver()):
                         self.flagOfRafagaOfPCB = True
                             
-                self.semaphore.release()
-            
+                self.semaphore.release()            
             # DECODE FLAGS
             if (self.flagOfIoInstruction):
                 self.logger.log("I/O Signal")
