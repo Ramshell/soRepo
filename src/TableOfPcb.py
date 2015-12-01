@@ -1,4 +1,4 @@
-class TableOfPCB(object):
+class TableOfPCB:
 
     def __init__(self):
         self.table = []
@@ -20,7 +20,6 @@ class TableOfPCB(object):
         
     def getPS(self):
         for pcb in self.table:
-            # print(pcb.getPid(),"",pcb.getState(),"",pcb.getPC()," This is the priority",pcb.getPriority())
             print "Pid: {} PC: {} Priority: {} State: {} ".format(pcb.getPid(), pcb.getPc(), pcb.getPriority(), pcb.getState())
 
     def countActiveProcess(self):

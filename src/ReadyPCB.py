@@ -1,3 +1,10 @@
+'''
+One of the diferent states of a PCB
+
+@author: Nicolas Leutwyler
+@author: Lucas Sandoval
+@author: Jesus Laime
+'''
 class ReadyPCB(object):
     
     

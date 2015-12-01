@@ -142,7 +142,7 @@ class Jne(InstCPU):
         InstCPU.__init__(self, "JE")
         
     def run(self,pcb,memory,mmu):
-        InstCPU.run(self,pcb,memory,mmu)
+        InstCPU.run(self)
         if not pcb.getFlagZ():
             pcb.pc = pcb.pc+self.displacement
             
@@ -188,4 +188,4 @@ class ScreenPrintValue(InstIO):
     
     def run(self):
         valueToPrint = self.value
-        self.logger.log("Executing from valueToPrint")
+        self.logger.log(str(valueToPrint))
