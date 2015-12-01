@@ -7,7 +7,7 @@ from util.FileLogger import FileLogger
 
 class CPU:
     '''
-    Object that represents a hardware CPU.
+    Object that represents hardware CPU.
     
     @author: Nicolas Leutwyler
     @author: Lucas Sandoval
@@ -36,11 +36,14 @@ class CPU:
         '''
         Sets a new Pcb, to work with
         
-        @param pcb: PCB to be set 
+        @param pcb: PCB to be set
         '''
         self.pcb = pcb
         self.enable()
 
+
+
+    
 
     def tick(self):
         '''
@@ -51,8 +54,7 @@ class CPU:
         self.flagOfPCBEnding = False
         self.flagOfRafagaOfPCB = False
         
-        if self.pcb is None:
-            self.interruptorManager.idleCPU()
+        self.thereIsPCB()
         
         if(self.isEnabled):
             if(self.pcb.finished()):  # BEFORE EXECUTION
@@ -61,29 +63,21 @@ class CPU:
                 self.semaphore.acquire()
                 self.inst = self.fetch()
                 if(self.inst.isIO()):
-                    self.flagOfIoInstruction = True
-                    self.inst.setValue(self.pcb,self.memory,self.mmu)
-                    self.package = [self.pcb, self.inst]
-                    self.codDevice = self.inst.deviceCod()
+                    self.prepareForIOInterruption()
                 else:
                     self.execute(self.inst)
-                    if(self.pcb.rafagaIsOver()):
-                        self.flagOfRafagaOfPCB = True
+                    self.prepareForKillInterruption()
                             
                 self.semaphore.release()            
             # DECODE FLAGS
             if (self.flagOfIoInstruction):
-                self.logger.log("I/O Signal")
-                self.disable()
-                self.interruptorManager.ioQueue(self.package, self.codDevice)
+                self.makeIoInterruption()
                 return
             if (self.flagOfPCBEnding):
-                self.logger.log("Kill Signal")
-                self.interruptorManager.kill(self.pcb.getPid())
+                self.makeKillInterruption()
                 return
             if(self.flagOfRafagaOfPCB):
-                self.logger.log("TimeOut Signal")
-                self.interruptorManager.timeOut(self.pcb)
+                self.makeTimeOutInterruption()
                 return
             
     def fetch(self):
@@ -109,8 +103,41 @@ class CPU:
         '''
         self.isEnabled = True
 
+    
     def disable(self):
         '''
         Disable the use of cpu, for kernel mode
         '''
         self.isEnabled = False
+        
+    def thereIsPCB(self):
+        if self.pcb is None:
+            self.interruptorManager.idleCPU()
+
+
+    def prepareForIOInterruption(self):
+        self.flagOfIoInstruction = True
+        self.inst.setValue(self.pcb, self.memory, self.mmu)
+        self.package = [self.pcb, self.inst]
+        self.codDevice = self.inst.deviceCod()
+
+
+    def prepareForKillInterruption(self):
+        if (self.pcb.rafagaIsOver()):
+            self.flagOfRafagaOfPCB = True
+
+
+    def makeIoInterruption(self):
+        self.logger.log("I/O Signal")
+        self.disable()
+        self.interruptorManager.ioQueue(self.package, self.codDevice)
+
+
+    def makeKillInterruption(self):
+        self.logger.log("Kill Signal")
+        self.interruptorManager.kill(self.pcb.getPid())
+
+
+    def makeTimeOutInterruption(self):
+        self.logger.log("TimeOut Signal")
+        self.interruptorManager.timeOut(self.pcb)
