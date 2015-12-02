@@ -39,8 +39,12 @@ class InterruptorManager(Thread):
         """
         data[0].toWaiting()
         self.io.putInQueue(data, cod)
+        self.schPCB.expropiate()
         self.schPCB.setPcbToCPU()
          
+
+    
+
     def kill(self, pid):
         """
         Signal of a Kill interruption that terminate with a process
@@ -50,9 +54,11 @@ class InterruptorManager(Thread):
         self.pcb = self.pcbTable.getPCB(pid)
         if self.pcb is None:
             return None
-        self.schPCB.cpu.pcb = None
+        self.semaphore.acquire()
+        self.pcbIsAlreadyInCpu(self.pcb)
         self.pcbTable.delete(self.pcb)
         self.mmu.clean(self.pcb)
+        self.semaphore.release()
         self.schPCB.getCpu().enable()
         
     def timeOut(self, pcb):
@@ -63,6 +69,7 @@ class InterruptorManager(Thread):
         """
         pcb.toReady()
         self.schPCB.put(pcb)
+        self.schPCB.expropiate()
         self.schPCB.setPcbToCPU()
         
     def storePageNeeded(self, pcb):
@@ -104,3 +111,10 @@ class InterruptorManager(Thread):
         
     def setPcbTable(self, pcbTable):
         self.pcbTable = pcbTable
+        
+    def pcbIsAlreadyInCpu(self, pcb):
+        if self.schPCB.getCpuPid() == pcb.getPid():
+            self.schPCB.expropiate()
+        else:
+            pcb.toTerminated()
+            self.schPCB.cpu.disable()

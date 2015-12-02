@@ -52,16 +52,20 @@ class CPU:
         self.flagOfRafagaOfPCB = False
         self.flagThePcbNeedsAPage = False
         
-        self.thereIsPCB()
+        if self.pcb is None:
+            self.interruptorManager.idleCPU()
+            return
         
         if(self.isEnabled):
             if(self.pcb.finished()):  # BEFORE EXECUTION
                 self.flagOfPCBEnding = True
             else:
+                self.semaphore.acquire()
                 if not self.pcb.getCurrentPage().isInMemory():  # BEFORE EXECUTION
                     self.flagThePcbNeedsAPage = True
                 else:
                     self.executionProcess()
+                self.semaphore.release()
             # DECODE FLAGS
             if (self.flagOfIoInstruction):
                 self.makeIoInterruption()
@@ -107,9 +111,7 @@ class CPU:
         '''
         self.isEnabled = False
         
-    def thereIsPCB(self):
-        if self.pcb is None:
-            self.interruptorManager.idleCPU()
+        
 
 
     def prepareForIOInterruption(self):
@@ -144,7 +146,7 @@ class CPU:
         self.interruptorManager.storePageNeeded(self.pcb)
         
     def executionProcess(self):
-        self.semaphore.acquire()
+        
         self.inst = self.fetch()
         if (self.inst.isIO()):
             self.prepareForIOInterruption()
@@ -152,8 +154,6 @@ class CPU:
             self.execute(self.inst)
             self.prepareForKillInterruption()
         self.semaphore.release()
-        
-    ##############
-    
+       
     def setLogger(self,aLogger):
         self.logger = aLogger

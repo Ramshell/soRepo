@@ -1,6 +1,7 @@
 from programs.ReadyPCB import *
 from programs.RuningPCB import *
 from programs.WaitingPCB import *
+from programs.TerminatedPCB import TerminatedPCB
 
 
 class PCB:
@@ -71,6 +72,12 @@ class PCB:
         
     def toWaiting(self):
         self.state = WaitingPCB()
+        
+    def toTerminated(self):
+        self.state = TerminatedPCB()
+        
+    def isTerminated(self):
+        return self.state.isTerminated()
                 
     def runing(self):
         self.state = RuningPCB()

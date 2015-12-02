@@ -15,7 +15,7 @@ class TableOfPCB:
     def getPCB(self, pid):
         res = None
         for pcbWithName in self.table:
-            if pcbWithName.pcb.getPid() == pid:
+            if pcbWithName.pcb.getPid() == int(pid):
                 res = pcbWithName.pcb
         return res
         
@@ -40,8 +40,9 @@ class TableOfPCB:
         
     def removePcb(self,pcb):
         for pcbWithName in self.table:
-            if pcbWithName.getPid():
+            if pcbWithName.getPid() == pcb.getPid():
                 self.table.remove(pcbWithName)
+                break
     
         
 class PcbWithName:

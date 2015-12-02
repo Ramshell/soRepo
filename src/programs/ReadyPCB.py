@@ -5,14 +5,8 @@ One of the diferent states of a PCB
 @author: Lucas Sandoval
 @author: Jesus Laime
 '''
-class ReadyPCB(object):
-    
-    
-    def __init__(self):
-        pass
-    
-    def incrementarPC(self, unPCB):
-        pass
+from programs.TerminatedPCB import PcbState
+class ReadyPCB(PcbState):
     
     def name(self):
         return "ready"

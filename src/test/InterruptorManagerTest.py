@@ -40,6 +40,7 @@ class InterruptorManagerTest(unittest.TestCase):
     def test_when_timeout_signal_then_the_pcb_is_added_to_the_readyQueue_again(self):
         self.imanager.timeOut(self.aPCB)
         
+        verify(self.scheduler).expropiate()
         verify(self.scheduler).setPcbToCPU()
         verify(self.scheduler).put(self.aPCB)
         
