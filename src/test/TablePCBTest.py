@@ -20,22 +20,22 @@ class TablePCBTest(unittest.TestCase):
         
     def test_when_delete_a_pcb_then_pcb_is_no_longer_in_the_table(self):
         self.sut = TableOfPCB()
-        self.sut.addPCB(self.pcb1)
+        self.sut.addPCB(self.pcb1,"aPcb")
         self.sut.delete(self.pcb1)
         self.assertTrue(not self.sut.contains(self.pcb1))
         
     def test_getPS_prints_the_correct_values(self):
         
         self.sut = TableOfPCB()
-        self.sut.addPCB(self.pcb1)
-        self.sut.addPCB(self.pcb2)
-        self.sut.addPCB(self.pcb3)
-        self.sut.addPCB(self.pcb4)
+        self.sut.addPCB(self.pcb1,"aPcb")
+        self.sut.addPCB(self.pcb2,"anotherPcb")
+        self.sut.addPCB(self.pcb3,"andAnother")
+        self.sut.addPCB(self.pcb4,"another")
         self.saved_stdout = sys.stdout
         self.out = StringIO()
         sys.stdout = self.out
         self.sut.getPS()
         self.output = self.out.getvalue().strip()
-        self.assertEquals(self.output, 'Pid: 1 PC: 0 Priority: 8 State: ready \nPid: 2 PC: 0 Priority: 9 State: ready \nPid: 3 PC: 0 Priority: 13 State: ready \nPid: 4 PC: 0 Priority: 17 State: ready')
+        self.assertEquals(self.output, 'Program: aPcb Pid: 1 PC: 0 Priority: 8 State: ready \nProgram: anotherPcb Pid: 2 PC: 0 Priority: 9 State: ready \nProgram: andAnother Pid: 3 PC: 0 Priority: 13 State: ready \nProgram: another Pid: 4 PC: 0 Priority: 17 State: ready')
 
         

@@ -7,7 +7,7 @@ class Instruction:
         self.value = valor
     
     def absoluteDataPosition(self,pcb,mmu,position):
-        return mmu.fromPageToAbsolutePosition(pcb.getDataPage(position))+ (position % mmu.getFrameSize())
+        return mmu.fromPageToAbsolutePosition(pcb.getDataPage(position).getPageNumber())+ (position % mmu.getFrameSize())
         
     def run(self):
         pass

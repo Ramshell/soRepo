@@ -36,6 +36,7 @@ class Program:
             self.logger.log("Setting value " +arg+ " at position:")
             self.instructions.insert(index, MovLiteral(index, int(arg)))
             index = index + 1
+        self.variableSize = self.variableSize + index
         
     def size(self):
         """
@@ -59,4 +60,7 @@ class Program:
     
     def getInstructions(self):
         return self.instructions
+    
+    def getName(self):
+        return self.name
     

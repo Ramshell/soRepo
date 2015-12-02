@@ -64,6 +64,10 @@ class InterruptorManager(Thread):
         pcb.toReady()
         self.schPCB.put(pcb)
         self.schPCB.setPcbToCPU()
+        
+    def storePageNeeded(self, pcb):
+        self.programLoader.storeNeededPage(pcb)
+        
 
     def ioDone(self, pcb):
         """
@@ -91,6 +95,9 @@ class InterruptorManager(Thread):
         
     def setIODelivery(self, iodelivery):
         self.io = iodelivery
+        
+    def setProgramLoader(self,programLoader):
+        self.programLoader = programLoader
         
     def setSemaphore(self, semaphore):
         self.semaphore = semaphore

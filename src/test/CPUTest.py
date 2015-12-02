@@ -8,7 +8,7 @@ from Instructions.InstCPU import InstCPU
 from mainHardwareModules.CPU import CPU
 from programs.PCB import PCB
 from mainHardwareModules.clock import Clock
-from memoryManagement.MMU import MMU
+from memoryManagement.MMU import MMU, Page
 
 '''
 @author Laime Jesus
@@ -45,7 +45,13 @@ class CPUTest(unittest.TestCase):
         self.memory.putDir(0, self.mov)
         self.memory.putDir(1, self.Instruction2)
         self.memory.putDir(2, self.instructionIO)
-        self.aPcb = PCB(0,[0,1,2],3,4,1,[123])
+        page0 = Page(0)
+        page1 = Page(1)
+        page2 = Page(2)
+        page0.changeMemoryFlag()
+        page1.changeMemoryFlag()
+        page2.changeMemoryFlag()
+        self.aPcb = PCB(0,[page0,page1,page2],3,4,1,[Page(123)])
         
 
     def test_when_fetch_then_instruction_valid(self):
@@ -69,7 +75,11 @@ class CPUTest(unittest.TestCase):
         verify(self.interruptor).ioQueue(self.data, self.cod)  # Assert
 
     def test_when_fetching_last_instruction_then_pcbEnd_interruption(self):
-        self.anotherPcb = PCB(0,[0,1],2,4,1,[123]) #The difference with aPcb, are their sizes... Arrange
+        page0 = Page(0)
+        page1 = Page(1)
+        page0.changeMemoryFlag()
+        page1.changeMemoryFlag()
+        self.anotherPcb = PCB(0,[page0,page1],2,4,1,[123]) #The difference with aPcb, are their sizes... Arrange
         self.anotherPcb.runing()
         self.cpu.setPCB(self.anotherPcb)
 

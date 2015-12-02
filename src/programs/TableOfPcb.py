@@ -4,26 +4,56 @@ class TableOfPCB:
         self.table = []
         
     def delete(self, pcb):
-        self.table.remove(pcb)
+        self.removePcb(pcb)
         
-    def addPCB(self, pcb):
-        self.table.append(pcb)
+    def addPCB(self, pcb,name):
+        self.table.append(PcbWithName(pcb,name))
         
     def contains(self, pcb):
         return self.table.count(pcb) > 0
     
     def getPCB(self, pid):
         res = None
-        for pcb in self.table:
-            if pcb.getPid() == pid:
-                res = pcb
+        for pcbWithName in self.table:
+            if pcbWithName.pcb.getPid() == pid:
+                res = pcbWithName.pcb
         return res
         
     def getPS(self):
-        for pcb in self.table:
-            print "Pid: {} PC: {} Priority: {} State: {} ".format(pcb.getPid(), pcb.getPc(), pcb.getPriority(), pcb.getState())
-
+        for pcbWithName in self.table:
+            pcbWithName.getInfo()
+            
     def countActiveProcess(self):
         return len(self.table)
     
+    def getProgramName(self,pid):
+        res = None
+        for pcbWithName in self.table:
+            if pcbWithName.pcb.getPid() == pid:
+                res = pcbWithName
+        if res is None:
+            return res
+        else:
+            return res.getName()
         
+    def removePcb(self,pcb):
+        for pcbWithName in self.table:
+            if pcbWithName.getPid():
+                self.table.remove(pcbWithName)
+    
+        
+class PcbWithName:
+    def __init__(self,pcb,name):
+        self.pcb = pcb
+        self.name = name
+        
+    def getName(self):
+        return self.name
+    
+    def getPid(self):
+        return self.pcb.getPid()
+        
+    def getInfo(self):
+        print "Program: {} Pid: {} PC: {} Priority: {} State: {} ".format(self.name ,self.pcb.getPid(), self.pcb.getPc(), self.pcb.getPriority(), self.pcb.getState())
+    
+    
