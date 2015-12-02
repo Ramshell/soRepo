@@ -15,8 +15,6 @@ if __name__ == '__main__':
     os.installNewDevice("screen")
     os.startUp()
     shell = Shell(os)
-    main = MainConsole()
-    main.startUp()
     shell.start()
     
     
