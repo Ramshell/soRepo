@@ -20,8 +20,10 @@ class TableOfPCB:
         return res
         
     def getPS(self):
+        info = ""
         for pcbWithName in self.table:
-            pcbWithName.getInfo()
+            info = info+(pcbWithName.getInfo()+"\n")
+        return info
             
     def countActiveProcess(self):
         return len(self.table)
@@ -54,6 +56,6 @@ class PcbWithName:
         return self.pcb.getPid()
         
     def getInfo(self):
-        print "Program: {} Pid: {} PC: {} Priority: {} State: {} ".format(self.name ,self.pcb.getPid(), self.pcb.getPc(), self.pcb.getPriority(), self.pcb.getState())
+        return "Program: {} Pid: {} PC: {} Priority: {} State: {} ".format(self.name ,self.pcb.getPid(), self.pcb.getPc(), self.pcb.getPriority(), self.pcb.getState())
     
     

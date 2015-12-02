@@ -1,4 +1,5 @@
 from Tkinter import *
+import time
 import codecs
 import os
 
@@ -14,6 +15,7 @@ class MainConsole(Frame):
         self.textViewCpu = None
         self.textViewScreen = None
         self.textViewPrinter = None
+        self.mainText = None
         self.createContents()
         
     def startUp(self):
@@ -22,9 +24,9 @@ class MainConsole(Frame):
     def createContents(self):
         self.mainWindow.config(bg="black")
         self.mainWindow.geometry("700x500")
-        text = Text(self.mainWindow)
-        text.pack()
-        text.config(bg="black",fg="white")
+        self.mainText = Text(self.mainWindow)
+        self.mainText.config(bg="black",fg="white",height="500",width="700")
+        self.mainText.pack()
         self.mainWindow.resizable(0,0)
         self.createTopLevelWindows()
         self.createMenues()
@@ -57,7 +59,7 @@ class MainConsole(Frame):
         return self.newWindow
     
     def createMenues(self):
-        lambda1 = lambda: self.openCpu()
+        lambda1 = lambda: self.updateCpu()
         lambda2 = lambda: self.closeCpu()
         self.createComponentMenu("CPU Console" ,lambda1 ,lambda2)
         lambda1 = lambda: self.openScreen()
@@ -76,11 +78,11 @@ class MainConsole(Frame):
     def openCpu(self):
         enlace = "../log/cpu_log"
         self.cpuWindow.deiconify()
-        #if os.path.exists(enlace):
-        file = open(enlace, "r")
-        data = file.read()
-        self.textViewCpu.insert(END,data)
-        file.close()
+        if os.path.exists(enlace):
+            file = open(enlace, "r")
+            data = file.read()
+            self.textViewCpu.insert(END,data)
+            file.close()
         
     def closeCpu(self):
         self.textViewCpu.delete("1.0", END)
@@ -112,4 +114,49 @@ class MainConsole(Frame):
         self.textViewScreen.delete("1.0", END)
         self.screenWindow.withdraw()
         
+    
+    
+    
+    
+    
+    ######################################################
+    ######################################################
+    ######################################################
+    
+    def update(self):
+        self.closeCpu()
+        self.closePrinter()
+        self.closeScreen()
+        self.openCpu()
+        self.openPrinter()
+        self.openScreen()
+    
+    def updateCpu(self):
+        time.sleep(1)
+        self.closeCpu()
+        self.openCpu()
+    
+    def key(self):
+        print "pressed"
+    
+    def write(self,message):
+        self.mainText.insert(END, message)
+        self.mainText.see(END)
+    
+    def writeCpuLog(self, message):
+        self.textViewCpu.insert(END, message)
+        self.textViewCpu.see(END)
+        
+    def writeScreenLog(self, message):
+        self.textViewScreen.insert(END, message)
+        self.textViewScreen.see(END)
+        
+    def writePrinterLog(self, message):
+        self.textViewPrinter.insert(END, message)
+        self.textViewPrinter.see(END)
+    
+        
+if __name__ == '__main__':
+    shell = MainConsole()
+    shell.startUp()
     

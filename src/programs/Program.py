@@ -23,7 +23,6 @@ class Program:
         self.name = name
         self.manual = manual
         self.variableSize = variableSize
-        self.logger = FileLogger("../log/progLoader_log")
 
     def initializePreValues(self, args):
         """
@@ -33,7 +32,6 @@ class Program:
         """
         index = 0
         for arg in args:
-            self.logger.log("Setting value " +arg+ " at position:")
             self.instructions.insert(index, MovLiteral(index, int(arg)))
             index = index + 1
         self.variableSize = self.variableSize + index

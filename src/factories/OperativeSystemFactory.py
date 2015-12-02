@@ -14,6 +14,8 @@ from storage.RAM import RAM
 from scheduler.Scheduler import Scheduler
 from mainHardwareModules.clock import Clock
 from memoryManagement.MMU import MMU
+from util.FileLogger import FileLogger
+from util.CpuFileLogger import CpuFileLogger
 
 
 class OperativeSystemFactory:
@@ -23,7 +25,7 @@ class OperativeSystemFactory:
 
 
 
-    def __init__(self,disk,ram,frameSize):
+    def __init__(self,disk,ram,frameSize,mainConsole):
         '''
         @param HardDiskDrive: an HDD with some programs loaded.
         @param MemoryRam
@@ -33,6 +35,7 @@ class OperativeSystemFactory:
         self.ram = ram
         self.condition = Condition()
         self.mmu = MMU(frameSize,ram)
+        self.console = mainConsole
     
     
     #####################
@@ -96,6 +99,11 @@ class OperativeSystemFactory:
         self.imanager.setSemaphore(self.condition)
         self.imanager.setPcbTable(self.progLoader.getPcbTable())
         self.imanager.setProgramLoader(self.progLoader)
+        
+        
+        self.loggerCpu = CpuFileLogger("../log/cpu_log",self.console)
+        self.cpu.setLogger(self.loggerCpu)
+        
         self.clock = Clock(self.cpu)
         
         return Kernel(self.clock, self.progLoader, self.imanager, self.ioDelivery)
