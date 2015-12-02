@@ -15,7 +15,7 @@ class Scheduler:
         self.readyQueue = queue
         self.burst = burst
         self.condition = condition
-        self.logger = FileLogger("../log/scheduler_log")
+        self.logger = FileLogger("../log/cpu_log")
         
 
     def put(self, pcb):

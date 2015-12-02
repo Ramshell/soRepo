@@ -24,7 +24,7 @@ class Device(Thread):
 		self.switch = True
 		self.name = devName
 		self.queue = queueAsoc
-		self.logger = FileLogger("../log/" + self.name)
+		self.logger = FileLogger("../log/" + self.name +"_log")
 		
 	def newqueue(self, queue):
 		'''

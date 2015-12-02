@@ -19,7 +19,6 @@ class HardDisk(object):
         @return: it return None if name is not found else it return program called name
         '''
         if not name in self.programs:
-            #raise Exception('ProgramTest not found')
             return None
         return self.programs[name]
     

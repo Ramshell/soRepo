@@ -1,6 +1,7 @@
 from factories.OperativeSystemFactory import OperativeSystemFactory
 from storage.RAM import RAM
 from Consoles.Shell import Shell
+from Consoles.MainConsole import MainConsole
 from factories.discFactory import diskFactory
 
 
@@ -14,6 +15,8 @@ if __name__ == '__main__':
     os.installNewDevice("screen")
     os.startUp()
     shell = Shell(os)
+    main = MainConsole()
+    main.startUp()
     shell.start()
     
     
