@@ -1,5 +1,5 @@
-from PCB import PCB
-from TableOfPcb import TableOfPCB
+from programs.PCB import PCB
+from programs.TableOfPcb import TableOfPCB
 
 
 class ProgramLoader:

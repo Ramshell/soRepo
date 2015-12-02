@@ -1,7 +1,7 @@
 import itertools
 import unittest
 
-from PCB import PCB
+from programs import PCB.PCB
 from mockito.mocking import Mock
 from mockito.mockito import verify
 from mockito.mockito import when

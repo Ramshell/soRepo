@@ -7,18 +7,18 @@ Created on 27/10/2015
 from Queue import Queue
 from threading import Condition
 
-from CPU import CPU
-from Device import Device
-from HardDisk import HardDisk
-from IODelivery import IODelivery
-from InterruptorManager import InterruptorManager
-from Kernel import Kernel
-from OwnHeap import OwnHeap, OwnQueue
-from ProgramLoader import ProgramLoader
-from RAM import RAM
+from mainHardwareModules.CPU import CPU
+from devices.Device import Device
+from storage.HardDisk import HardDisk
+from devices.IODelivery import IODelivery
+from mainHardwareModules.InterruptorManager import InterruptorManager
+from mainHardwareModules.Kernel import Kernel
+from scheduler.OwnHeap import *
+from mainHardwareModules.ProgramLoader import ProgramLoader
+from storage.RAM import RAM
 
-from Scheduler import Scheduler
-from clock import Clock
+from scheduler.Scheduler import Scheduler
+from mainHardwareModules.clock import Clock
 from memoryManagement.MMU import MMU
 
 
@@ -93,7 +93,4 @@ class OperativeSystemFactory:
 
         
         
-if __name__ == '__main__':
-    factori = OperativeSystemFactory(HardDisk(), RAM(1000))
-    factori.roundRobin(4)
         

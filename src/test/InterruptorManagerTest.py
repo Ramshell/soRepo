@@ -1,7 +1,7 @@
 from twisted.internet.test.test_serialport import DoNothing
 import unittest 
 
-from InterruptorManager import InterruptorManager
+from mainHardwareModules import InterruptorManager.InterruptorManager
 from mockito.mocking import Mock
 from mockito.mockito import verify, when
 

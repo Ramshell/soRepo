@@ -2,7 +2,7 @@ from StringIO import StringIO
 import os, sys
 import unittest
 
-from PCB import PCB
+from programs import PCB.PCB
 from TableOfPcb import TableOfPCB
 from mockito.mocking import Mock
 from mockito.mockito import verify

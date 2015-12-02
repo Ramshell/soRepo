@@ -9,14 +9,14 @@ from Queue import Queue
 from threading import Condition
 import unittest
 
-from CPU import CPU
-from Device import Device
+from mainHardwareModules import CPU.CPU
+from devices import Device.Device
 from HardDisk import HardDisk
 from IODelivery import IODelivery
 from Instructions.InstCPU import InstCPU
 from Instructions.InstIO import InstIO
 from InterruptorManager import InterruptorManager
-from OwnHeap import OwnHeap
+from scheduler import OwnHeap.OwnHeap
 from Program import Program
 from ProgramLoader import ProgramLoader
 from RAM import RAM

@@ -1,5 +1,5 @@
 from threading import Thread
-from Manual import Manual
+from programs.Manual import Manual
 from Exceptions.InvalidProgramException import InvalidProgramException
 
 class Shell(Thread):

@@ -3,7 +3,7 @@ import itertools
 from threading import Condition
 import unittest
 
-from OwnHeap import OwnHeap
+from scheduler import OwnHeap.OwnHeap
 from PCB import *
 from Scheduler import *
 from mockito.mocking import Mock

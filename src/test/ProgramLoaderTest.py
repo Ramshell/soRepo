@@ -3,9 +3,9 @@ import unittest
 from Instructions.InstCPU import InstCPU
 from Instructions.InstIO import InstIO
 
-from Program import Program
-from ProgramLoader import ProgramLoader
-from RAM import RAM
+from programs import Program.Program
+from mainHardwareModules import ProgramLoader.ProgramLoader
+from storage import RAM.RAM
 from mockito.mocking import Mock
 from mockito.mockito import when
 from mockito.mockito import verify

@@ -7,7 +7,7 @@ from Queue import Queue
 import time
 import unittest
 
-from Device import Device
+from devices import Device.Device
 from Instructions.InstIO import InstIO
 from mockito import Mock
 from mockito.inorder import verify

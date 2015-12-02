@@ -6,13 +6,13 @@ Created on 10 de nov. de 2015
 from threading import *
 import unittest
 
-from CPU import CPU
+from mainHardwareModules import CPU.CPU
 from Instructions.Assembly import *
 from Instructions.InstIO import InstIO
 from Manual import Manual
 from PCB import PCB
 from Program import Program
-from RAM import RAM
+from storage import RAM.RAM
 from clock import Clock
 from mockito.mocking import Mock
 from mockito.mockito import verify

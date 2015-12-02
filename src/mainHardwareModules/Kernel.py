@@ -1,4 +1,4 @@
-from Device import Device
+from devices.Device import Device
 
 
 class Kernel(object):
@@ -14,7 +14,7 @@ class Kernel(object):
         self.imanager = imanager
         self.devices = devices
         
-    def estart(self):
+    def startUp(self):
         self.clock.start()
         for device in self.devices:
             device.start()

@@ -1,7 +1,7 @@
 from threading import *
 
-from InterruptorManager import InterruptorManager
-from PCB import PCB
+from mainHardwareModules import InterruptorManager
+from programs import PCB
 from util.FileLogger import FileLogger
 
 

@@ -1,6 +1,6 @@
 from threading import Thread
 import time
-from CPU import CPU
+from mainHardwareModules.CPU import CPU
 
 class Clock(Thread):
     '''

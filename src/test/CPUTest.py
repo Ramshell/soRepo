@@ -1,7 +1,7 @@
 import unittest
 from mockito.mocking import Mock
 from mockito.mockito import verify
-from RAM import RAM
+from storage import RAM.RAM
 from threading import RLock
 from Instructions.InstIO import InstIO
 from Instructions.InstCPU import InstCPU
@@ -23,7 +23,7 @@ from CPU import CPU
 from Instructions.InstCPU import InstCPU
 from Instructions.InstIO import InstIO
 from PCB import PCB
-from RAM import RAM
+from storage import RAM.RAM
 from clock import Clock
 from mockito.mocking import Mock
 from mockito.mockito import verify

@@ -1,6 +1,6 @@
-from ReadyPCB import *
-from RuningPCB import *
-from WaitingPCB import *
+from programs.ReadyPCB import *
+from programs.RuningPCB import *
+from programs.WaitingPCB import *
 
 
 class PCB:
