@@ -29,9 +29,12 @@ class Scheduler:
         self.condition.acquire()
         if self.readyQueue.empty():
             self.condition.wait()
+        
         pcb = self.readyQueue.get()  # this method also removes the element
-        if pcb is None:
-            raise Exception('Pcb is Null')
+        if pcb.isTerminated():
+            self.condition.release()
+            self.logger.log("Deleting terminated process with pid: ", pcb.getPid())
+            return
         self.assignRafaga(pcb)
         pcb.runing()
         self.logger.log("Setting new process to CPU")
@@ -46,6 +49,12 @@ class Scheduler:
         
     def getCpu(self):
         return self.cpu
+    
+    def getCpuPid(self):
+        return self.cpu.pcb.getPid()
+    
+    def expropiate(self):
+        self.cpu.pcb = None
         
         
         
