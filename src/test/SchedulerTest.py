@@ -3,9 +3,9 @@ import itertools
 from threading import Condition
 import unittest
 
-from scheduler import OwnHeap.OwnHeap
-from PCB import *
-from Scheduler import *
+from scheduler.OwnHeap import OwnHeap
+from programs.PCB import *
+from scheduler.Scheduler import *
 from mockito.mocking import Mock
 from mockito.mockito import verify
 from mockito.mockito import when

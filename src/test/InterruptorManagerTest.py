@@ -1,7 +1,6 @@
-from twisted.internet.test.test_serialport import DoNothing
 import unittest 
 
-from mainHardwareModules import InterruptorManager.InterruptorManager
+from mainHardwareModules.InterruptorManager import InterruptorManager
 from mockito.mocking import Mock
 from mockito.mockito import verify, when
 
@@ -11,6 +10,7 @@ class InterruptorManagerTest(unittest.TestCase):
 
     def setUp(self):
         self.scheduler = Mock()
+        self.cpu = Mock()
         self.disco = Mock()
         self.condition = Mock()
         self.pcbTable = Mock()
@@ -31,11 +31,11 @@ class InterruptorManagerTest(unittest.TestCase):
         verify(self.scheduler).setPcbToCPU()
     
     def test_when_kill_signal_then_cleans_the_memory(self):
+        when(self.cpu).enable().thenReturn(None)
+        when(self.scheduler).getCpu().thenReturn(self.cpu)
         self.imanager.kill(0)
-        
         verify(self.pcbTable).delete(self.aPCB)
         verify(self.ram).clean(self.aPCB)
-        verify(self.scheduler).setPcbToCPU()
          
     def test_when_timeout_signal_then_the_pcb_is_added_to_the_readyQueue_again(self):
         self.imanager.timeOut(self.aPCB)

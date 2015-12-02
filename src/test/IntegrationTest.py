@@ -9,18 +9,18 @@ from Queue import Queue
 from threading import Condition
 import unittest
 
-from mainHardwareModules import CPU.CPU
-from devices import Device.Device
-from HardDisk import HardDisk
-from IODelivery import IODelivery
+from mainHardwareModules.CPU import CPU
+from devices.Device import Device
+from storage.HardDisk import HardDisk
+from devices.IODelivery import IODelivery
 from Instructions.InstCPU import InstCPU
 from Instructions.InstIO import InstIO
-from InterruptorManager import InterruptorManager
-from scheduler import OwnHeap.OwnHeap
-from Program import Program
-from ProgramLoader import ProgramLoader
-from RAM import RAM
-from Scheduler import Scheduler
+from mainHardwareModules.InterruptorManager import InterruptorManager
+from scheduler.OwnHeap import OwnHeap
+from programs.Program import Program
+from mainHardwareModules.ProgramLoader import ProgramLoader
+from storage.RAM import RAM
+from scheduler.Scheduler import Scheduler
 from mockito.mocking import Mock
 from memoryManagement.MMU import MMU
 
@@ -72,8 +72,8 @@ class IntegrationTest(unittest.TestCase):
         
 
     def test_when_programLoader_loadProcessWithNoPriority_then_it_starts_the_expected_sequence(self):
-        self.progLoader.loadProcessWithNoPriority("ls")
-        self.progLoader.loadProcessWithPriority("pwd", 3)
+        self.progLoader.loadProcess("ls")
+        self.progLoader.loadProcess("pwd", 3)
         self.table = self.progLoader.getPcbTable()
         self.table.getPS()
         self.assertEqual(2, self.table.countActiveProcess())

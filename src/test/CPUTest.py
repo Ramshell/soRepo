@@ -1,13 +1,13 @@
 import unittest
 from mockito.mocking import Mock
 from mockito.mockito import verify
-from storage import RAM.RAM
+from storage.RAM import RAM
 from threading import RLock
 from Instructions.InstIO import InstIO
 from Instructions.InstCPU import InstCPU
-from CPU import CPU
-from PCB import PCB
-from clock import Clock
+from mainHardwareModules.CPU import CPU
+from programs.PCB import PCB
+from mainHardwareModules.clock import Clock
 from memoryManagement.MMU import MMU
 
 '''
@@ -16,17 +16,6 @@ from memoryManagement.MMU import MMU
 @author Sandoval Lucas
 '''
 
-from threading import RLock
-import unittest
-
-from CPU import CPU
-from Instructions.InstCPU import InstCPU
-from Instructions.InstIO import InstIO
-from PCB import PCB
-from storage import RAM.RAM
-from clock import Clock
-from mockito.mocking import Mock
-from mockito.mockito import verify
 
 
 class CPUTest(unittest.TestCase):

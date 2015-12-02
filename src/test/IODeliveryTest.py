@@ -1,7 +1,7 @@
 from threading import *
 import unittest
 
-from devices import IODelivery.IODelivery
+from devices.IODelivery import IODelivery
 from mockito.mocking import Mock
 from mockito.mockito import verify
 from mockito.mockito import when

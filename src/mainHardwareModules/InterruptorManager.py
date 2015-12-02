@@ -53,7 +53,7 @@ class InterruptorManager(Thread):
         self.schPCB.cpu.pcb = None
         self.pcbTable.delete(self.pcb)
         self.mmu.clean(self.pcb)
-        self.schPCB.cpu.enable()
+        self.schPCB.getCpu().enable()
         
     def timeOut(self, pcb):
         """

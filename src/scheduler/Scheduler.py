@@ -44,6 +44,9 @@ class Scheduler:
         '''
         pcb.assignBurst(self.burst)
         
+    def getCpu(self):
+        return self.cpu
+        
         
         
           
