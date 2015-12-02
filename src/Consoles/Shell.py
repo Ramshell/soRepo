@@ -1,5 +1,5 @@
 from threading import Thread
-from Manual import Manual
+from programs.Manual import Manual
 from Exceptions.InvalidProgramException import InvalidProgramException
 
 class Shell(Thread):
@@ -8,21 +8,37 @@ class Shell(Thread):
 
 
     def __init__(self, kernel=None, manuals=None):
+        """
+        @note: Shell work together a Kernel and have default manuals, and initialize a thread
+        Constructor a kernel and manuals
+        """       
+        
         Thread.__init__(self)
         self.buildIn = {'execute' : self.execute, '?' : self.help, 'ps' : self.ps, 'kill' : self.kill, 'man' : self.manual}
         self.kernel=kernel
         self.manuals = self.createManuals()
         
     def run(self):
+        """
+        @note: this method start the shell
+        """
         while(True):
             inst = raw_input("|: ")
             self.parse(inst)
             
         
     def setKernel(self, kernel):
+        """
+        @param kernel: its the new kernel for this shell
+        """
         self.kernel = kernel
     #shell function                
     def execute(self, command):
+        """
+        @note: this is a shell build-in function
+        @param command: it's a 
+        """
+        
         command.pop(0) #This is from Shell, we don't need this
         
         if len(command) == 0:
@@ -52,11 +68,22 @@ class Shell(Thread):
         if len(args) == 1:
             self.dir_print("Give me some pid to kill")
             return
+        #first argument for args is not used
+        args.pop(0)
+        
+        #pidtokill = args[0]
         for arg in args:
             try:
-                int(arg)
-                self.kernel.kill(arg)
-            except: raise Exception("invalid argument")
+                self.kernel.kill(int(arg))
+                
+            except:
+                self.dir_print("Error you can't kill " + arg + " please give me a pid number")
+            
+        #for arg in args:
+        #    try:
+        #        int(arg)
+        #        self.kernel.kill(arg)
+        #    except: raise Exception("invalid argument")
         
     
     #shell function    

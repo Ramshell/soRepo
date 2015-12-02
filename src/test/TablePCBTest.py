@@ -2,8 +2,8 @@ from StringIO import StringIO
 import os, sys
 import unittest
 
-from PCB import PCB
-from TableOfPcb import TableOfPCB
+from programs.PCB import PCB
+from programs.TableOfPcb import TableOfPCB
 from mockito.mocking import Mock
 from mockito.mockito import verify
 from mockito.mockito import when

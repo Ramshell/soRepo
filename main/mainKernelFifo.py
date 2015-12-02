@@ -1,9 +1,9 @@
-from Manual import Manual
-from OperativeSystemFactory import OperativeSystemFactory
-from RAM import RAM
-from Scheduler import Scheduler
-from Shell import Shell
-from discFactory import diskFactory
+from programs.Manual import Manual
+from factories.OperativeSystemFactory import OperativeSystemFactory
+from storage.RAM import RAM
+from scheduler.Scheduler import Scheduler
+from Consoles.Shell import Shell
+from factories.discFactory import diskFactory
 
 
 if __name__ == '__main__':
@@ -13,6 +13,6 @@ if __name__ == '__main__':
     os = osFc.fifo()
     os.installNewDevice("printer")
     os.installNewDevice("screen")
-    os.estart()
+    os.startUp()
     shell = Shell(os)
     shell.start()

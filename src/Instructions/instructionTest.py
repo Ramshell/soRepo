@@ -2,8 +2,8 @@
 import unittest
 
 from Assembly import *
-from PCB import PCB
-from RAM import RAM
+from programs import PCB.PCB
+from storage import RAM.RAM
 from memoryManagement.MMU import MMU
 
 class Test(unittest.TestCase):

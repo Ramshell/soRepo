@@ -3,9 +3,9 @@ import unittest
 from Instructions.InstCPU import InstCPU
 from Instructions.InstIO import InstIO
 
-from Program import Program
-from ProgramLoader import ProgramLoader
-from RAM import RAM
+from programs.Program import Program
+from mainHardwareModules.ProgramLoader import ProgramLoader
+from storage.RAM import RAM
 from mockito.mocking import Mock
 from mockito.mockito import when
 from mockito.mockito import verify
@@ -49,7 +49,7 @@ class ProgramLoaderTest(unittest.TestCase):
         when(self.disco).getProgram("programa").thenReturn(self.program)
         
         
-        self.progLoader.loadProcessWithNoPriority("programa")
+        self.progLoader.loadProcess("programa")
         
         self.assertEquals(self.progLoader.getNextId() , 2)
         verify(self.mmu,1).getMemoryScope(self.program)
@@ -65,7 +65,7 @@ class ProgramLoaderTest(unittest.TestCase):
         when(self.disco).getProgram("programa").thenReturn(self.program)
         
         
-        self.progLoader.loadProcessWithNoPriority("programa")
+        self.progLoader.loadProcess("programa")
         
         self.assertEquals(self.progLoader.getNextId() , 2)
         verify(self.mmu,1).getMemoryScope(self.program)
@@ -77,7 +77,7 @@ class ProgramLoaderTest(unittest.TestCase):
         when(self.disco).getProgram("programa").thenReturn(self.program)
         
         
-        self.progLoader2.loadProcessWithNoPriority("programa")
+        self.progLoader2.loadProcess("programa")
         
         self.assertEquals(self.progLoader.getNextId() , 1)
         self.assertEquals(self.ram.getDir(0) , self.instruccion1)

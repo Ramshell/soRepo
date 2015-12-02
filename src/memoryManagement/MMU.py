@@ -1,4 +1,4 @@
-class MMU(object):
+class MMU:
     '''
     @summary: it manages the paging
     '''

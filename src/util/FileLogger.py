@@ -26,6 +26,6 @@ class FileLogger:
         '''
         self.date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         self.file = open(self.dir, "a")
-        self.message = "// " + self.date + " - " + txt + " //" + "\n"
+        self.message = self.date + "   -   " + txt + "\n"
         self.file.write(self.message)
         self.file.close()

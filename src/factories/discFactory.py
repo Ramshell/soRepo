@@ -1,9 +1,9 @@
-from HardDisk import HardDisk
+from storage.HardDisk import HardDisk
 from Instructions.Assembly import *
 from Instructions.InstCPU import InstCPU
 from Instructions.InstIO import InstIO
-from Manual import Manual
-from Program import Program
+from programs.Manual import Manual
+from programs.Program import Program
 
 
 class diskFactory(object):

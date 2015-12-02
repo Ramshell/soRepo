@@ -1,6 +1,6 @@
 from threading import Thread
 import time
-from CPU import CPU
+from mainHardwareModules.CPU import CPU
 
 class Clock(Thread):
     '''
@@ -27,4 +27,4 @@ class Clock(Thread):
         '''
         while(True):
             self.cpu.tick()
-            time.sleep(0.5)
+            time.sleep(1)

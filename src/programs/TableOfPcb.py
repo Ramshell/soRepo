@@ -13,10 +13,11 @@ class TableOfPCB:
         return self.table.count(pcb) > 0
     
     def getPCB(self, pid):
+        res = None
         for pcb in self.table:
             if pcb.getPid() == pid:
-                return pcb
-        return None
+                res = pcb
+        return res
         
     def getPS(self):
         for pcb in self.table:

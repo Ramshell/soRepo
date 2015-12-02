@@ -1,7 +1,7 @@
-from OperativeSystemFactory import OperativeSystemFactory
-from RAM import RAM
-from Shell import Shell
-from discFactory import diskFactory
+from factories.OperativeSystemFactory import OperativeSystemFactory
+from storage.RAM import RAM
+from Consoles.Shell import Shell
+from factories.discFactory import diskFactory
 
 
 if __name__ == '__main__':
@@ -12,7 +12,7 @@ if __name__ == '__main__':
     os = osFc.roundRobin_withPriority(2)
     os.installNewDevice("printer")
     os.installNewDevice("screen")
-    os.estart()
+    os.startUp()
     shell = Shell(os)
     shell.start()
     
