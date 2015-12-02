@@ -14,6 +14,9 @@ class diskFactory(object):
         pass
     
     def basicHDD(self):
+        '''
+        @return: an HDD with 4 programs, 2 simple programs, and 2 "real programs", factorial n and summatory n
+        '''
         self.manSublime = Manual("sublimeText", "make something in I/O")
         self.sbl = Program("sublimeText")
         self.instr1 = InstIO("ioDePrinter", 1)
@@ -59,33 +62,25 @@ class diskFactory(object):
         self.vim.addInstruction(self.instrVim6)
         self.vim.addInstruction(self.instrVim6)
         
-        self.manMultiplatory = Manual("multiplatory", "multiplatory(n)")
-        self.multiplatory = Program("multiplatory", self.manMultiplatory)
+        self.manMultiplatory = Manual("factorial", "factorial(n)")
+        self.multiplatory = Program("factorial", self.manMultiplatory)
+        self.multiplatory.variableSize = 3
         # the relative position 0 has the n
-        self.instrMultiplatory1 = MovLiteral(1, 1)
-        self.instrMultiplatory2 = MovLiteral(2, 1)
-        self.instrMultiplatory3 = CmpLiteral(0, 0)
-        self.instrMultiplatory4 = Jle(4)
-        self.instrMultiplatory5 = Mul(1, 2)
-        self.instrMultiplatory6 = AddLiteral(2, 1)
-        self.instrMultiplatory7 = AddLiteral(0, -1)
-        self.instrMultiplatory8 = Jmp(3)
-        self.instrMultiplatory9 = ScreenPrintValue(1)
-        
-        self.multiplatory.addInstruction(self.instrMultiplatory1)
-        self.multiplatory.addInstruction(self.instrMultiplatory2)
-        self.multiplatory.addInstruction(self.instrMultiplatory3)
-        self.multiplatory.addInstruction(self.instrMultiplatory4)
-        self.multiplatory.addInstruction(self.instrMultiplatory5)
-        self.multiplatory.addInstruction(self.instrMultiplatory6)
-        self.multiplatory.addInstruction(self.instrMultiplatory7)
-        self.multiplatory.addInstruction(self.instrMultiplatory8)
-        self.multiplatory.addInstruction(self.instrMultiplatory9)
+        self.multiplatory.addInstruction(MovLiteral(1, 1))
+        self.multiplatory.addInstruction(MovLiteral(2, 2))
+        self.multiplatory.addInstruction(CmpLiteral(0, 1))
+        self.multiplatory.addInstruction(Jle(4))
+        self.multiplatory.addInstruction(Mul(1, 2))
+        self.multiplatory.addInstruction(AddLiteral(2, 1))
+        self.multiplatory.addInstruction(AddLiteral(0, -1))
+        self.multiplatory.addInstruction(Jmp(3))
+        self.multiplatory.addInstruction(ScreenPrintValue(1))
         
         
         
-        self.sumatoryManual = Manual("sumatory", "sumatory(n)")
-        self.sumatory = Program("sumatory", self.sumatoryManual)
+        self.sumatoryManual = Manual("summatory", "summatory(n)")
+        self.sumatory = Program("summatory", self.sumatoryManual)
+        self.sumatory.variableSize = 3
         self.sumatory.addInstruction(MovLiteral(1, 0))
         self.sumatory.addInstruction(MovLiteral(2, 1))
         self.sumatory.addInstruction(CmpLiteral(0, 0))

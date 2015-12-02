@@ -42,9 +42,6 @@ class CPU:
         self.enable()
 
 
-
-    
-
     def tick(self):
         '''
         Starts the loop of fetch/decode/execute cicle
@@ -53,6 +50,7 @@ class CPU:
         self.flagOfIoInstruction = False
         self.flagOfPCBEnding = False
         self.flagOfRafagaOfPCB = False
+        self.flagThePcbNeedsAPage = False
         
         self.thereIsPCB()
         
@@ -60,17 +58,13 @@ class CPU:
             if(self.pcb.finished()):  # BEFORE EXECUTION
                 self.flagOfPCBEnding = True
             else:
-                self.semaphore.acquire()
-                self.inst = self.fetch()
-                if(self.inst.isIO()):
-                    self.prepareForIOInterruption()
+                if not self.pcb.getCurrentPage().isInMemory():  # BEFORE EXECUTION
+                    self.flagThePcbNeedsAPage = True
                 else:
-                    self.execute(self.inst)
-                    self.prepareForKillInterruption()
-                            
-                self.semaphore.release()            
+                    self.executionProcess()
             # DECODE FLAGS
             if (self.flagOfIoInstruction):
+                print "iooo"
                 self.makeIoInterruption()
                 return
             if (self.flagOfPCBEnding):
@@ -79,13 +73,16 @@ class CPU:
             if(self.flagOfRafagaOfPCB):
                 self.makeTimeOutInterruption()
                 return
+            if(self.flagThePcbNeedsAPage):
+                self.storePageInterruption()
+                return
             
     def fetch(self):
         '''
         Fetch next instruction, due to set pcb.
         '''
-        self.logger.log("Fetching instruction "+ str(self.mmu.fromPageToAbsolutePosition(self.pcb.getCurrentPage()) + self.pcb.getPc() % self.mmu.getFrameSize()))
-        self.inst = self.memory.getDir(self.mmu.fromPageToAbsolutePosition(self.pcb.getCurrentPage()) + self.pcb.getPc() % self.mmu.getFrameSize())
+        self.logger.log("Fetching instruction "+ str(self.mmu.fromPageToAbsolutePosition(self.pcb.getCurrentPage().getPageNumber()) + self.pcb.getPc() % self.mmu.getFrameSize()))
+        self.inst = self.memory.getDir(self.mmu.fromPageToAbsolutePosition(self.pcb.getCurrentPage().getPageNumber()) + self.pcb.getPc() % self.mmu.getFrameSize())
         self.pcb.incrementPc()
         self.pcb.decrementQuantum()
         return self.inst  # ANTE CADA FETCH SE INCREMENTA EL PC DEL PCB
@@ -141,3 +138,17 @@ class CPU:
     def makeTimeOutInterruption(self):
         self.logger.log("TimeOut Signal")
         self.interruptorManager.timeOut(self.pcb)
+        
+    def storePageInterruption(self):
+        self.logger.log("Store Page Signal")
+        self.interruptorManager.storePageNeeded(self.pcb)
+        
+    def executionProcess(self):
+        self.semaphore.acquire()
+        self.inst = self.fetch()
+        if (self.inst.isIO()):
+            self.prepareForIOInterruption()
+        else:
+            self.execute(self.inst)
+            self.prepareForKillInterruption()
+        self.semaphore.release()

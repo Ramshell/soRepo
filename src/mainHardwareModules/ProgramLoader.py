@@ -50,15 +50,17 @@ class ProgramLoader:
         self.miPCB = PCB(self.getNextId(),self.pages,self.myProgram.size(), priority,self.mmu.getFrameSize(),self.dataScope)
         self.instructions = self.myProgram.getInstructions()
         current = 0
-        for i in self.pages:
-            for j in xrange(self.mmu.getFrameSize()):
-                if current >= len(self.instructions): break
-                self.memory.putDir(self.mmu.fromPageToAbsolutePosition(i) + j, self.instructions[current])
-                current = current+1
+        for slipping in xrange(self.mmu.getFrameSize()):
+            if current >= len(self.instructions): break
+            self.memory.putDir(self.mmu.fromPageToAbsolutePosition(self.pages[0].getPageNumber()) + slipping, self.instructions[current])
+            current = current+1
+        self.pages[0].changeMemoryFlag()
         self.miPCB.toReady()
         self.processQueue.put(self.miPCB)
-        self.pcbTable.addPCB(self.miPCB)
+        self.pcbTable.addPCB(self.miPCB,self.myProgram.getName())
         return self.pids
+    
+    
     
     def getPcbTable(self):
         return self.pcbTable
@@ -67,3 +69,16 @@ class ProgramLoader:
     def getNextId(self):
         self.pids = self.pids + 1
         return self.pids
+    
+    def storeNeededPage(self,pcb):
+        '''
+        @invariant: the pcb's pc is in the beginning of a page not in memory RAM.
+        '''
+        currentValue = pcb.getCurrentLogicPage() * self.mmu.getFrameSize()
+        programName = self.pcbTable.getProgramName(pcb.getPid())
+        instructions = self.hdd.getProgram(programName).getInstructions()
+        for slipping in xrange(self.mmu.getFrameSize()):
+            if currentValue >= len(instructions): break
+            self.memory.putDir(self.mmu.fromPageToAbsolutePosition(pcb.getCurrentPage().getPageNumber()) + slipping, instructions[currentValue])
+            currentValue = currentValue + 1
+        pcb.getCurrentPage().changeMemoryFlag()

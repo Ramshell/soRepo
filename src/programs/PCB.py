@@ -27,8 +27,14 @@ class PCB:
     def getCurrentPage(self):
         return self.pages[self.pc / self.frameSize]
     
+    def getCurrentLogicPage(self):
+        return self.pc / self.frameSize
+    
     def getDataPage(self,relativePosition):
         return self.dataScope[relativePosition / self.frameSize]
+    
+    def getDataPageNumber(self,relativePosition):
+        return relativePosition / self.frameSize
         
     def getFlagZ(self):
         return self.flagZ
@@ -38,6 +44,9 @@ class PCB:
         
     def getPages(self):
         return self.pages
+    
+    def getDataPages(self):
+        return self.dataScope
 
     def getPc(self):
         return self.pc
@@ -76,11 +85,11 @@ class PCB:
         return self.priority
     
     def decrementPriority(self):
-        if(self.priority > 0):
-            self.priority = (self.priority - 1)
+        self.priority = (self.priority - 1)
             
     def decrementQuantum(self):
         self.burst = self.burst - 1
+        
         
 
         

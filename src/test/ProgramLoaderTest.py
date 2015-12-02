@@ -9,7 +9,7 @@ from storage.RAM import RAM
 from mockito.mocking import Mock
 from mockito.mockito import when
 from mockito.mockito import verify
-from memoryManagement.MMU import MMU, Scope
+from memoryManagement.MMU import MMU, Scope, Page
 
 
 
@@ -42,7 +42,7 @@ class ProgramLoaderTest(unittest.TestCase):
     def test_load_a_program_pcb_creation(self):
         when(self.disco).getProgram("programa").thenReturn(self.program)
         when(self.mmu).getFrameSize().thenReturn(1)
-        self.scope = Scope([0,23],[123])
+        self.scope = Scope([Page(0),Page(23)],[Page(123)])
         when(self.mmu).getMemoryScope(self.program).thenReturn(self.scope)
         when(self.mmu).fromPageToAbsolutePosition(0).thenReturn(0)
         when(self.mmu).fromPageToAbsolutePosition(23).thenReturn(23)
@@ -54,12 +54,11 @@ class ProgramLoaderTest(unittest.TestCase):
         self.assertEquals(self.progLoader.getNextId() , 2)
         verify(self.mmu,1).getMemoryScope(self.program)
         self.assertEquals(self.ram.getDir(0) , self.instruccion1)
-        self.assertEquals(self.ram.getDir(23) , self.instruccion2)
         
     def test_load_a_program_pcb_creation_with_1_page(self):
         when(self.disco).getProgram("programa").thenReturn(self.program)
         when(self.mmu).getFrameSize().thenReturn(2)
-        self.scope = Scope([23],[45])
+        self.scope = Scope([Page(23)],[Page(45)])
         when(self.mmu).getMemoryScope(self.program).thenReturn(self.scope)
         when(self.mmu).fromPageToAbsolutePosition(23).thenReturn(46)
         when(self.disco).getProgram("programa").thenReturn(self.program)
@@ -81,7 +80,6 @@ class ProgramLoaderTest(unittest.TestCase):
         
         self.assertEquals(self.progLoader.getNextId() , 1)
         self.assertEquals(self.ram.getDir(0) , self.instruccion1)
-        self.assertEquals(self.ram.getDir(1) , self.instruccion2)
 
 if __name__ == "__main__":
     unittest.main()        
