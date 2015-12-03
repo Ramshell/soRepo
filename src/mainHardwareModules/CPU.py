@@ -153,7 +153,7 @@ class CPU:
         else:
             self.execute(self.inst)
             self.prepareForKillInterruption()
-        self.semaphore.release()
+        #self.semaphore.release()
        
     def setLogger(self,aLogger):
         self.logger = aLogger

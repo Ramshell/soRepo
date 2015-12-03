@@ -27,15 +27,14 @@ class CPUTest(unittest.TestCase):
         self.scheduler = Mock()
         self.hdd = Mock()
         self.queue = Mock()
-        # self.aPcb = Mock()
-
         self.interruptor2 = Mock()
         self.interruptor = Mock()
+        self.logger = Mock()
 
         self.semaphore = RLock()
 
         self.cpu = CPU(self.memory,self.interruptor, self.semaphore,self.mmu)
-        #self.cpu2= CPU(self.memoria,self.inMan2)
+        self.cpu.setLogger(self.logger)
         self.clock = Clock(self.cpu)
 
         self.mov = InstCPU("Matar a Flanders")

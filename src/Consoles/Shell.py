@@ -3,6 +3,7 @@ from threading import Thread
 from programs.Manual import Manual
 from Exceptions.InvalidProgramException import InvalidProgramException
 from Consoles.MainConsoleThread import MainConsoleThread
+from sys import stdin
 
 class Shell(Thread):
     

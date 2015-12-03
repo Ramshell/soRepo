@@ -14,8 +14,7 @@ from storage.RAM import RAM
 from scheduler.Scheduler import Scheduler
 from mainHardwareModules.clock import Clock
 from memoryManagement.MMU import MMU
-from util.FileLogger import FileLogger
-from util.CpuFileLogger import CpuFileLogger
+from util.FileLogger import *
 
 
 class OperativeSystemFactory:
