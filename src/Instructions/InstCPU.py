@@ -11,7 +11,7 @@ class InstCPU(Instruction):
     """
     def __init__(self, name):
         Instruction.__init__(self, name)
-        self.logger = FileLogger("../log/cpu_log")
+        #self.logger = FileLogger("../log/cpu_log")
     
     """
     Return True if the instruction is of I/O, False otherwise
@@ -33,4 +33,4 @@ class InstCPU(Instruction):
     
     """
     def run(self,pcb,memory,mmu):
-        self.logger.log(self.value) 
+        pass

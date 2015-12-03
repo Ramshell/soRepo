@@ -20,11 +20,12 @@ class Test(unittest.TestCase):
         self.pcb1 = Mock()
         self.pcb2 = Mock()
         self.interruptor = Mock()
+        self.logger = Mock()
         self.printLine1 = InstIO("Impresion 1", 0)
         self.printLine2 = InstIO("Impresion 2", 0)
         self.queue = Queue()
         self.device = Device("Printer", self.interruptor, self.queue)  # 0 equals to the device cod printer
-        
+        self.device.setLogger(self.logger)
         
     def test_when_process_is_called_the_instruccion_runs_and_ioDone_is_sent(self):
         self.packageOne = [self.pcb1, self.printLine1]

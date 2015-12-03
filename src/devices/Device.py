@@ -24,7 +24,7 @@ class Device(Thread):
 		self.switch = True
 		self.name = devName
 		self.queue = queueAsoc
-		self.logger = FileLogger("../log/" + self.name +"_log")
+		self.logger = None
 		
 	def newqueue(self, queue):
 		'''
@@ -64,7 +64,7 @@ class Device(Thread):
 		
 		@param instruction: Instruction to be executed 
 		'''
-		instruction.run()
+		self.logger.log(str(instruction.value))
 	
 	def sizeOfQueue(self):
 		'''
@@ -78,3 +78,5 @@ class Device(Thread):
 		'''
 		self.switch = False  # The Switch stands for ON / OFF Device.. True==ON, FALSE== OFF
 	
+	def setLogger(self,logger):
+		self.logger = logger

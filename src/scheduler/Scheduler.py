@@ -15,7 +15,7 @@ class Scheduler:
         self.readyQueue = queue
         self.burst = burst
         self.condition = condition
-        self.logger = FileLogger("../log/cpu_log")
+        #self.logger = FileLogger("../log/cpu_log")
         
 
     def put(self, pcb):
@@ -37,7 +37,7 @@ class Scheduler:
             return
         self.assignRafaga(pcb)
         pcb.runing()
-        self.logger.log("Setting new process to CPU")
+        #self.logger.log("Setting new process to CPU")
         self.cpu.setPCB(pcb)
         self.condition.release()
     

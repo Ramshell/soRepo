@@ -24,13 +24,14 @@ class Kernel(object):
         return self.pid
     
     def ps(self):
-        self.programLoader.getPcbTable().getPS()
+        return self.programLoader.getPcbTable().getPS()
     
     def kill(self,pid):
         self.imanager.kill(pid)
     
-    def installNewDevice(self,deviceName):
+    def installNewDevice(self,deviceName,deviceLogger):
         self.device = Device(deviceName,self.imanager)
+        self.device.setLogger(deviceLogger)
         self.delivery.newDevice(self.device)
         self.devices.append(self.device)
         

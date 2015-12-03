@@ -29,7 +29,7 @@ class CPU:
         self.pcb = None
         self.semaphore = semaphore
         self.mmu = mmu
-        self.logger = FileLogger("../log/cpu_log")
+        self.logger = None#FileLogger("../log/cpu_log")
         
 
     def setPCB(self, pcb):
@@ -86,6 +86,7 @@ class CPU:
         '''
         self.logger.log("Fetching instruction "+ str(self.mmu.fromPageToAbsolutePosition(self.pcb.getCurrentPage().getPageNumber()) + self.pcb.getPc() % self.mmu.getFrameSize()))
         self.inst = self.memory.getDir(self.mmu.fromPageToAbsolutePosition(self.pcb.getCurrentPage().getPageNumber()) + self.pcb.getPc() % self.mmu.getFrameSize())
+        self.logger.log(str(self.inst.value))
         self.pcb.incrementPc()
         self.pcb.decrementQuantum()
         return self.inst  # ANTE CADA FETCH SE INCREMENTA EL PC DEL PCB
@@ -152,4 +153,7 @@ class CPU:
         else:
             self.execute(self.inst)
             self.prepareForKillInterruption()
-        
+        #self.semaphore.release()
+       
+    def setLogger(self,aLogger):
+        self.logger = aLogger

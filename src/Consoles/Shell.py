@@ -1,13 +1,16 @@
+from __future__ import print_function
 from threading import Thread
 from programs.Manual import Manual
 from Exceptions.InvalidProgramException import InvalidProgramException
+from Consoles.MainConsoleThread import MainConsoleThread
+from sys import stdin
 
 class Shell(Thread):
     
     __slots__ = ["buildIn"]
 
 
-    def __init__(self, kernel=None, manuals=None):
+    def __init__(self,console, kernel=None, manuals=None):
         """
         @note: Shell work together a Kernel and have default manuals, and initialize a thread
         Constructor a kernel and manuals
@@ -17,6 +20,7 @@ class Shell(Thread):
         self.buildIn = {'execute' : self.execute, '?' : self.help, 'ps' : self.ps, 'kill' : self.kill, 'man' : self.manual}
         self.kernel=kernel
         self.manuals = self.createManuals()
+        self.console = console
         
     def run(self):
         """
@@ -43,19 +47,19 @@ class Shell(Thread):
         
         if len(command) == 0:
             #raise InvalidProgramException("No Program to Run")
-            print "No program to run"
+            print ("No program to run",file=self.console)
             return
         programToExecute = command.pop(0)
         if(not self.kernel.in_disk(programToExecute)):
             #raise InvalidProgramException(programToExecute + " does not exist")
-            print programToExecute + " doesn't exist"
+            print (programToExecute + " doesn't exist",file=self.console)
             return
         
         if len(command) == 0:
             self.real_execute(programToExecute,0, command)
         else:
             assignedPriority = int(command.pop(0))
-            print assignedPriority
+            print (assignedPriority,file=self.console)
             self.real_execute(programToExecute, assignedPriority , command)
 
     def real_execute(self, program_name, priority=0, args=[]): 
@@ -89,11 +93,11 @@ class Shell(Thread):
     #shell function    
     def help(self, args):
         # si le pones args deberia tirar error o te olvias de los args?
-        print "NSN bash, version 0.0.0(1)-release shortly in linux-windows-mac-os"
-        print "These shell commands are defined internally. Type `help' to see this list."
-        print "Type help 'name' to find out more about the function 'name'"
-        print "Use 'info bash' to find out more about the shell in general."
-        print "Use `man -k' or `info' to find out more about commands not in this list."
+        print ("NSN bash, version 0.0.0(1)-release shortly in linux-windows-mac-os",file=self.console)
+        print ("These shell commands are defined internally. Type `help' to see this list.",file=self.console)
+        print ("Type help 'name' to find out more about the function 'name'",file=self.console)
+        print ("Use 'info bash' to find out more about the shell in general.",file=self.console)
+        print ("Use `man -k' or `info' to find out more about commands not in this list.",file=self.console)
         self.my_real_help()
     
     def my_real_help(self):
@@ -104,7 +108,7 @@ class Shell(Thread):
         
     #shell function        
     def ps(self, args):
-        self.kernel.ps()
+        print (self.kernel.ps(),file=self.console)
         
     #shell function pcb need to say what program have apcb
     def pid(self, args):
@@ -167,7 +171,7 @@ class Shell(Thread):
         self.kernel.manual(programName).printManual()
     
     def dir_print(self, to_print, impressor=None):
-        print to_print
+        print (to_print,file=self.console)
         
 if __name__ == '__main__':
     shell = Shell()
