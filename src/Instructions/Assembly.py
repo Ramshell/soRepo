@@ -216,7 +216,7 @@ class ScreenPrintValue(InstIO):
     '''
     
     def __init__(self, relativePositionWhereTheValueIs):
-        InstIO.__init__(self, "Print Screen",0)
+        InstIO.__init__(self, "---Value---",1)
         self.relativePositionWhereTheValueIs = relativePositionWhereTheValueIs
         
     def setValue(self,pcb,memory,mmu):
