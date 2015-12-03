@@ -4,9 +4,11 @@ from MainConsole import MainConsole
 import codecs
 import os
 '''
-Created on 02/12/2015
+Main Thread that starts the console application
 
-@author: exilio
+@author: Nicolas Leutwyler
+@author: Lucas Sandoval
+@author: Jesus Laime
 '''
 
 class MainConsoleThread(Thread):
