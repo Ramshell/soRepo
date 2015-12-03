@@ -36,6 +36,6 @@ class TablePCBTest(unittest.TestCase):
         sys.stdout = self.out
         self.sut.getPS()
         self.output = self.out.getvalue().strip()
-        self.assertEquals(self.output, 'Program: aPcb Pid: 1 PC: 0 Priority: 8 State: ready \nProgram: anotherPcb Pid: 2 PC: 0 Priority: 9 State: ready \nProgram: andAnother Pid: 3 PC: 0 Priority: 13 State: ready \nProgram: another Pid: 4 PC: 0 Priority: 17 State: ready')
+        self.assertEquals(self.sut.getPS(), 'Program: aPcb Pid: 1 PC: 0 Priority: 8 State: ready \nProgram: anotherPcb Pid: 2 PC: 0 Priority: 9 State: ready \nProgram: andAnother Pid: 3 PC: 0 Priority: 13 State: ready \nProgram: another Pid: 4 PC: 0 Priority: 17 State: ready \n')
 
         
