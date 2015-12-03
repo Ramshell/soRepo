@@ -139,7 +139,7 @@ class CmpLiteral(InstCPU):
     def run(self,pcb,memory,mmu):
         InstCPU.run(self,pcb,memory,mmu)
         valueToCompare = memory.getDir(self.absoluteDataPosition(pcb, mmu,self.relativePositionToCompare))
-        res = valueToCompare - self.valueLiteral        
+        res = valueToCompare - self.valueLiteral
         if(res == 0):
             pcb.flagZ = True
         if(res < 0):

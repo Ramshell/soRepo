@@ -23,6 +23,7 @@ class Program:
         self.name = name
         self.manual = manual
         self.variableSize = variableSize
+        self.preValuesAlreadyCharged = False
 
     def initializePreValues(self, args):
         """
@@ -31,10 +32,21 @@ class Program:
         @param args: Arguments for the program 
         """
         index = 0
-        for arg in args:
-            self.instructions.insert(index, MovLiteral(index, int(arg)))
-            index = index + 1
-        self.variableSize = self.variableSize + index
+        if not self.preValuesAlreadyCharged:
+            for arg in args:
+                self.instructions.insert(index, MovLiteral(index, int(arg)))
+                index = index + 1
+            self.variableSize = self.variableSize + index
+            self.preValuesAlreadyCharged = True
+        else:
+            whereToStart  = len(args)- 1
+            for arg in args:
+                self.instructions[whereToStart] = MovLiteral(index, int(arg))
+                whereToStart = whereToStart - 1
+                index = index + 1
+        
+        
+        
         
     def size(self):
         """
