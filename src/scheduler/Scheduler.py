@@ -33,7 +33,7 @@ class Scheduler:
         pcb = self.readyQueue.get()  # this method also removes the element
         if pcb.isTerminated():
             self.condition.release()
-            self.logger.log("Deleting terminated process with pid: ", pcb.getPid())
+            self.logger.log("Deleting terminated process with pid: "+ str(pcb.getPid()))
             return
         self.assignRafaga(pcb)
         pcb.runing()

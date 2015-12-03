@@ -42,7 +42,7 @@ class IODelivery:
 		
 	def numberOfDevices(self):
 		'''
-	    Tells how many devices are installed
+	    @return: how many devices are installed
 	    
 	    @return: Number of devices 
 	    ''' 
