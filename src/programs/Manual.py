@@ -13,12 +13,12 @@ class Manual(object):
         self.arguments = arguments
     
     def printManual(self, impressor = None):
-        print "Name: ", self.name
+        to_print_manual = "Name: " + self.name + " \n"
         if self.description != None:
-            print "Description: ", self.name, "was created to ", self.description
+            to_print_manual = to_print_manual + "Description: " + self.name + " was created to " + self.description + " \n"
         if self.arguments != None:
-            print "Arguments: "
+            to_print_manual = to_print_manual + "Arguments: " + " \n"
             for argument in self.arguments:
-                print "- ", argument
+                to_print_manual = to_print_manual + argument
             
-        
+        return to_print_manual

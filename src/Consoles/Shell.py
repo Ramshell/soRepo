@@ -39,8 +39,9 @@ class Shell(Thread):
     #shell function                
     def execute(self, command):
         """
-        @note: this is a shell build-in function
-        @param command: it's a 
+        @note: it's a shell build-in function.
+        @param command: it's a program to run.
+        @note: run the program in command
         """
         
         command.pop(0) #This is from Shell, we don't need this
@@ -68,7 +69,11 @@ class Shell(Thread):
         
     #shell function        
     def kill(self, args):
-        #args deberia ser un pid o varios pids
+        """
+        @summary: it's a shell built-in command.
+        @param args: these are program's pid.
+        @note: terminate the programs asociated at pids in args.
+        """
         if len(args) == 1:
             self.dir_print("Give me some pid to kill")
             return
@@ -92,7 +97,12 @@ class Shell(Thread):
     
     #shell function    
     def help(self, args):
-        # si le pones args deberia tirar error o te olvias de los args?
+        """
+        @note:  args: not used
+        @summary: it's a shell built-in command
+        @note: show a help provided for the system
+        """
+        
         print ("NSN bash, version 0.0.0(1)-release shortly in linux-windows-mac-os",file=self.console)
         print ("These shell commands are defined internally. Type `help' to see this list.",file=self.console)
         print ("Type help 'name' to find out more about the function 'name'",file=self.console)
@@ -101,6 +111,10 @@ class Shell(Thread):
         self.my_real_help()
     
     def my_real_help(self):
+        """
+        @note: this method just help the shell's help command
+        """
+        
         building_commands = self.buildIn.keys()
         self.dir_print("This are the usable commands: ")
         for command in building_commands:
@@ -108,16 +122,25 @@ class Shell(Thread):
         
     #shell function        
     def ps(self, args):
+        """
+        @note: args are not used
+        @note: it's a shell built-in command
+        @note: show the current process in the system
+        """
         print (self.kernel.ps(),file=self.console)
         
-    #shell function pcb need to say what program have apcb
-    def pid(self, args):
-        pass
-    
+
     def parse(self, command_line):
+        """
+        @note: read and parse the shell's input
+        @param command_line: is the input to read
+        """
+        
+        
         command = command_line.split(' ')
         program = command[0]
-        
+        if(len(program) == 0):
+            return
         if(program in self.buildIn):
             self.buildIn[program](command)
         else:
@@ -125,6 +148,12 @@ class Shell(Thread):
     
     #shell function    
     def manual(self, command):
+        """
+        @note: it's a shell built-in command
+        @param command: the manuals to show
+        @note: show the manuals in command
+        """
+        
         command.pop(0)
         args = len(command)
         if args == 0:
@@ -137,26 +166,43 @@ class Shell(Thread):
         #show the manual for each command
         if args > 1:
             for arg in command:
-                self.print_manual(arg)
+                self.dir_print(self.print_manual(arg))
 
     #fetch man in mymanuals and disk manuals and then print it if found it
     def print_manual(self, man):
+        """
+        @note: just to help manual built-in function
+        @param man: a manual to fetch and print
+        """
+        
         if man in self.manuals:
-            self.manuals[man].printManual()
+            self.dir_print(self.manuals[man].printManual())
         else:
-            in_disk_manual = self.fetch_man_in_disk(man)
-            if in_disk_manual is not None:
-                in_disk_manual.getManual().printManual()
+            manual = self.fetch_man_in_disk(man)
+            if manual is not None:
+                self.dir_print(manual.getManual().printManual())
             else:
                 self.no_exist_manual(man)
             
     def fetch_man_in_disk(self, man):
+        """
+        @note: just to help manual built-in function
+        @param man: a manual to fetch
+        """
         return self.kernel.manual(man)
         
     def no_exist_manual(self, arg):
+        """
+        @note: just to help manual built-in function
+        @param arg: arg not found 
+        """
         self.dir_print("No manual entry for " + arg)
                 
     def createManuals(self):
+        """
+        @note: it initialize the manuals for the shell's built-in functions
+        """
+        
         #creating manuals
         manexe = Manual("execute", "run a program", ["a program"])
         manps = Manual("ps", "displays information about a selection of the active processes.")
@@ -167,9 +213,6 @@ class Shell(Thread):
         
         return manuals
         
-    def printProgramManual(self, programName):
-        self.kernel.manual(programName).printManual()
-    
     def dir_print(self, to_print, impressor=None):
         print (to_print,file=self.console)
         
