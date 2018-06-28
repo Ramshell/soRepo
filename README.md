@@ -8,6 +8,7 @@ This simulation includes:
   * CPU common interruptions
   * Scheduler
     * Secuential
+    * FIFO
     * Priority
   * Pseudo assembler architecture
   * Memory Pagination
